@@ -4,7 +4,7 @@ class UserController{
     async getAllUser(req, res){
         try{
             const user = await userService.getAllUser();
-            res.json(user);
+            res.json(user)
         }catch(error){
             res.status(500),
             res.json({error: "Une erreur s'est produite lors de la recuperation des utilisateurs"})
@@ -14,7 +14,7 @@ class UserController{
     async getUserByid(req, res){
         try{
             const user = await userService.getUserById(req.params.id)
-            res.json(user);
+            res.json(user)
         }catch(error){
             res.status(500),
             res.json({error: "Une erreur s'est produite lors de la recuperation d'utilisateur"})
@@ -24,7 +24,7 @@ class UserController{
     async addUser(req, res){
         try{
             const user = await userService.addUser(req.body)
-            res.json(user);
+            res.json(user)
         }catch(error){
             res.status(500),
             res.json({error: "Une erreur s'est produite lors de l'ajout d'utilisateur"})
