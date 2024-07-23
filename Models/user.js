@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require("sequelize")
 const sequelize = require('../config/Sequelize');
-
+const Role =require('../Models/role')
 class User extends Model{
 
 }
@@ -44,7 +44,7 @@ User.init({
         type: DataTypes.INTEGER,
         primaryKey: true,
         references:{
-            model: "role",
+            model: "Role",
             key: "id"
         }
     },
