@@ -1,9 +1,10 @@
 const { Model, DataTypes } = require("sequelize")
 const sequelize = require('../config/Sequelize');
+const bcrypt = require('bcrypt');
 const Role =require('../Models/role')
 
 class User extends Model{
-
+   
 }
 
 User.init({
@@ -28,17 +29,14 @@ User.init({
         allowNull: false
     },
 
-    promo:{
+    password:{
         type: DataTypes.STRING,
         allowNull: false
     },
 
-    created_at:{
-        type: DataTypes.DATE
-    },
-
-    updated_at:{
-        type: DataTypes.DATE
+    promo:{
+        type: DataTypes.STRING,
+        allowNull: false
     },
 
     role_id:{
@@ -58,7 +56,13 @@ User.init({
     sequelize,
     modelName: "User",
     tableName: "user",
-    timestamps: false
+    timestamps: false,
+    hooks:{
+        beforeCreate: async(user) => {
+            user.password = await bcrypt.hash(user.password, 10);
+        },
+        
+    }
 });
 
 User.belongsTo(Role, {as: "role",  foreignKey: "role_id" });
