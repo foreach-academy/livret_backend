@@ -2,6 +2,8 @@ const { DATE } = require('sequelize');
 const User = require('../Models/user');
 const AuthenticateService = require('../Services/authenticateService');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config.json');
 
 
 const register = async (req, res) =>{
@@ -43,8 +45,12 @@ const register = async (req, res) =>{
          if(!user || !mdpMatch){
             return res.status(401).json({error: "Invalid email or password"});
         }
+
+        const token = jwt.sign({ id: user.id, email: user.email }, config.SECRET, {
+            expiresIn: '30d'
+        });
         
-         return res.status(200).json({message: "Login successfull", user});
+         return res.status(200).json({message: "Login successfull", token, user});
 
         }catch(error){
             res.status(500).json({error: "error internal"});
