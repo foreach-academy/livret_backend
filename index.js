@@ -14,6 +14,9 @@ const cors = require("cors");
 app.use(express.json());
 app.use(bodyParser.json());
 
+app.get('/api/data', (req, res) => {
+    res.json({ message: 'Hello from server!' });
+});
 
 app.use("/User", userRouter);
 app.use("/Role", roleRouter);
