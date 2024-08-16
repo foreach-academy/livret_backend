@@ -12,6 +12,16 @@ class UserService{
     async addUser(userdata){
         return await user.create(userdata);
     }
+
+    async getUsersByRole(roleName) {
+        return await user.findAll({
+            include: [{
+                model: Role,
+                as: 'role',
+                where: { name: roleName }
+            }]
+        });
+    }
 };
 
 module.exports = new UserService();

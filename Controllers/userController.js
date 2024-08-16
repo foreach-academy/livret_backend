@@ -31,6 +31,15 @@ class UserController{
         }
     }
 
+    async getUserByRole(req, res){
+        try{
+            const roleName = req.params.roleName;
+            const users = await userService.getUsersByRole(roleName)
+            res.json(users)
+        }catch(error){
+            res.status(500).json({error: " Un erreur s'est produite lors de la récuperation des utilisateurs par rôle"})
+        }
+    }
 
 };
 
