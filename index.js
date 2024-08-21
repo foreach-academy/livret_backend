@@ -7,6 +7,7 @@ const roleRouter = require('./Routes/roleRoute')
 const userRouter = require('./Routes/userRoute')
 const authenticateRouter = require('./Routes/authenticateRoute')
 const moduleRouter = require('./Routes/moduleRoute')
+const formationRouter = require('./Routes/formationRoute')
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/User", userRouter);
 app.use("/Role", roleRouter);
 app.use("/authenticate", authenticateRouter);
 app.use("/Module", moduleRouter);
+app.use("/Formation", formationRouter);
 
 
 module.exports = app;
