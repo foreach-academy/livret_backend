@@ -6,6 +6,7 @@ require('dotenv').config();
 const roleRouter = require('./Routes/roleRoute')
 const userRouter = require('./Routes/userRoute')
 const authenticateRouter = require('./Routes/authenticateRoute')
+const moduleRouter = require('./Routes/moduleRoute')
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/api/data', (req, res) => {
 app.use("/User", userRouter);
 app.use("/Role", roleRouter);
 app.use("/authenticate", authenticateRouter);
+app.use("/Module", moduleRouter);
 
 
 module.exports = app;
