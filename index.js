@@ -8,6 +8,12 @@ const userRouter = require('./Routes/userRoute')
 const authenticateRouter = require('./Routes/authenticateRoute')
 const moduleRouter = require('./Routes/moduleRoute')
 const formationRouter = require('./Routes/formationRoute')
+const formation_moduleRouter = require('./Routes/formation_moduleRoute')
+
+require('./Models/module');
+require('./Models/formation');
+require('./Models/formation_module');
+require('./Models/formation_module')
 
 const app = express();
 
@@ -26,6 +32,7 @@ app.use("/Role", roleRouter);
 app.use("/authenticate", authenticateRouter);
 app.use("/Module", moduleRouter);
 app.use("/Formation", formationRouter);
+app.use("/Formation_Module", formation_moduleRouter);
 
 
 module.exports = app;

@@ -23,7 +23,7 @@ Formation.init({
         primaryKey: true,
         references:{
             model: User,
-            key: "user_id"
+            key: "id"
         }
     }
 
@@ -33,5 +33,7 @@ Formation.init({
     tableName: 'formation',
     timestamps: false
 });
+
+Formation.belongsTo(User, {as: 'user', foreignKey:'user_id'});
 
 module.exports = Formation;

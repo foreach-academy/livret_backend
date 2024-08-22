@@ -16,6 +16,7 @@ class FormationControl{
             const formation = await FormationServ.getFormationByPk(req.params.id)
             res.json(formation)
         }catch(error){
+            console.error("source de l'erreur de recupe ID", error)
             res.status(500).json({error: "An error occured while getting formation"});
         }
     }

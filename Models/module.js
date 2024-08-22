@@ -29,7 +29,7 @@ Module.init({
         primaryKey: true,
         references:{
             model: User,
-            key: "id"
+            key: "user_id"
         }
     },
 
@@ -45,5 +45,6 @@ Module.init({
 });
 
 Module.belongsTo(User, {as: "user", foreignKey:'user_id'});
+
 
 module.exports = Module;

@@ -3,9 +3,11 @@ const ModuleService = require('../Services/moduleService');
 class ModuleControl{
     async getAllModule(req, res){
         try{
+            console.log('tentative de recuperation de recuperation des modules')
             const module = await ModuleService.getAllModule()
             res.json(module)
         }catch(error){
+            console.error('ici la source ', error)
             res.status(500).json({error: "An error occured while getting all modules"});
         }
     }
@@ -21,7 +23,7 @@ class ModuleControl{
 
     async addModule(req, res){
         try{
-            const module = await ModuleService.addModule()
+            const module = await ModuleService.addModule(req.body)
             res.json(module)
         }catch(error){
             res.status(500).json({error:" An error occured while adding module"})

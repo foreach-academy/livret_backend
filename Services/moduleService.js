@@ -1,3 +1,4 @@
+const Formation = require('../Models/formation');
 const Module =require('../Models/module');
 const User = require('../Models/user');
 
@@ -7,11 +8,11 @@ class ModuleService{
     }
 
     async getModuleById(moduleId){
-        return await Module.findByPk(moduleId, {include:[User]});
+        return await Module.findByPk(moduleId, {include:[{model:User, as: 'user'}, Formation]});
     }
 
-    async addModule(mouleData){
-        return await Module.create(mouleData, {include: [User]});
+    async addModule(moduleData){
+        return await Module.create(moduleData, {include: [{model: User, as: 'user'}]});
     }
 };
 
