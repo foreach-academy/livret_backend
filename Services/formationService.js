@@ -4,7 +4,6 @@ const User = require('../Models/user');
 
 class FormationServ{
     async getAllFormation(){
-        console.log('source 2')
         return await Formation.findAll();
     }
 

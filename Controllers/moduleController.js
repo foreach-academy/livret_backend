@@ -3,7 +3,6 @@ const ModuleService = require('../Services/moduleService');
 class ModuleControl{
     async getAllModule(req, res){
         try{
-            console.log('tentative de recuperation de recuperation des modules')
             const module = await ModuleService.getAllModule()
             res.json(module)
         }catch(error){
