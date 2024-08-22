@@ -9,6 +9,8 @@ const authenticateRouter = require('./Routes/authenticateRoute')
 const moduleRouter = require('./Routes/moduleRoute')
 const formationRouter = require('./Routes/formationRoute')
 const formation_moduleRouter = require('./Routes/formation_moduleRoute')
+const evaluationRouter = require('./Routes/evaluationRoute')
+const evaluationTypeRouter = require('./Routes/evaluation_typeRoute')
 
 require('./Models/module');
 require('./Models/formation');
@@ -33,6 +35,8 @@ app.use("/authenticate", authenticateRouter);
 app.use("/Module", moduleRouter);
 app.use("/Formation", formationRouter);
 app.use("/Formation_Module", formation_moduleRouter);
+app.use("/Evaluation", evaluationRouter);
+app.use("/Evaluation_Type", evaluationTypeRouter);
 
 
 module.exports = app;
