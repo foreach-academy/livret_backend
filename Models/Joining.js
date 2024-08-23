@@ -6,4 +6,5 @@ Module.belongsToMany(Formation, {through: Formation_Module, foreignKey: "module_
 Formation.belongsToMany(Module, {through: Formation_Module, foreignKey: "formation_id"});
 
 
+
 module.exports = {Module, Formation, Formation_Module};

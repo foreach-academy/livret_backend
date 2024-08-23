@@ -1,19 +1,23 @@
 const Evaluation = require('../Models/evaluation');
 const EvaluationType = require('../Models/evaluation_type');
+const Module = require('../Models/module');
+const User = require('../Models/user');
 
 class EvaluationServ{
     async getAllEvaluation(){
-        return await Evaluation.findAll();
+        return await Evaluation.findAll({include:[Module, User, {
+            model: EvaluationType, as: 'evaluationType'}
+        ]});
     }
 
     async getEvaluationById(evaluationId){
-        return await Evaluation.findByPk(evaluationId, {include:[{
+        return await Evaluation.findByPk(evaluationId, {include:[Module, User, {
             model: EvaluationType, as: 'evaluationType'}
         ]});
     }
 
     async addEvaluation(evaluationData){
-        return await Evaluation.create(evaluationData, {include:[{
+        return await Evaluation.create(evaluationData, {include:[Module, User, {
             model: EvaluationType, as:'evaluationType'
         }]});
     }

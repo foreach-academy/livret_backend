@@ -50,5 +50,7 @@ Evaluation.init({
 });
 
 Evaluation.belongsTo(EvaluationType, {as: 'evaluationType', foreignKey: 'evaluation_type_id'});
+Evaluation.belongsTo(Module, {foreignKey: 'module_id'});
+Evaluation.belongsTo(User, {foreignKey: 'user_id'});
 
 module.exports = Evaluation;

@@ -6,6 +6,7 @@ class UserController{
             const  user= await userService.getAllUser();
             res.json(user)
         }catch(error){
+            console.error('erreur trouvée', error)
             res.status(500),
             res.json({error: "Une erreur s'est produite lors de la recuperation des utilisateurs"})
         }
