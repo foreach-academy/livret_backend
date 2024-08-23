@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require('body-parser')
 require('dotenv').config();
 
+require('./Models/Joining');
 
 const roleRouter = require('./Routes/roleRoute')
 const userRouter = require('./Routes/userRoute')
@@ -12,10 +13,8 @@ const formation_moduleRouter = require('./Routes/formation_moduleRoute')
 const evaluationRouter = require('./Routes/evaluationRoute')
 const evaluationTypeRouter = require('./Routes/evaluation_typeRoute')
 
-require('./Models/module');
-require('./Models/formation');
-require('./Models/formation_module');
-require('./Models/formation_module')
+
+
 
 const app = express();
 
