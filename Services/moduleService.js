@@ -14,6 +14,23 @@ class ModuleService{
     async addModule(moduleData){
         return await Module.create(moduleData, {include: [{model: User, as: 'user'}]});
     }
+
+
+    async getModuleDetails() {
+        const query = `
+            SELECT module.title, mark.result, mark.updated_at, evaluation_type.name AS evaluation_type, module.commentary, user.promo, mark.created_at
+            FROM mark
+            JOIN evaluation_type ON mark.evaluation_id = evaluation_type.id
+            JOIN module ON mark.module_id = module.id 
+            JOIN user ON mark.user_id = user.id
+            JOIN role ON user.role_id = role.id
+            WHERE role.name = 'Apprenant';
+        `;
+        return await sequelize.query(query, { type: sequelize.QueryTypes.SELECT });
+    }
+
 };
+
+
 
 module.exports = new ModuleService();
