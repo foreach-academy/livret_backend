@@ -28,6 +28,17 @@ class ModuleControl{
             res.status(500).json({error:" An error occured while adding module"})
         }
     }
+
+    async getModuleDetails(req, res) {
+        try {
+            const moduleDetails = await ModuleService.getModuleDetails();
+            res.json(moduleDetails);
+        } catch (error) {
+            console.error('Error fetching module details:', error);
+            res.status(500).json({ error: "An error occurred while fetching module details" });
+        }
+    }
+
 };
 
 module.exports = new ModuleControl();
