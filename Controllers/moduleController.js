@@ -30,11 +30,13 @@ class ModuleControl{
     }
 
     async getModuleDetails(req, res) {
+        console.log('tentative de recuperation des details du moddule')
         try {
-            const moduleDetails = await ModuleService.getModuleDetails();
-            res.json(moduleDetails);
+            const details = req.params.details
+            const modules = await ModuleService.getModuleDetails(details);
+            res.json(modules);
         } catch (error) {
-            console.error('Error fetching module details:', error);
+            console.error('Error fetching module details:', error.message, error.stack);
             res.status(500).json({ error: "An error occurred while fetching module details" });
         }
     }
