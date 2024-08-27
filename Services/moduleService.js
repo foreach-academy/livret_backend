@@ -1,6 +1,8 @@
 const Formation = require('../Models/formation');
 const Module =require('../Models/module');
 const User = require('../Models/user');
+const sequelize = require('../config/Sequelize')
+
 
 class ModuleService{
     async getAllModule(){

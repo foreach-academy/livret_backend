@@ -2,7 +2,7 @@ const ModuleService = require('../Services/moduleService');
 
 class ModuleControl{
     async getAllModule(req, res){
-        try{
+        try{            
             const module = await ModuleService.getAllModule()
             res.json(module)
         }catch(error){
@@ -32,8 +32,7 @@ class ModuleControl{
     async getModuleDetails(req, res) {
         console.log('tentative de recuperation des details du moddule')
         try {
-            const details = req.params.details
-            const modules = await ModuleService.getModuleDetails(details);
+            const modules = await ModuleService.getModuleDetails();
             res.json(modules);
         } catch (error) {
             console.error('Error fetching module details:', error.message, error.stack);
