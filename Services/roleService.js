@@ -1,4 +1,4 @@
-const role = require('../Models/role');
+const role = require('../models/role');
 
 class RoleService{
     async getAllRole(){

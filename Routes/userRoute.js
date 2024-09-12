@@ -1,7 +1,7 @@
 const express = require('express');
-const authGuard = require('../Controllers/authGuard');
+const authGuard = require('../controllers/authGuard');
 
-const userController = require('../Controllers/userController');
+const userController = require('../controllers/userController');
 const router = express.Router();
 
 router.get('/', (req, res) => userController.getAllUser(req,res));

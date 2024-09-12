@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt');
 const Role =require('../Models/role')
 
 class User extends Model{
-   
+    async validateMdp(password){
+        return await bcrypt.compare(password, this.password);
+    }
 }
 
 User.init({
@@ -61,7 +63,12 @@ User.init({
         beforeCreate: async(user) => {
             user.password = await bcrypt.hash(user.password, 10);
         },
-        
+        beforeUpdate : async (user) => {
+            console.log(user.password);
+            if (user.changed('password')) {
+                user.password = await bcrypt.hash(user.password,10);
+            }
+        } 
     }
 });
 

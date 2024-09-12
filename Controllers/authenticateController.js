@@ -1,9 +1,9 @@
 const { DATE } = require('sequelize');
-const User = require('../Models/user');
-const AuthenticateService = require('../Services/authenticateService');
+const User = require('../models/user');
+const AuthenticateService = require('../services/authenticateService');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const config = require('../config/config.json');
+const config = require('../config/config.js');
 
 
 const register = async (req, res) =>{
@@ -45,7 +45,7 @@ const register = async (req, res) =>{
          if(!user || !mdpMatch){
             return res.status(401).json({error: "Invalid email or password"});
         }
-
+        // ligne 49 a 51 a mettre dans services
         const token = jwt.sign({ id: user.id, email: user.email }, config.SECRET, {
             expiresIn: '30d'
         });

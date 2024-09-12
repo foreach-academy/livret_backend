@@ -3,9 +3,15 @@ const bodyParser = require('body-parser')
 require('dotenv').config();
 
 
-const roleRouter = require('./Routes/roleRoute')
-const userRouter = require('./Routes/userRoute')
-const authenticateRouter = require('./Routes/authenticateRoute')
+const roleRouter = require('./routes/roleRoute')
+const userRouter = require('./routes/userRoute')
+const authenticateRouter = require('./routes/authenticateRoute')
+const moduleRouter = require('./routes/moduleRoute')
+const formationRouter = require('./routes/formationRoute')
+const formation_moduleRouter = require('./routes/formation_moduleRoute')
+const evaluationRouter = require('./routes/evaluationRoute')
+const evaluationTypeRouter = require('./routes/evaluation_typeRoute')
+const markRouter = require('./routes/markRoute')
 
 const app = express();
 
@@ -19,9 +25,15 @@ app.get('/api/data', (req, res) => {
     res.json({ message: 'Hello from server!' });
 });
 
-app.use("/User", userRouter);
-app.use("/Role", roleRouter);
+app.use("/user", userRouter);
+app.use("/role", roleRouter);
 app.use("/authenticate", authenticateRouter);
+app.use("/Module", moduleRouter);
+app.use("/Formation", formationRouter);
+app.use("/Formation_Module", formation_moduleRouter);
+app.use("/Evaluation", evaluationRouter);
+app.use("/Evaluation_Type", evaluationTypeRouter);
+app.use("/Mark", markRouter);
 
 
 module.exports = app;
