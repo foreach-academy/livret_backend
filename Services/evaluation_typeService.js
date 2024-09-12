@@ -1,4 +1,4 @@
-const EvaluationType = require('../models/evaluation_type');
+const EvaluationType = require('../Models/evaluation_type');
 
 class EvaluationTypeServ{
     async getAllEvaluationType(){

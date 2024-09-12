@@ -1,7 +1,7 @@
 const Evaluation = require('../models/evaluation');
 const Mark = require('../models/mark');
-const Module = require('../models/module');
-const User = require('../models/user');
+const Module = require('../Models/module');
+const User = require('../Models/user');
 
 class MarkServ{
     async getAllMark(){

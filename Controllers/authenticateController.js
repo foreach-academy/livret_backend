@@ -1,6 +1,6 @@
 const { DATE } = require('sequelize');
-const User = require('../models/user');
-const AuthenticateService = require('../services/authenticateService');
+const User = require('../Models/user');
+const AuthenticateService = require('../Services/authenticateService');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config.js');

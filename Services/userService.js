@@ -1,6 +1,6 @@
 const { model } = require('../config/Sequelize');
-const Role = require('../models/role');
-const user = require('../models/user');
+const Role = require('../Models/role');
+const user = require('../Models/user');
 
 class UserService{
     async getAllUser(){
