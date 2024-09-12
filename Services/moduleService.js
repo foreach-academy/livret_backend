@@ -1,7 +1,7 @@
-const Formation = require('../Models/formation');
+const Formation = require('../models/formation');
 const Mark = require('../models/mark');
-const Module =require('../Models/module');
-const User = require('../Models/user');
+const Module =require('../models/module');
+const User = require('../models/user');
 const sequelize = require('../config/Sequelize')
 
 

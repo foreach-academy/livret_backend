@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require("sequelize")
 const sequelize = require('../config/Sequelize');
 const bcrypt = require('bcrypt');
-const Role =require('../Models/role')
+const Role =require('./role')
 
 class User extends Model{
     async validateMdp(password){
