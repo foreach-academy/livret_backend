@@ -43,7 +43,7 @@ User.init({
 
     role_id:{
         type: DataTypes.INTEGER,
-        primaryKey: true,
+        allowNull: false,
         references:{
             model: "Role",
             key: "id"
@@ -72,6 +72,7 @@ User.init({
     }
 });
 
-User.belongsTo(Role, {as: "role",  foreignKey: "role_id" });
+ User.belongsTo(Role, {as: "role",  foreignKey: "role_id" });
+//  Role.hasMany(User,{as : "user", foreignKey: "id" });
 
 module.exports = User;

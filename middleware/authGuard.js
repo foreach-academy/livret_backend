@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config.js');
-const User = require('../Models/user');
-const Role = require('../Models/role');
+const User = require('../Models/user.js');
+const Role = require('../Models/role.js');
 
 const authGuard = (req, res, next) => {
     const authHeader = req.headers['authorization'];
