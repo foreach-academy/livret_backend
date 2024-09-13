@@ -40,23 +40,24 @@ class UserService{
         });
     }
 
-    // Creation d'un utilisateur avec le role Admin
-    async AddUserByAdmin(userdatas, currentUserRole) {
-        // Vérification du rôle de l'utilisateur
-        if (currentUserRole !== 'Admin') {
-            throw new Error('Unauthorized'); // Lever une erreur si l'utilisateur n'est pas admin
-        }
+    // Creation d'un utilisateur avec le role Admin à réactiver si besoin
     
-        // Création de l'utilisateur
-        const newUser = await user.create(userdatas, {
-            include: [{
-                model: Role,
-                as: 'role'
-            }]
-        });
+    // async AddUserByAdmin(userdatas, currentUserRole) {
+    //     // Vérification du rôle de l'utilisateur
+    //     if (currentUserRole !== 'Admin') {
+    //         throw new Error('Unauthorized'); // Lever une erreur si l'utilisateur n'est pas admin
+    //     }
+    
+    //     // Création de l'utilisateur
+    //     const newUser = await user.create(userdatas, {
+    //         include: [{
+    //             model: Role,
+    //             as: 'role'
+    //         }]
+    //     });
 
-        return newUser; // Retourner le nouvel utilisateur créé
-    }
+    //     return newUser; // Retourner le nouvel utilisateur créé
+    // }
 
 };
 

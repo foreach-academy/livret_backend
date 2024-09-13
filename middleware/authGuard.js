@@ -26,7 +26,8 @@ const authGuard = (req, res, next) => {
     });
 };
 
-const adminGuard = async (req, res, next) => {
+const adminGuard = async (req, res, next,decoded) => {
+    req.userID = decoded.id;
     try {
         console.log(User);
         const user = await User.findOne({
@@ -44,6 +45,7 @@ const adminGuard = async (req, res, next) => {
             return res.status(401).json({ message: 'Unauthorized' });
         }
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ message: 'Server error' });
     }
 };
