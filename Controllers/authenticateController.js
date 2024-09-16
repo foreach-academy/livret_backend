@@ -39,11 +39,14 @@ const config = require('../config/config.js');
     
         // Vérifier si l'utilisateur existe
         const user = await AuthenticateService.getUserByEmail(email);
-    
         if (!user) {
             return res.status(401).json({ error: "Invalid email or password" });
         }
-    
+        const checkPassword =  await bcrypt.compare(password,user.password);
+
+        if(checkPassword === false){
+            return res.status(401).json({message : "Invalid Email ou Password"})
+        }
         // Génération du token ou autres traitements ici
         const token = await AuthenticateService.createToken(user);
         return res.status(200).json({message: "Login successfull", token});
