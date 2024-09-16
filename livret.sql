@@ -9,7 +9,12 @@ name VARCHAR(50) NOT NULL
 
 INSERT INTO role(id, name) VALUES
 (1, 'apprenant'), (2, 'Formateur'), (3, 'Admin');
+
+SET SQL_SAFE_UPDATES = 0;
 UPDATE role SET name = 'Apprenant' WHERE name = 'apprenant';
+SET SQL_SAFE_UPDATES = 1;
+
+SELECT * FROM role;
 
 CREATE TABLE user (
 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -24,17 +29,25 @@ company VARCHAR(50) NOT NULL,
 FOREIGN KEY (role_id) REFERENCES role(id)
 );
 
+SELECT * FROM user;
+
 INSERT INTO user(id, first_name, surname, email, promo, created_at, updated_at, role_id, company) VALUES
 (1, 'Xavier', 'Barthez', 'xavierbarthez@gmail.com', 2025, '2025-07-24', '2025-07-24', 1, 'ISEG'),
 (2, 'Paul', 'Langevin', 'paullangevin@gmail.com', 2025, '2025-07-24', '2025-07-24', 2, 'Foreach'),
 (3, 'Laury', 'Bossaert', 'laurybossaert@gmail.com', 2025, '2025-07-24', '2025-07-24', 3, 'Foreach');
 
 ALTER TABLE user ADD COLUMN password VARCHAR(50) NOT NULL;
+ALTER TABLE user MODIFY COLUMN password VARCHAR(100);
+
 INSERT INTO user( first_name, surname, email, password, promo, created_at, updated_at, role_id, company) VALUES
 ('Laury', 'Bossaert', 'laurybossaert2@gmail.com', "azerty", 2025, '2025-07-24', '2025-07-24', 3, 'Foreach');
+
+INSERT INTO user( first_name, surname, email, password, promo, created_at, updated_at, role_id, company) VALUES
+('Brandon', 'Bossaert', 'brandon@gmail.com', "azertyghhes", 2025, '2025-07-24', '2025-07-24', 3, 'Foreach');
  
- DELETE FROM user WHERE id =27;
-ALTER TABLE user MODIFY COLUMN password VARCHAR(100);
+ DELETE FROM user WHERE id =13;
+
+
 CREATE TABLE module(
 id INT AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(50) NOT NUll,
@@ -84,9 +97,3 @@ FOREIGN KEY (user_id) REFERENCES user(id),
 FOREIGN KEY (module_id) REFERENCES module(id),
 FOREIGN KEY (evaluation_id) REFERENCES evaluation(id)
 );
-
-SET SQL_SAFE_UPDATES = 0;
-UPDATE role SET name = 'Apprenant' WHERE name = 'apprenant';
-SET SQL_SAFE_UPDATES = 1;
-
-SELECT * FROM role;
