@@ -1,5 +1,5 @@
 const { model } = require('../config/Sequelize');
-const Role = require('../models/role');
+const Role = require('../Models/role');
 const user = require('../models/user');
 
 class UserService{
@@ -39,26 +39,6 @@ class UserService{
             }]
         });
     }
-
-    // Creation d'un utilisateur avec le role Admin à réactiver si besoin
-    
-    // async AddUserByAdmin(userdatas, currentUserRole) {
-    //     // Vérification du rôle de l'utilisateur
-    //     if (currentUserRole !== 'Admin') {
-    //         throw new Error('Unauthorized'); // Lever une erreur si l'utilisateur n'est pas admin
-    //     }
-    
-    //     // Création de l'utilisateur
-    //     const newUser = await user.create(userdatas, {
-    //         include: [{
-    //             model: Role,
-    //             as: 'role'
-    //         }]
-    //     });
-
-    //     return newUser; // Retourner le nouvel utilisateur créé
-    // }
-
 };
 
 module.exports = new UserService();

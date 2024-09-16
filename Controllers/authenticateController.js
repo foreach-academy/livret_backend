@@ -48,10 +48,7 @@ const config = require('../config/config.js');
         const token = await AuthenticateService.createToken(user);
         return res.status(200).json({message: "Login successfull", token});
         } catch (error) {
-        console.log(error);
         res.status(500).json({ error: "Internal server error" });
         }
     };
-
-
 module.exports = {login, register};

@@ -12,6 +12,7 @@ const formation_moduleRouter = require('./routes/formation_moduleRoute')
 const evaluationRouter = require('./routes/evaluationRoute')
 const evaluationTypeRouter = require('./routes/evaluation_typeRoute')
 const markRouter = require('./routes/markRoute')
+const authGuard = require('./middleware/authGuard')
 
 const app = express();
 
