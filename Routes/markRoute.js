@@ -1,4 +1,4 @@
-const MarkControl = require('../Controllers/markController');
+const MarkControl = require('../controllers/markController');
 
 const express = require('express');
 

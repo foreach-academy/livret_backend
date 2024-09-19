@@ -4,18 +4,15 @@ require('dotenv').config();
 
 require('./Models/Joining');
 
-const roleRouter = require('./Routes/roleRoute')
-const userRouter = require('./Routes/userRoute')
-const authenticateRouter = require('./Routes/authenticateRoute')
-const moduleRouter = require('./Routes/moduleRoute')
-const formationRouter = require('./Routes/formationRoute')
-const formation_moduleRouter = require('./Routes/formation_moduleRoute')
-const evaluationRouter = require('./Routes/evaluationRoute')
-const evaluationTypeRouter = require('./Routes/evaluation_typeRoute')
-const markRouter = require('./Routes/markRoute')
-
-
-
+const roleRouter = require('./routes/roleRoute')
+const userRouter = require('./routes/userRoute')
+const authenticateRouter = require('./routes/authenticateRoute')
+const moduleRouter = require('./routes/moduleRoute')
+const formationRouter = require('./routes/formationRoute')
+const formation_moduleRouter = require('./routes/formation_moduleRoute')
+const evaluationRouter = require('./routes/evaluationRoute')
+const evaluationTypeRouter = require('./routes/evaluation_typeRoute')
+const markRouter = require('./routes/markRoute')
 
 const app = express();
 
@@ -29,8 +26,8 @@ app.use(cors());
 //     res.json({ message: 'Hello from server!' });
 // });
 
-app.use("/User", userRouter);
-app.use("/Role", roleRouter);
+app.use("/user", userRouter);
+app.use("/role", roleRouter);
 app.use("/authenticate", authenticateRouter);
 app.use("/Module", moduleRouter);
 app.use("/Formation", formationRouter);

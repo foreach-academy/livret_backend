@@ -12,6 +12,22 @@ class RoleService{
     async addRole(roleData){
         return await role.create(roleData);
     }
+
+    async updateRole(roles,ids){
+        return await role.update(roles,{
+            where : {
+                id: ids
+            }
+        })
+    }
+
+    async deleteRole(ids){
+        return await role.destroy({
+            where : {
+                id: ids
+            }
+        })
+    }
 };
 
 module.exports = new RoleService();

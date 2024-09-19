@@ -1,4 +1,4 @@
-const FormationServ = require('../Services/formationService');
+const FormationServ = require('../services/formationService');
 
 class FormationControl{
     async getAllFormation(req, res){

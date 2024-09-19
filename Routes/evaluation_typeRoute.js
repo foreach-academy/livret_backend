@@ -1,4 +1,4 @@
-const EvaluationTypeControl = require('../Controllers/evaluation_typeController');
+const EvaluationTypeControl = require('../controllers/evaluation_typeController');
 
 const express = require('express');
 const router = express.Router();

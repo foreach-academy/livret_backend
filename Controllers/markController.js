@@ -1,4 +1,4 @@
-const MarkServ = require('../Services/markService');
+const MarkServ = require('../services/markService');
 
 class MarkControl{
     async getAllMark(req, res){

@@ -15,4 +15,3 @@ class EvaluationTypeServ{
 };
 
 module.exports = new EvaluationTypeServ();
-

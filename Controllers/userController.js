@@ -1,3 +1,4 @@
+const { request } = require('express');
 const userService = require('../Services/userService');
 
 class UserController{
@@ -23,26 +24,52 @@ class UserController{
         }
     }
 
+    async getUserByRole(req, res){
+        try{
+            const roleName = req.params.roleName;
+            const users = await userService.getUsersByRole(roleName)
+            console.log(users)
+            res.json(users)
+        }catch(error){
+            console.log(error)
+            res.status(500).json({error: " Un erreur s'est produite lors de la récuperation des utilisateurs par rôle"})
+        }
+    }   
+
     async addUser(req, res){
         try{
-            const user = await userService.create(req.body)
+            console.log(req.body)
+            const user = await userService.addUser(req.body)
             res.json(user)
         }catch(error){
+            console.log(error)
             res.status(500),
             res.json({error: "Une erreur s'est produite lors de l'ajout d'utilisateur"})
         }
     }
 
-    async getUserByRole(req, res){
-        try{
-            const roleName = req.params.roleName;
-            const users = await userService.getUsersByRole(roleName)
-            res.json(users)
-        }catch(error){
-            res.status(500).json({error: " Un erreur s'est produite lors de la récuperation des utilisateurs par rôle"})
+    async updateUser(req, res){
+        try {
+            const user = await userService.updateUser(req.params.id,req.body);
+            res.json(user);
+        } catch (error) {
+            console.log(error);
+            res.status(500);
+            res.json({error : "Une erreur s'est produite lors de la mise à jour de l'utilisateur"});
         }
     }
 
+    async deleteUser(req, res){
+        try {
+            const user = await userService.deleteUser(req.params.id);
+            res.json(user);
+        } catch (error) {
+            console.log(error);
+            res.status(500);
+            res.json({error : "Une erreur s'est produite lors de la suppression de l'utilisateur"});
+        }
+    }
+    
 };
 
 module.exports = new UserController();

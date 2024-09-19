@@ -1,4 +1,4 @@
-const EvaluationControl = require('../Controllers/evaluationController');
+const EvaluationControl = require('../controllers/evaluationController');
 
 const express = require('express');
 

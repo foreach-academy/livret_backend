@@ -1,4 +1,4 @@
-const EvaluationServ = require('../Services/evaluationService');
+const EvaluationServ = require('../services/evaluationService');
 
 class EvaluationControl{
     async getAllEvaluation(req, res){
