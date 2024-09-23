@@ -5,12 +5,10 @@ const jwt = require('jsonwebtoken')
 const Role = require('../Models/role')
 
 
-
     const getUserByEmail = async (email) => {
         try {
-            const normalizedEmail = email.trim().toLowerCase();
             const user = await User.findOne({
-                where: { email: normalizedEmail },
+                where: { email: email },
                 include: [{
                     model: Role,
                     as: 'role'

@@ -1,6 +1,7 @@
 const { model } = require('../config/Sequelize');
 const Role = require('../Models/role');
 const user = require('../models/user');
+const bcrypt = require('bcrypt');
 
 class UserService{
     async getAllUser(){
@@ -40,13 +41,28 @@ class UserService{
             });
     }
      
-    async updateUser(ids,users){
-        return await user.update(users,{
-            where : {
-                id: ids
+    async updateUser(ids, users) {
+        try {
+            // Trouver l'utilisateur par ID
+            const User = await user.findByPk(ids);
+            if (!User) {
+                throw new Error('Utilisateur non trouvé');
             }
-        })
+    
+            // Si un mot de passe est fourni, le hacher
+            if (users.password) {
+                users.password = await bcrypt.hash(users.password, 10);
+            }
+    
+            // Mettre à jour l'utilisateur avec les nouveaux champs
+            await User.update(users);
+            return User; // Renvoie l'utilisateur mis à jour
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour de l\'utilisateur:', error);
+            throw error; // Propager l'erreur
+        }
     }
+    
 
     async deleteUser(ids){
         return await user.destroy({
