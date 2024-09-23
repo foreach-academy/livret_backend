@@ -1,5 +1,5 @@
-const Formation = require('../Models/formation');
-const Module = require('../Models/module');
+const Formation = require('../models/formation');
+const Module = require('../models/module');
 const User = require('../models/user');
 
 class FormationServ{

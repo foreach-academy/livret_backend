@@ -1,6 +1,6 @@
-const Evaluation = require('../Models/evaluation');
-const EvaluationType = require('../Models/evaluation_type');
-const Module = require('../Models/module');
+const Evaluation = require('../models/evaluation');
+const EvaluationType = require('../models/evaluation_type');
+const Module = require('../models/module');
 const User = require('../models/user');
 
 class EvaluationServ{

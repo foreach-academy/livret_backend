@@ -8,7 +8,6 @@ const config = require('../config/config.js');
     const register = async (req, res) =>{
         try{
             const { email, password, promo, role_id, company, prenom, surname,} = req.body;
-            console.log(User);
             
             const data = {
                 first_name: prenom,
