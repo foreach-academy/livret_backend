@@ -39,10 +39,13 @@ const config = require('../config/config.js');
     
         // Vérifier si l'utilisateur existe
         const user = await AuthenticateService.getUserByEmail(email);
+        console.log(user);
         if (!user) {
+            console.log('Erreur : utilisateur non trouvé pour l\'email:', email);
             return res.status(401).json({ error: "Invalid email or password" });
         }
         const checkPassword =  await bcrypt.compare(password,user.password);
+        console.log(checkPassword);
 
         if(checkPassword === false){
             return res.status(401).json({message : "Invalid Email ou Password"})

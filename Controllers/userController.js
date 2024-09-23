@@ -1,5 +1,5 @@
 const { request } = require('express');
-const userService = require('../Services/userService');
+const userService = require('../services/userService');
 
 class UserController{
     async getAllUser(req, res){

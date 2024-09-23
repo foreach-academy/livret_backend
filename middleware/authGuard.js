@@ -56,6 +56,7 @@ const config = require('../config/config');
             }
             // autre erreur
         } catch (error) {
+            console.log(error);
             return res.status(403).json({ message: 'Token invalide ou expiré.' });
         }
     };

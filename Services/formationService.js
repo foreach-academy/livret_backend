@@ -1,6 +1,6 @@
 const Formation = require('../Models/formation');
 const Module = require('../Models/module');
-const User = require('../Models/user');
+const User = require('../models/user');
 
 class FormationServ{
     async getAllFormation(){

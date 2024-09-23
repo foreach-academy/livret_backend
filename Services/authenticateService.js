@@ -6,13 +6,22 @@ const Role = require('../Models/role')
 
 
 
-   const getUserByEmail = async (email) =>{
-    const user =  await User.findOne({where:{ email }, include: [{
-        model: Role,
-        as: 'role'
-    }]});
-       return user? user.dataValues : null;
-   }
+    const getUserByEmail = async (email) => {
+        try {
+            const normalizedEmail = email.trim().toLowerCase();
+            const user = await User.findOne({
+                where: { email: normalizedEmail },
+                include: [{
+                    model: Role,
+                    as: 'role'
+                }]
+            });
+            return user ? user.dataValues : null;
+        } catch (error) {
+            console.error("Erreur lors de la récupération de l'utilisateur par email:", error);
+            throw new Error("Erreur lors de la récupération de l'utilisateur");
+        }
+    }
    
     const createToken = async (user) => {
 
