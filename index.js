@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require('body-parser')
 require('dotenv').config();
 
-require('./Models/Joining');
+require('./models/Joining');
 
 const roleRouter = require('./routes/roleRoute')
 const userRouter = require('./routes/userRoute')
@@ -19,7 +19,6 @@ const app = express();
 const cors = require("cors");
 
 app.use(express.json());
-app.use(bodyParser.json());
 app.use(cors());
 
 // app.get('/api/data', (req, res) => {

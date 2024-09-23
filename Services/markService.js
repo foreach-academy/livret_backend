@@ -1,6 +1,6 @@
-const Evaluation = require('../Models/evaluation');
+const Evaluation = require('../models/evaluation');
 const Mark = require('../models/mark');
-const Module = require('../Models/module');
+const Module = require('../models/module');
 const User = require('../models/user');
 
 class MarkServ{
