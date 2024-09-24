@@ -54,6 +54,16 @@ class UserService{
                 users.password = await bcrypt.hash(users.password, 10);
             }
     
+            // Mettre à jour le rôle si un nouveau rôle est fourni
+            if (users.role_id) { 
+                const role = await Role.findByPk(users.role_id);
+                if (!role) {
+                    throw new Error('Rôle non trouvé');
+                }
+                // Mettre à jour le rôle de l'utilisateur
+                await User.setRole(role); 
+            }
+    
             // Mettre à jour l'utilisateur avec les nouveaux champs
             await User.update(users);
             return User; // Renvoie l'utilisateur mis à jour
@@ -62,6 +72,7 @@ class UserService{
             throw error; // Propager l'erreur
         }
     }
+    
     
 
     async deleteUser(ids){
