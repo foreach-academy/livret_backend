@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const config = require('../config/config.js');
 
 
+
     const register = async (req, res) =>{
         try{
             const { email, password, promo, role_id, company, prenom, surname,} = req.body;
@@ -15,8 +16,8 @@ const config = require('../config/config.js');
                 promo: promo,
                 email: email,
                 password: password,
-                created_at: new DATE(),
-                updated_at: new DATE(),
+                created_at: new Date(),
+                upDated_at: new Date(),
                 company: company,
                 role_id: role_id
             }

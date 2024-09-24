@@ -1,7 +1,7 @@
 
 const User = require("../models/user");
-const config = require('../config/config')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const config = require('../config/config.js');
 const Role = require('../models/role')
 
 
@@ -20,18 +20,17 @@ const Role = require('../models/role')
             throw new Error("Erreur lors de la récupération de l'utilisateur");
         }
     }
-   
-    const createToken = async (user) => {
 
-        const token = jwt.sign({ 
-            id: user.id, 
-            email: user.email, 
-            role: user.role.name}, 
-            config.SECRET, {
-            expiresIn: '30d'
-        });
-        return token;
-   }
+    const createToken = (user) => {
+        const userPayload = {
+            id: user.id,
+            email: user.email,
+            user: `${user.first_name} ${user.surname}`,
+            role: user.role.name
+        };
+        return jwt.sign(userPayload, config.SECRET, { expiresIn: '30d' });
+    };
+
 
 
 module.exports = {getUserByEmail, createToken};
