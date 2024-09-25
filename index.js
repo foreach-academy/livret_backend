@@ -1,6 +1,6 @@
 const express = require("express");
 // require('dotenv').config();
-require('./models/Joining');
+
 
 const roleRouter = require('./routes/roleRoute')
 const userRouter = require('./routes/userRoute')

@@ -57,6 +57,7 @@ class UserService{
             // Mettre à jour le rôle si un nouveau rôle est fourni
             if (users.role_id) { 
                 const role = await Role.findByPk(users.role_id);
+                console.log(role);
                 if (!role) {
                     throw new Error('Rôle non trouvé');
                 }
