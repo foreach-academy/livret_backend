@@ -1,7 +1,10 @@
 const Evaluation = require('../Models/evaluation');
+const EvaluationResultat = require('../Models/evaluation_resultat');
 const EvaluationType = require('../Models/evaluation_type');
 const Module = require('../Models/module');
 const User = require('../Models/user');
+const ApprenantsFormation = require('../Models/apprenants_formations');
+const Formation = require('../Models/formation');
 
 class EvaluationServ{
     async getAllEvaluation(){
@@ -10,11 +13,26 @@ class EvaluationServ{
         ]});
     }
 
-    async getEvaluationById(evaluationId){
-        return await Evaluation.findByPk(evaluationId, {include:[Module, User, {
-            model: EvaluationType, as: 'evaluationType'}
-        ]});
-    }
+    
+
+    // async getEvaluationForStudentsByModule(moduleId){
+    //     return await Evaluation.findAll({
+    //         where: {
+    //             module_id: moduleId,
+    //         },
+    //         include: [{
+    //             model: User,
+    //             as: 'apprenant',
+    //             attributes: ['first_name', 'surname', 'email', 'company'] 
+    //         },
+    //         {
+    //             model: EvaluationResultat,
+    //             as: 'resultat', 
+    //             attributes: ['name'],
+    //         },
+    //     ]
+    //     })
+    // }
 
     async addEvaluation(evaluationData){
         return await Evaluation.create(evaluationData, {include:[Module, User, {

@@ -7,16 +7,14 @@ ApprenantsFormation.init({
     apprenant_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: "User", 
+            model: "User",
             key: "id"
         }
     },
     formation_id: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "Formation",
-            key: "id"
-        }
+        allowNull: false,
+        primaryKey: true,
     }
 }, {
     sequelize,
