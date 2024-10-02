@@ -1,50 +1,44 @@
-const {Model, DataTypes} = require('sequelize')
-const sequelize = require('../config/Sequelize')
-const User = require('./user')
+const { Model, DataTypes } = require("sequelize");
+const sequelize = require('../config/Sequelize');
 
-
-class Module extends Model{
-
-}
+class Module extends Model {}
 
 Module.init({
-    id:{
+    id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-
-    title:{
-        type: DataTypes.STRING,
-        allowNull: false
+    title: {
+        type: DataTypes.STRING(200),
+        allowNull: true
     },
-    
-    end_date:{
+    start_date: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: true,
+        defaultValue: DataTypes.NOW
     },
-
-    user_id:{
+    end_date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW
+    },
+    formateur_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
-        references:{
-            model: User,
-            key: "user_id"
+        references: {
+            model: "User",
+            key: "id"
         }
     },
-
-    commentary:{
+    commentary: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     }
-},{
+}, {
     sequelize,
-    modelName: 'Module',
-    tableName: 'module',
+    modelName: "Module",
+    tableName: "module",
     timestamps: false
 });
-
-Module.belongsTo(User, {as: "user", foreignKey:'user_id'});
-
 
 module.exports = Module;

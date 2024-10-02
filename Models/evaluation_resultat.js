@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../config/Sequelize');
 
-class EvaluationType extends Model {}
+class EvaluationResultat extends Model {}
 
-EvaluationType.init({
+EvaluationResultat.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -15,9 +15,9 @@ EvaluationType.init({
     }
 }, {
     sequelize,
-    modelName: "EvaluationType",
-    tableName: "evaluation_type",
+    modelName: "EvaluationResultat",
+    tableName: "evaluation_resultat",
     timestamps: false
 });
 
-module.exports = EvaluationType;
+module.exports = EvaluationResultat;

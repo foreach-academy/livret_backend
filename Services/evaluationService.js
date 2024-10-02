@@ -1,7 +1,7 @@
-const Evaluation = require('../models/evaluation');
+const Evaluation = require('../Models/evaluation');
 const EvaluationType = require('../Models/evaluation_type');
 const Module = require('../Models/module');
-const User = require('../models/user');
+const User = require('../Models/user');
 
 class EvaluationServ{
     async getAllEvaluation(){

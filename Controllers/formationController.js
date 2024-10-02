@@ -10,10 +10,10 @@ class FormationControl{
         }
     }
 
-    async getFormationById(req, res){
+    async getUsersByFormationId(req, res){
         try{
-            const formation = await FormationServ.getFormationByPk(req.params.id)
-            res.json(formation)
+            const formation = await FormationServ.getUsersByFormationId(req.params.id)
+            res.json(formation);
         }catch(error){
             res.status(500).json({error: "An error occured while getting formation"});
         }

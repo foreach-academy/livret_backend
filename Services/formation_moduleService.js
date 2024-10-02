@@ -1,4 +1,4 @@
-const Formation_Module = require('../models/formation_module');
+const Formation_Module = require('../Models/formation_module');
 
 class Formation_ModuleServ{
     async getAllFormationModule(){

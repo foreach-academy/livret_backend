@@ -1,14 +1,19 @@
-const Formation = require('../models/formation');
+const Formation = require('../Models/formation');
 const Module = require('../Models/module');
-const User = require('../models/user');
+const User = require('../Models/user');
 
 class FormationServ{
     async getAllFormation(){
         return await Formation.findAll();
     }
 
-    async getFormationByPk(formationId){
-        return await Formation.findByPk(formationId, {include:[Module,{model: User, as:'user'}]});
+    async getUsersByFormationId(formationId){
+        return await Formation.findByPk(formationId, {
+            include: [{
+                model: User, 
+                as: 'user',
+            }]
+        });
     }
 
     async addFormation(formationData){

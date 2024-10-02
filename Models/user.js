@@ -1,72 +1,72 @@
-const { Model, DataTypes } = require("sequelize")
+const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../config/Sequelize');
 const bcrypt = require('bcrypt');
-const Role =require("./role")
 
-class User extends Model{
-    async validateMdp(password){
+class User extends Model {
+    async validateMdp(password) {
         return await bcrypt.compare(password, this.password);
     }
 }
 
 User.init({
-    id:{
+    id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-
-    first_name:{
-        type: DataTypes.STRING,
+    first_name: {
+        type: DataTypes.STRING(50),
         allowNull: false
     },
-
-    surname:{
-        type: DataTypes.STRING,
+    surname: {
+        type: DataTypes.STRING(50),
         allowNull: false
     },
-
-    email:{
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-
-    password:{
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-
-    promo:{
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-
-    role_id:{
-        type: DataTypes.INTEGER,
+    email: {
+        type: DataTypes.STRING(50),
         allowNull: false,
-        references:{
+        unique: true
+    },
+    promo: {
+        type: DataTypes.STRING(50),
+        allowNull: false
+    },
+    created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW
+    },
+    updated_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+        onUpdate: DataTypes.NOW
+    },
+    role_id: {
+        type: DataTypes.INTEGER,
+        references: {
             model: "Role",
             key: "id"
         }
     },
-
-    company:{
-        type: DataTypes.STRING,
-        allowNull:false
+    company: {
+        type: DataTypes.STRING(50),
+        allowNull: false
+    },
+    password: {
+        type: DataTypes.STRING(100),
+        allowNull: true
     }
-},{
+}, {
     sequelize,
     modelName: "User",
     tableName: "user",
     timestamps: false,
-    hooks:{
-        beforeCreate: async(user) => {
+    hooks: {
+        beforeCreate: async (user) => {
             user.password = await bcrypt.hash(user.password, 10);
-        },
+        }
     }
 });
-
- User.belongsTo(Role, {as: "role",  foreignKey: "role_id" });
-//  Role.hasMany(User,{as : "user", foreignKey: "id" });
 
 module.exports = User;

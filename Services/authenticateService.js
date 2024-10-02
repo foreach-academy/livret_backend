@@ -1,8 +1,8 @@
 
-const User = require("../models/user");
+const User = require("../Models/user.js");
 const jwt = require('jsonwebtoken');
 const config = require('../config/config.js');
-const Role = require('../models/role')
+const Role = require('../Models/role')
 
 
     const getUserByEmail = async (email) => {
