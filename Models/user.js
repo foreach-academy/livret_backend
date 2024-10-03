@@ -28,11 +28,13 @@ User.init({
 
     email:{
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
 
     password:{
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false
     },
 
@@ -53,6 +55,17 @@ User.init({
     company:{
         type: DataTypes.STRING,
         allowNull:false
+    },
+    // Ajout des champs pour la réinitialisation de mot de passe
+    resetPasswordToken: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: true // Ce champ est null tant qu'il n'y a pas de demande de réinitialisation
+    },
+
+    resetPasswordExpires: {
+        type: DataTypes.DATE,
+        allowNull: true // Ce champ est null tant qu'il n'y a pas de demande de réinitialisation
     }
 },{
     sequelize,

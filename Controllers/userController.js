@@ -1,6 +1,6 @@
 const { request } = require('express');
 const userService = require('../services/userService');
-const sendEmail = require("../SendEmail/SendEmail")
+const EmailsServices = require("../services/EmailsServices")
 class UserController{
 
     async getAllUser(req, res){
@@ -47,7 +47,7 @@ class UserController{
             // Si l'utilisateur est ajouté avec succès, envoie l'email
             if (user) {
                 try {
-                    await sendEmail(user);
+                    await EmailsServices.sendWelcomeEmail(user);
                     console.log('Email envoyé à :', user.email);
                 } catch (emailError) {
                     console.error('Erreur lors de l\'envoi de l\'email :', emailError);
