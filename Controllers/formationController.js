@@ -1,4 +1,4 @@
-const FormationServ = require('../services/formationService');
+const FormationServ = require('../Services/formationService');
 
 class FormationControl{
     async getAllFormation(req, res){
@@ -37,6 +37,16 @@ class FormationControl{
             res.status(500).json({error: "An error occured while adding formation"})
         }
     }
+
+    async getModulesByFormationId(req, res) {
+        try {
+            const modules = await FormationServ.getModulesByFormationId(req.params.formationId);
+            res.json(modules);
+        } catch(error) {
+            res.status(500).json({error: "An error occured while getting modules for this formation"})
+        }
+    }
+
 };
 
 module.exports = new FormationControl();

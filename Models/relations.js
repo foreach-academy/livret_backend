@@ -28,11 +28,17 @@ EvaluationType.hasMany(Evaluation, { foreignKey: 'evaluation_type_id', as: 'eval
 Evaluation.belongsTo(EvaluationResultat, { foreignKey: 'evaluation_resultat_id', as: 'resultat' });
 EvaluationResultat.hasMany(Evaluation, { foreignKey: 'evaluation_resultat_id', as: 'evaluations' });
 
-FormationModule.belongsTo(Formation, { foreignKey: 'formation_id', as: 'formation' });
-Formation.hasMany(FormationModule, { foreignKey: 'formation_id', as: 'modules' });
+Formation.belongsToMany(Module, {
+    through: FormationModule,
+    as: 'modules',
+    foreignKey: 'formation_id'
+});
 
-FormationModule.belongsTo(Module, { foreignKey: 'module_id', as: 'module' });
-Module.hasMany(FormationModule, { foreignKey: 'module_id', as: 'formation' });
+Module.belongsToMany(Formation, {
+    through: FormationModule, 
+    as: 'formations', 
+    foreignKey: 'module_id'
+});
 
 ResponsablesFormation.belongsTo(User, { foreignKey: 'responsable_id', as: 'responsable' });
 User.hasMany(ResponsablesFormation, { foreignKey: 'responsable_id', as: 'responsables' });

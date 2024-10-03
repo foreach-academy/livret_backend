@@ -18,26 +18,16 @@ class FormationServ{
         });
     }
 
-    // async getStudentsByFormation(formationId){
-    //     return await Formation.findByPk(formationId, {
-    //         include: [{
-    //             model: User, 
-    //             as: 'user',
-    //         }]
-    //     });
-    // }
-
     async getStudentsEvaluationsByFormationAndModule(formationId, moduleId) {
-        // Récupérer la formation et ses étudiants
         const formationWithStudents = await Formation.findByPk(formationId, {
             include: [{
                 model: User,
-                as: 'apprenants', // Vérifiez que c'est le bon alias pour les utilisateurs
+                as: 'apprenants', 
                 include: [{
                     model: Evaluation,
-                    as: 'evaluation', // Assurez-vous que c'est le bon alias pour les évaluations
+                    as: 'evaluation',
                     where: { module_id: moduleId },
-                    required: false, // Ne pas forcer la correspondance
+                    required: false, 
                     include: [{
                         model: EvaluationResultat,
                         as: 'resultat',
@@ -46,11 +36,19 @@ class FormationServ{
                 }]
             }]
         });
-    
         return formationWithStudents;
     }
     
-    
+    async getModulesByFormationId(formationId) {
+        return await Formation.findByPk(formationId, 
+            {
+            include: [{
+                model: Module,
+                as: 'modules'
+            }]
+        }
+    )
+    }
 
     async addFormation(formationData){
         return await Formation.create(formationData, {include:[Module, {model: User, as:'user'}]});
