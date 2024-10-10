@@ -29,7 +29,7 @@ User.init({
     },
     promo: {
         type: DataTypes.STRING(50),
-        allowNull: false
+        allowNull: false,
     },
     created_at: {
         type: DataTypes.DATE,
@@ -53,9 +53,21 @@ User.init({
         type: DataTypes.STRING(50),
         allowNull: false
     },
-    password: {
-        type: DataTypes.STRING(100),
-        allowNull: true
+    password:{
+        type: DataTypes.STRING(200),
+        // unique: true,
+        allowNull: false
+    },
+    // Ajout des champs pour la réinitialisation de mot de passe
+    resetPasswordToken: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: true // Ce champ est null tant qu'il n'y a pas de demande de réinitialisation
+    },
+
+    resetPasswordExpires: {
+        type: DataTypes.DATE,
+        allowNull: true // Ce champ est null tant qu'il n'y a pas de demande de réinitialisation
     }
 }, {
     sequelize,
