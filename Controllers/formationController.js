@@ -47,6 +47,15 @@ class FormationControl{
         }
     }
 
+    async getModulesByFormationIdAndFormateurId(req, res) {
+        try {
+            const modules = await FormationServ.getModulesByFormationIdAndFormateurId(req.params.formationId, req.params.formateurId);
+            res.json(modules);
+        } catch (error) {
+            res.status(500).json({error: "An error occured while getting modules for this formation and this teacher"})            
+        }
+    }
+
 };
 
 module.exports = new FormationControl();

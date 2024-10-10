@@ -44,11 +44,23 @@ class FormationServ{
             {
             include: [{
                 model: Module,
-                as: 'modules'
+                as: 'modules',
+            }]
+        }
+    )}
+
+    async getModulesByFormationIdAndFormateurId(formationId, formateurId) {
+        return await Formation.findByPk(formationId, 
+            {
+            include: [{
+                model: Module,
+                as: 'modules',
+                where : { formateur_id : formateurId }
             }]
         }
     )
     }
+
 
     async addFormation(formationData){
         return await Formation.create(formationData, {include:[Module, {model: User, as:'user'}]});
