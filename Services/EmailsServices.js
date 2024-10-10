@@ -44,7 +44,9 @@ class EmailsServices {
     const resetToken = this.generateResetToken(); 
 
     // Stocker le token et la date d'expiration dans la base de données (ex : 1 heure de validité)
-    const tokenExpiration = Date.now() + 3600000; // 1 heure à partir de maintenant
+    const now = new Date();
+    const timezoneOffsetInMs = now.getTimezoneOffset() * 60000; // Décalage en millisecondes
+    const tokenExpiration = new Date(Date.now() + 3600000 - timezoneOffsetInMs).toLocaleString();
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = tokenExpiration;
     await user.save(); // Sauvegarder le token dans la base de données

@@ -2,5 +2,5 @@ config.json
 node_modules/
 package-lock.json
 test_connection.js
-.env
+
 frontend/livret-frontend-1
