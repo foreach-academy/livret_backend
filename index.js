@@ -9,7 +9,7 @@ const formationRouter = require('./Routes/formationRoute')
 const formation_moduleRouter = require('./routes/formation_moduleRoute')
 const evaluationRouter = require('./routes/evaluationRoute')
 const evaluationTypeRouter = require('./routes/evaluation_typeRoute')
-const markRouter = require('./routes/markRoute')
+// const markRouter = require('./Routes/markRoute')
 const emailRouter = require('./routes/EmailRoute')
 
 const app = express();
@@ -34,7 +34,7 @@ app.use("/formation", formationRouter);
 app.use("/formation_module", formation_moduleRouter);
 app.use("/evaluation", evaluationRouter);
 app.use("/evaluation_type", evaluationTypeRouter);
-app.use("/mark", markRouter);
+// app.use("/mark", markRouter);
 app.use("/email", emailRouter);
 
 

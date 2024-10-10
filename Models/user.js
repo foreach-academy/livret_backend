@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../config/Sequelize');
 const bcrypt = require('bcrypt');
+const Role = require("./role");
 
 class User extends Model {
     async validateMdp(password) {
@@ -80,5 +81,7 @@ User.init({
         }
     }
 });
+
+User.belongsTo(Role, {as: "role",  foreignKey: "role_id" });
 
 module.exports = User;
