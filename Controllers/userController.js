@@ -1,7 +1,7 @@
 const userService = require('../services/userService');
 const EmailsServices = require("../services/EmailsServices");
 const bcrypt = require('bcrypt');
-const User = require('../Models/user'); 
+const User = require('../models/user'); 
 
 class UserController {
 

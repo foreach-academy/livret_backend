@@ -1,6 +1,6 @@
 // /controllers/emailController.js
 
-const User = require('../Models/user'); // Assurez-vous que le chemin est correct
+const User = require('../models/user'); // Assurez-vous que le chemin est correct
 const EmailsServices = require('../services/EmailsServices'); // Importer l'instance de EmailsServices
 
 class emailController {

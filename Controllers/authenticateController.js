@@ -1,5 +1,5 @@
 const { DATE } = require('sequelize');
-const User = require('../Models/user.js');
+const User = require('../models/user.js');
 const AuthenticateService = require('../services/authenticateService.js');
 const bcrypt = require('bcrypt');
 const config = require('../config/config.js');

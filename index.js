@@ -19,6 +19,10 @@ const emailRouter = require('./routes/EmailRoute')
 // Importer les relations 
 require('./Models/relations'); 
 
+app.use(cors({
+    exposedHeaders: ['Retry-After'],  // Autorise Axios à lire cet en-tête
+}));
+
 app.use((err, req, res, next) => {
     console.error('Erreur détaillée :', err); // Affiche l'erreur dans la console
     res.status(500).send('Something broke!');
