@@ -28,6 +28,10 @@ User.init({
         allowNull: false,
         unique: true
     },
+    birthdate: {
+        type: DataTypes.DATE,
+        allowNull: true
+    },
     promo: {
         type: DataTypes.STRING(50),
         allowNull: false,
@@ -82,6 +86,5 @@ User.init({
     }
 });
 
-User.belongsTo(Role, {as: "role",  foreignKey: "role_id" });
 
 module.exports = User;
