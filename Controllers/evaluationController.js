@@ -1,4 +1,4 @@
-const EvaluationServ = require('../services/evaluationService');
+const EvaluationServ = require('../Services/evaluationService');
 
 class EvaluationControl{
     async getAllEvaluation(req, res){
@@ -16,7 +16,7 @@ class EvaluationControl{
             const evaluation = await EvaluationServ.addEvaluation(req.body)
             res.json(evaluation)
         }catch(error){
-            res.status(500).json({error: 'An error occured while adding evaluation'});
+            res.status(500).json({error: 'An error occured while adding this evaluation'});
         }
     }
 };

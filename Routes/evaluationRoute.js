@@ -1,8 +1,5 @@
-const EvaluationControl = require('../controllers/evaluationController');
-
+const EvaluationControl = require('../Controllers/evaluationController');
 const express = require('express');
-const { getStudentsEvaluations } = require('../services/evaluationService');
-
 const router = express.Router();
 
 

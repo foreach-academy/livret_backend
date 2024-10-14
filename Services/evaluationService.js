@@ -13,32 +13,10 @@ class EvaluationServ{
         ]});
     }
 
-    
-
-    // async getEvaluationForStudentsByModule(moduleId){
-    //     return await Evaluation.findAll({
-    //         where: {
-    //             module_id: moduleId,
-    //         },
-    //         include: [{
-    //             model: User,
-    //             as: 'apprenant',
-    //             attributes: ['first_name', 'surname', 'email', 'company'] 
-    //         },
-    //         {
-    //             model: EvaluationResultat,
-    //             as: 'resultat', 
-    //             attributes: ['name'],
-    //         },
-    //     ]
-    //     })
-    // }
-
-    async addEvaluation(evaluationData){
-        return await Evaluation.create(evaluationData, {include:[Module, User, {
-            model: EvaluationType, as:'evaluationType'
-        }]});
+    async addEvaluation (evaluation) {
+        return await Evaluation.create(evaluation);
     }
+
 };
 
 module.exports = new EvaluationServ();
