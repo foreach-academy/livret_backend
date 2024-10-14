@@ -1,5 +1,5 @@
-const User = require('./user');
-const Role = require('./role');
+const User = require('../models/user');
+const Role = require('../models/role');
 const Formation = require('./formation');
 const Module = require('./module');
 const Evaluation = require('./evaluation');
