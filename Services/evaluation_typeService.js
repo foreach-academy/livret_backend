@@ -2,7 +2,7 @@ const EvaluationType = require('../models/evaluation_type');
 
 class EvaluationTypeServ{
     async getAllEvaluationType(){
-        return await EvaluationType.findAll()
+        return await EvaluationType.findAll();
     }
 
     async getEvaluationTypeById(evaluationTypeId){

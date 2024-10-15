@@ -13,7 +13,8 @@ const moduleRouter = require('./routes/moduleRoute')
 const formationRouter = require('./Routes/formationRoute')
 const formation_moduleRouter = require('./routes/formation_moduleRoute')
 const evaluationRouter = require('./routes/evaluationRoute')
-const evaluationTypeRouter = require('./routes/evaluation_typeRoute')
+const evaluationTypeRouter = require('./Routes/evaluation_typeRoute')
+const evaluationResultatsRouter = require('./Routes/evaluationResultatRoute')
 // const markRouter = require('./Routes/markRoute')
 const emailRouter = require('./routes/EmailRoute')
 // Importer les relations 
@@ -32,6 +33,7 @@ app.use("/formation", formationRouter);
 app.use("/formation_module", formation_moduleRouter);
 app.use("/evaluation", evaluationRouter);
 app.use("/evaluation_type", evaluationTypeRouter);
+app.use("/evaluation_resultat", evaluationResultatsRouter);
 app.use("/email", emailRouter);
 
 
