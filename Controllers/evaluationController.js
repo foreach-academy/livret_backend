@@ -9,7 +9,6 @@ class EvaluationControl{
             res.status(500).json({error: 'A error ocuured while getting all evaluations'});
         }
     }
-    
 
     async addEvaluation(req, res){
         try{
@@ -19,6 +18,7 @@ class EvaluationControl{
             res.status(500).json({error: 'An error occured while adding this evaluation'});
         }
     }
+
 };
 
 module.exports = new EvaluationControl();

@@ -1,7 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../config/Sequelize');
 const EvaluationResultat = require('../Models/evaluation_resultat');
-const EvaluationType = require('../Models/evaluation_type');
 
 class Evaluation extends Model {}
 
@@ -36,19 +35,16 @@ Evaluation.init({
             key: "id"
         }
     },
-    evaluation_type_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: EvaluationType,
-            key: "id"
-        }
-    },
     evaluation_resultat_id: {
         type: DataTypes.INTEGER,
         references: {
             model: EvaluationResultat,
             key: "id"
         }
+    }, 
+    comment: {
+        type: DataTypes.STRING(1000),
+        allowNull: true
     }
 }, {
     sequelize,

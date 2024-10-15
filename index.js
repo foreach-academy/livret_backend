@@ -7,9 +7,9 @@ app.use(cors());
 
 // Routes
 const roleRouter = require('./routes/roleRoute')
-const userRouter = require('./routes/userRoute')
+const userRouter = require('./Routes/userRoute')
 const authenticateRouter = require('./routes/authenticateRoute')
-const moduleRouter = require('./routes/moduleRoute')
+const moduleRouter = require('./Routes/moduleRoute')
 const formationRouter = require('./Routes/formationRoute')
 const formation_moduleRouter = require('./routes/formation_moduleRoute')
 const evaluationRouter = require('./routes/evaluationRoute')
@@ -32,8 +32,8 @@ app.use("/module", moduleRouter);
 app.use("/formation", formationRouter);
 app.use("/formation_module", formation_moduleRouter);
 app.use("/evaluation", evaluationRouter);
-app.use("/evaluation_type", evaluationTypeRouter);
-app.use("/evaluation_resultat", evaluationResultatsRouter);
+app.use("/evaluation-type", evaluationTypeRouter);
+app.use("/evaluation-resultat", evaluationResultatsRouter);
 app.use("/email", emailRouter);
 
 

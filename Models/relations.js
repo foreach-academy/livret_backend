@@ -8,6 +8,7 @@ const EvaluationResultat = require('./evaluation_resultat');
 const ApprenantsFormation = require('../Models/apprenants_formations'); 
 const FormationModule = require('./formation_module');
 const ResponsablesFormation = require('./responsables_formation');
+const ModuleEvaluationType = require('./module_evaluation_type');
 
 // Définir les relations
 User.belongsTo(Role, { foreignKey: 'role_id', as: 'role' });
@@ -21,9 +22,6 @@ Module.hasMany(Evaluation, { foreignKey: 'module_id', as: 'evaluation' });
 
 Module.belongsTo(User, { foreignKey: 'formateur_id', as: 'formateur' });
 User.hasMany(Module, { foreignKey: 'formateur_id', as: 'modules' });
-
-Evaluation.belongsTo(EvaluationType, { foreignKey: 'evaluation_type_id', as: 'evaluationType' });
-EvaluationType.hasMany(Evaluation, { foreignKey: 'evaluation_type_id', as: 'evaluation' });
 
 Evaluation.belongsTo(EvaluationResultat, { foreignKey: 'evaluation_resultat_id', as: 'resultat' });
 EvaluationResultat.hasMany(Evaluation, { foreignKey: 'evaluation_resultat_id', as: 'evaluations' });
@@ -58,6 +56,18 @@ Formation.belongsToMany(User, {
     foreignKey: 'formation_id',
 });
 
+Module.belongsToMany(EvaluationType, {
+    through: ModuleEvaluationType,
+    as: 'evaluation_types', 
+    foreignKey: 'module_id',
+});
+
+EvaluationType.belongsToMany(Module, {
+    through: ModuleEvaluationType,
+    as: 'modules', 
+    foreignKey: 'evaluation_type_id',
+});
+
 module.exports = {
     User,
     Role,
@@ -68,6 +78,7 @@ module.exports = {
     EvaluationResultat,
     ApprenantsFormation,
     FormationModule,
-    ResponsablesFormation
+    ResponsablesFormation,
+    ModuleEvaluationType
 };
 
