@@ -4,12 +4,12 @@ const validator = require('validator');
 
 class RoleServices {
     // Récupérer tous les rôles
-    async fetchAllRoles() {
+    async getAllRole() {
         return await Role.findAll();
     }
 
     // Récupérer un rôle par ID
-    async fetchRoleById(roleId) {
+    async getRoleById(roleId) {
         const role = await Role.findByPk(roleId);
         if (!role) {
             throw new Error('Rôle non trouvé');
