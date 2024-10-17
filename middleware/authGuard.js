@@ -1,24 +1,33 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
-const authGuard = (request, result, next) => {
+const authGuard = (request, response, next) => {
     const authHeader = request.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
+    // Vérification de la présence du token
     if (!token) {
-        return result.status(401).json({ error: "Token manquant" });
+        return response.status(401).json({ error: "Token manquant" });
     }
 
+    // Vérification que le format du token est correct
+    if (!/^[\w-]+\.[\w-]+\.[\w-]+$/.test(token)) {
+        return response.status(401).json({ error: "Format de token invalide" });
+    }
+
+    // Vérification du token
     jwt.verify(token, config.SECRET, (error, user) => {
         if (error) {
-            return result.status(401).json({ error: "Votre token n'est pas valide" });
+            return response.status(401).json({ error: "Token invalide" });
         }
+
         request.user = user;
 
+        // Vérification du rôle de l'utilisateur
         if (user && user.role === 'Admin') {
-            next();
+            return next(); // Passe à la suite du traitement si l'utilisateur est admin
         } else {
-            return result.status(403).json({ error: "Vous n'avez pas les permissions nécessaires" });
+            return response.status(403).json({ error: "Accès refusé" });
         }
     });
 };

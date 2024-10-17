@@ -1,8 +1,10 @@
 const express = require("express");
-require('dotenv').config();
 const app = express();
-app.use(express.json());
 const cors = require("cors");
+require('dotenv').config();
+
+app.use(express.json());
+
 app.use(cors());
 
 // Routes
@@ -19,6 +21,15 @@ const evaluationResultatsRouter = require('./Routes/evaluationResultatRoute')
 const emailRouter = require('./routes/EmailRoute')
 // Importer les relations 
 require('./Models/relations'); 
+
+app.use(cors({
+    exposedHeaders: ['Retry-After'],  // Autorise Axios à lire cet en-tête
+}));
+
+
+// importer les relations
+require('./Models/relations'); 
+
 
 app.use((err, req, res, next) => {
     console.error('Erreur détaillée :', err); // Affiche l'erreur dans la console

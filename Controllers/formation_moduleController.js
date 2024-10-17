@@ -1,29 +1,51 @@
-const Formation_ModuleServ = require ('../services/formation_moduleService')
-class Formation_ModuleControl{
-    async getAllFormationModule(req, res){
-        try{
-            const formationModule = await Formation_ModuleServ.getAllFormationModule(req, res)
-            res.json(formationModule)
-        }catch(error){
-            res.status(500).json({error: 'An error occured while getting all formation_module'});
+const Formation_ModuleServ = require('../services/formation_moduleService');
+const xss = require('xss');
+
+class Formation_ModuleControl {
+    // Récupérer tous les modules de formation
+    async getAllFormationModule(req, res) {
+        try {
+            const formationModule = await Formation_ModuleServ.getAllFormationModule();
+            res.json(formationModule);
+        } catch (error) {
+            console.error('Erreur lors de la récupération de tous les modules de formation:', error);
+            res.status(500).json({ error: 'Une erreur est survenue lors de la récupération de tous les modules de formation.' });
         }
     }
 
-    async getFormationModuleById(req, res){
-        try{
-            const formationModule = await Formation_ModuleServ.getFormationModuleById(req.params.id)
-            res.json(formationModule)
-        }catch(error){
-            res.status(500).json({error: 'An error occured while getting formation_module'});
+    // Récupérer un module de formation par son ID
+    async getFormationModuleById(req, res) {
+        try {
+            const formationModule = await Formation_ModuleServ.getFormationModuleById(req.params.id);
+            if (!formationModule) {
+                return res.status(404).json({ error: 'Module de formation non trouvé.' });
+            }
+            res.json(formationModule);
+        } catch (error) {
+            console.error(`Erreur lors de la récupération du module de formation avec ID ${req.params.id}:`, error);
+            res.status(500).json({ error: 'Une erreur est survenue lors de la récupération du module de formation.' });
         }
     }
 
-    async addFormationModule(req, res){
-        try{
-            const formationModule = await Formation_ModuleServ.addFormationModule(req.body)
-            res.json(formationModule)
-        }catch(error){
-            res.status(500).json({error: 'An error occured while adding formation_module'});
+    // Ajouter un module de formation
+    async addFormationModule(req, res) {
+        try {
+            // Validation et nettoyage des données d'entrée
+            if (!req.body.formation_id || !req.body.module_id) {
+                return res.status(400).json({ error: 'Les champs formation_id et module_id sont requis.' });
+            }
+
+            // Nettoyage des données pour éviter les attaques XSS
+            const sanitizedData = {
+                formation_id: xss(req.body.formation_id),
+                module_id: xss(req.body.module_id)
+            };
+
+            const formationModule = await Formation_ModuleServ.addFormationModule(sanitizedData);
+            res.status(201).json(formationModule); // Retourner un statut 201 pour une création réussie
+        } catch (error) {
+            console.error('Erreur lors de l\'ajout d\'un module de formation:', error);
+            res.status(500).json({ error: 'Une erreur est survenue lors de l\'ajout du module de formation.' });
         }
     }
 }
