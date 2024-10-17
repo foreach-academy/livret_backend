@@ -1,11 +1,9 @@
-// const Module = require("../Models/module");
+const Module = require("../models/module");
 
-// class ModuleServ {
-//     async getModulesByFormateurId (formateurId) {
-//         return await Module.findAll( {
-//             where: { formateur_id : formateurId }
-//         })
-//     }
-// }
+class ModuleService {
+    async getModuleById (moduleId) {
+        return await Module.findByPk(moduleId)
+    }
+}
 
-// module.exports = new ModuleServ();
+module.exports = new ModuleService();
