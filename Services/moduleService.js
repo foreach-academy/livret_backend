@@ -1,4 +1,4 @@
-const Module = require("../models/module");
+const Module = require("../Models/module");
 
 class ModuleService {
     async getModuleById (moduleId) {
