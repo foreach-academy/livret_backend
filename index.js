@@ -8,17 +8,17 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
-const roleRouter = require('./routes/roleRoute')
+const roleRouter = require('./Routes/roleRoute')
 const userRouter = require('./Routes/userRoute')
 const authenticateRouter = require('./routes/authenticateRoute')
 const moduleRouter = require('./Routes/moduleRoute')
 const formationRouter = require('./Routes/formationRoute')
-const formation_moduleRouter = require('./routes/formation_moduleRoute')
-const evaluationRouter = require('./routes/evaluationRoute')
+const formation_moduleRouter = require('./Routes/formation_moduleRoute')
+const evaluationRouter = require('./Routes/evaluationRoute')
 const evaluationTypeRouter = require('./Routes/evaluation_typeRoute')
 const evaluationResultatsRouter = require('./Routes/evaluationResultatRoute')
 // const markRouter = require('./Routes/markRoute')
-const emailRouter = require('./routes/EmailRoute')
+const emailRouter = require('./Routes/EmailRoute')
 
 app.use(cors({
     exposedHeaders: ['Retry-After'],  // Autorise Axios à lire cet en-tête

@@ -1,5 +1,5 @@
 const { model } = require('../config/Sequelize');
-const User = require('../models/user');
+const User = require('../Models/user');
 const Role = require('../models/role');
 const bcrypt = require('bcrypt');
 const xss = require('xss');
