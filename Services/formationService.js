@@ -1,7 +1,7 @@
-const Formation = require('../models/formation');
+const Formation = require('../Models/formation');
 const Module = require('../Models/module');
 const User = require('../models/user');
-const Evaluation = require('../models/evaluation');
+const Evaluation = require('../Models/evaluation');
 const EvaluationResultat = require('../Models/evaluation_resultat');
 const xss = require('xss');
 
@@ -43,7 +43,26 @@ class FormationServ {
         return formationWithStudents;
     }
 
-    // Récupérer les modules par ID de formation
+    async getStudentEvaluationsByModule(studentId, moduleId) {
+        const studentWithEvaluation = await User.findOne({
+            where: { id: studentId },
+            include: [{
+                model: Evaluation,
+                as: 'evaluation',
+                where: { module_id: moduleId },
+                required: false,
+                include: [{
+                    model: EvaluationResultat,
+                    as: 'resultat',
+                    attributes: ['name'],
+                }]
+            }]
+        });
+        return studentWithEvaluation;
+    }
+    
+    
+    
     async getModulesByFormationId(formationId) {
         return await Formation.findByPk(formationId, {
             include: [{
