@@ -1,7 +1,7 @@
-const Formation = require('../models/formation');
-const Module = require('../models/module');
+const Formation = require('../Models/formation');
+const Module = require('../Models/module');
 const User = require('../models/user');
-const Evaluation = require('../models/evaluation');
+const Evaluation = require('../Models/evaluation');
 const EvaluationResultat = require('../Models/evaluation_resultat');
 const xss = require('xss');
 

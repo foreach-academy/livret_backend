@@ -39,12 +39,26 @@ class FormationControl {
     }
 
 
-    async addFormation(req, res){
-        try{
-             const formation = await FormationServ.addFormation(req.body)
-             res.json(formation)
-        }catch(error){
-            res.status(500).json({error: "An error occured while adding formation"})
+    async addFormation(req, res) {
+        try {
+            // Validation des données d'entrée
+            if (!req.body.title || !req.body.start_date || !req.body.end_date) {
+                return res.status(400).json({ error: 'Les champs title, start_date et end_date sont requis.' });
+            }
+
+            // Nettoyage des données pour éviter les attaques XSS
+            const sanitizedData = {
+                title: xss(req.body.title),
+                start_date: xss(req.body.start_date),
+                end_date: xss(req.body.end_date),
+                commentary: req.body.commentary ? xss(req.body.commentary) : null, // Optional field
+            };
+
+            const formation = await FormationServ.addFormation(sanitizedData);
+            res.status(201).json(formation); // Retourner un statut 201 pour la création réussie
+        } catch (error) {
+            console.error('Erreur lors de l\'ajout d\'une formation:', error);
+            res.status(500).json({ error: "Une erreur est survenue lors de l'ajout de la formation." });
         }
     }
 
