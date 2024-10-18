@@ -1,4 +1,4 @@
-const FormationServ = require('../services/formationService');
+const FormationServ = require('../Services/formationService');
 const xss = require('xss');
 
 class FormationControl {
@@ -22,10 +22,22 @@ class FormationControl {
             const students = await FormationServ.getStudentsEvaluationsByFormationAndModule(sanitizedFormationId, sanitizedModuleId);
             res.json(students);
         } catch (error) {
-            console.error('Erreur lors de la récupération des évaluations des étudiants:', error);
-            res.status(500).json({ error: "Une erreur est survenue lors de la récupération de la formation.", details: error.message });
+            console.error('Error while getting students evaluations:', error); 
+            res.status(500).json({ error: "An error occurred while getting formation", details: error.message }); 
         }
     }
+
+    async getStudentEvaluationsByModule(req, res) {
+        try {
+            const { studentId, moduleId } = req.params; 
+            const evaluation = await FormationServ.getStudentEvaluationsByModule(studentId, moduleId);
+            res.json(evaluation);
+        } catch (error) {
+            console.error('Error while getting students evaluations:', error); 
+            res.status(500).json({ error: "An error occurred while getting this evaluation", details: error.message }); 
+        }
+    }
+
 
     async addFormation(req, res) {
         try {
@@ -47,6 +59,29 @@ class FormationControl {
         } catch (error) {
             console.error('Erreur lors de l\'ajout d\'une formation:', error);
             res.status(500).json({ error: "Une erreur est survenue lors de l'ajout de la formation." });
+            console.error('Error while getting students evaluations:', error); 
+            res.status(500).json({ error: "An error occurred while getting formation", details: error.message }); 
+        }
+    }
+
+    async getStudentEvaluationsByModule(req, res) {
+        try {
+            const { studentId, moduleId } = req.params; 
+            const evaluation = await FormationServ.getStudentEvaluationsByModule(studentId, moduleId);
+            res.json(evaluation);
+        } catch (error) {
+            console.error('Error while getting students evaluations:', error); 
+            res.status(500).json({ error: "An error occurred while getting this evaluation", details: error.message }); 
+        }
+    }
+
+
+    async addFormation(req, res){
+        try{
+             const formation = await FormationServ.addFormation(req.body)
+             res.json(formation)
+        }catch(error){
+            res.status(500).json({error: "An error occured while adding formation"})
         }
     }
 
