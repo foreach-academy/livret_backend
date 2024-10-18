@@ -20,6 +20,24 @@ class FormationServ {
             }]
         });
     }
+    
+    async getStudentEvaluationsByModule(studentId, moduleId) {
+        const studentWithEvaluation = await User.findOne({
+            where: { id: studentId },
+            include: [{
+                model: Evaluation,
+                as: 'evaluation',
+                where: { module_id: moduleId },
+                required: false,
+                include: [{
+                    model: EvaluationResultat,
+                    as: 'resultat',
+                    attributes: ['name'],
+                }]
+            }]
+        });
+        return studentWithEvaluation;
+    }
 
     // Récupérer les évaluations des étudiants par formation et module
     async getStudentsEvaluationsByFormationAndModule(formationId, moduleId) {

@@ -64,6 +64,17 @@ class FormationControl {
         }
     }
 
+    async getStudentEvaluationsByModule(req, res) {
+        try {
+            const { studentId, moduleId } = req.params; 
+            const evaluation = await FormationServ.getStudentEvaluationsByModule(studentId, moduleId);
+            res.json(evaluation);
+        } catch (error) {
+            console.error('Error while getting students evaluations:', error); 
+            res.status(500).json({ error: "An error occurred while getting this evaluation", details: error.message }); 
+        }
+    }
+
     async getModulesByFormationIdAndFormateurId(req, res) {
         try {
             const sanitizedFormationId = xss(req.params.formationId); // Nettoyage de l'ID de formation

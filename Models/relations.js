@@ -2,11 +2,11 @@ const User = require('../models/user');
 const Role = require('../models/role');
 const Formation = require('./formation');
 const Module = require('./module');
-const Evaluation = require('./evaluation');
+const Evaluation = require('../models/evaluation');
 const EvaluationType = require('../Models/evaluation_type');
 const EvaluationResultat = require('../Models/evaluation_resultat');
 const ApprenantsFormation = require('../Models/apprenants_formations'); 
-const FormationModule = require('./formation_module');
+const FormationModule = require('../models/formation_module');
 const ResponsablesFormation = require('./responsables_formation');
 const ModuleEvaluationType = require('./module_evaluation_type');
 
