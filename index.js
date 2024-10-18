@@ -19,8 +19,6 @@ const evaluationTypeRouter = require('./Routes/evaluation_typeRoute')
 const evaluationResultatsRouter = require('./Routes/evaluationResultatRoute')
 // const markRouter = require('./Routes/markRoute')
 const emailRouter = require('./routes/EmailRoute')
-// Importer les relations 
-require('./Models/relations'); 
 
 app.use(cors({
     exposedHeaders: ['Retry-After'],  // Autorise Axios à lire cet en-tête
