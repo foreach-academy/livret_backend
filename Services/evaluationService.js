@@ -17,6 +17,14 @@ class EvaluationServ{
         return await Evaluation.create(evaluation);
     }
 
+    async editEvaluation (evaluationId, evaluation) {
+        return await Evaluation.update(evaluation, {
+            where : {
+                id : evaluationId
+            }
+        })
+    }
+
 };
 
 module.exports = new EvaluationServ();

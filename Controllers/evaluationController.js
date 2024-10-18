@@ -19,6 +19,15 @@ class EvaluationControl{
         }
     }
 
+    async editEvaluation(req, res) {
+        try {
+            const evaluation = await EvaluationServ.editEvaluation(req.params.evaluationId, req.body);
+            res.json(evaluation);
+        } catch (error) {
+            res.status(500).json({error: 'An error occured while editing this evaluation'});
+        }
+    }
+
 };
 
 module.exports = new EvaluationControl();
