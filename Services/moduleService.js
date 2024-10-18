@@ -1,5 +1,5 @@
 const Module = require("../Models/module");
-const User = require("../Models/user");
+const User = require("../Model/user");
 
 class ModuleService {
     async getModuleById (moduleId) {
