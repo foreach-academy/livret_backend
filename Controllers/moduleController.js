@@ -1,4 +1,4 @@
-const ModuleService = require('../services/moduleService');
+const ModuleService = require('../Services/moduleService');
 const xss = require('xss');
 
 class ModuleControl {

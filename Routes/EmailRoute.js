@@ -1,7 +1,7 @@
 
 
 const express = require('express');
-const EmailController = require('../controllers/EmailControllers'); 
+const EmailController = require('../Controllers/EmailControllers'); 
 const {BruteForceSecurity} = require('../middleware/BruteForceSecurity');
 
 const router = express.Router();

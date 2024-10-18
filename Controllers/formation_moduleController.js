@@ -1,4 +1,4 @@
-const Formation_ModuleServ = require('../services/formation_moduleService');
+const Formation_ModuleServ = require('../Services/formation_moduleService');
 const xss = require('xss');
 
 class Formation_ModuleControl {

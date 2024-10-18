@@ -1,7 +1,7 @@
-const userService = require('../services/userService');
+const userService = require('../Services/userService');
 const EmailsServices = require("../services/EmailsServices");
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
+const User = require('../Models/user');
 const xss = require('xss'); // Assurez-vous d'installer cette bibliothèque avec npm
 
 class UserController {

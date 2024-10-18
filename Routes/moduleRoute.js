@@ -1,4 +1,4 @@
-const ModuleControl = require('../controllers/moduleController');
+const ModuleControl = require('../Controllers/moduleController');
 const express = require('express')
 const router = express.Router();
 

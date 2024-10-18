@@ -1,4 +1,4 @@
-const Role = require('../models/role');
+const Role = require('../Models/role');
 const xss = require('xss');
 const validator = require('validator');
 

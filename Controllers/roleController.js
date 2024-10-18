@@ -1,4 +1,4 @@
-const roleService = require('../services/roleService');
+const roleService = require('../Services/roleService');
 const xss = require('xss'); // Assurez-vous d'installer cette bibliothèque avec npm
 
 class RoleController {

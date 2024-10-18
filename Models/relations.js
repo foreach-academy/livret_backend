@@ -1,13 +1,13 @@
-const User = require('../models/user');
-const Role = require('../models/role');
+const User = require('../Models/user');
+const Role = require('../Models/role');
 const Formation = require('../Models/formation');
 const Module = require('../Models/module');
 const Evaluation = require('../Models/evaluation');
 const EvaluationType = require('../Models/evaluation_type');
 const EvaluationResultat = require('../Models/evaluation_resultat');
 const ApprenantsFormation = require('../Models/apprenants_formations'); 
-const FormationModule = require('../models/formation_module');
-const ResponsablesFormation = require('./responsables_formation');
+const FormationModule = require('../Models/formation_module');
+const ResponsablesFormation = require('../Models/responsables_formation');
 const ModuleEvaluationType = require('./module_evaluation_type');
 
 // Définir les relations

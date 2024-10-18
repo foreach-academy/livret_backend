@@ -1,6 +1,6 @@
 const Formation = require('../Models/formation');
 const Module = require('../Models/module');
-const User = require('../models/user');
+const User = require('../Models/user');
 const Evaluation = require('../Models/evaluation');
 const EvaluationResultat = require('../Models/evaluation_resultat');
 const xss = require('xss');

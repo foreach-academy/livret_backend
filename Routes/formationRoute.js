@@ -1,4 +1,4 @@
-const FormationControl = require('../controllers/formationController');
+const FormationControl = require('../Controllers/formationController');
 const express = require('express');
 const router = express.Router();
 

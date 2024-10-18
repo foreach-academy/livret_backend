@@ -1,10 +1,10 @@
-const Evaluation = require('../models/evaluation');
+const Evaluation = require('../Models/evaluation');
 const EvaluationResultat = require('../Models/evaluation_resultat');
 const EvaluationType = require('../Models/evaluation_type');
-const Module = require('../models/module');
-const User = require('../models/user');
+const Module = require('../Models/module');
+const User = require('../Models/user');
 const ApprenantsFormation = require('../Models/apprenants_formations');
-const Formation = require('../models/formation');
+const Formation = require('../Models/formation');
 
 class EvaluationServ{
     async getAllEvaluation(){
