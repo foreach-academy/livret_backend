@@ -1,10 +1,14 @@
+// /controllers/userController.js
+
 const userService = require('../Services/userService');
-const EmailsServices = require("../services/EmailsServices");
+const EmailsServices = require("../Services/EmailsServices");
 const bcrypt = require('bcrypt');
 const User = require('../Models/user');
 const xss = require('xss'); // Assurez-vous d'installer cette bibliothèque avec npm
+const { utcToZonedTime } = require('date-fns-tz');
 
 class UserController {
+    // Récupérer tous les utilisateurs
     async getAllUser(req, res) {
         try {
             const users = await userService.getAllUser();
@@ -15,6 +19,7 @@ class UserController {
         }
     }
 
+    // Récupérer un utilisateur par son ID
     async getUserById(req, res) {
         try {
             const userId = xss(req.params.id); // Nettoyage de l'ID utilisateur
@@ -29,6 +34,7 @@ class UserController {
         }
     }
 
+    // Récupérer les utilisateurs par rôle
     async getUserByRole(req, res) {
         try {
             const roleName = xss(req.params.roleName); // Nettoyage du nom de rôle
@@ -40,6 +46,7 @@ class UserController {
         }
     }
 
+    // Ajouter un nouvel utilisateur
     async addUser(req, res) {
         try {
             // Validation des données d'entrée
@@ -50,19 +57,25 @@ class UserController {
                 return res.status(400).json({ error: "Les champs 'first_name', 'surname', 'email', 'promo', 'company' et 'password' sont requis." });
             }
 
+            // Validation d'email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return res.status(400).json({ error: "L'email n'est pas valide." });
+            }
+
             // Nettoyage des données pour éviter les attaques XSS
             const sanitizedData = {
                 first_name: xss(first_name),
                 surname: xss(surname),
                 email: xss(email),
-                birthdate: birthdate ? xss(birthdate) : null, // On peut ne pas nettoyer si c'est une date
+                birthdate: birthdate || null, // Laisser la date telle quelle
                 promo: xss(promo),
                 company: xss(company),
-                password: password, // Le mot de passe ne doit pas être nettoyé ici
+                password: password, // Le mot de passe sera hashé avant d'être stocké
                 role_id: role_id || null // Si le rôle n'est pas fourni, on l'initialise à null
             };
 
-            // Créer l'utilisateur
+            // Créer l'utilisateur via le service
             const user = await userService.addUser(sanitizedData);
 
             // Envoi d'un e-mail de bienvenue si l'utilisateur a été créé
@@ -82,6 +95,7 @@ class UserController {
         }
     }
 
+    // Mettre à jour un utilisateur par ID
     async updateUser(req, res) {
         try {
             const userId = xss(req.params.id); // Nettoyage de l'ID utilisateur
@@ -97,7 +111,7 @@ class UserController {
         }
     }
 
-    // Fonction pour mettre à jour l'utilisateur via le token
+   // Mettre à jour un utilisateur via le token de réinitialisation de mot de passe
     async updateUserByToken(req, res) {
         const { password, token } = req.body;
 
@@ -114,9 +128,22 @@ class UserController {
                 return res.status(400).json({ message: "Token invalide ou utilisateur introuvable." });
             }
 
-            // Vérifier si le token est expiré
-            const now = Date.now(); // Utiliser Date.now() pour obtenir le temps actuel en millisecondes
-            if (now > user.resetPasswordExpires) {
+            // Obtenir la date actuelle en UTC
+            const now = new Date(); // Cette date est en UTC
+
+            // Obtenir l'heure locale de Paris (UTC +1)
+            const nowInParis = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
+
+            // Ajouter 2 heures à l'heure actuelle à Paris
+            nowInParis.setHours(nowInParis.getHours() + 2);
+
+            // La date d'expiration du token en UTC
+            const tokenExpiration = new Date(user.resetPasswordExpires); // Supposé en UTC
+
+            console.log("date maintenant (Paris) : ", nowInParis, "expire le : ", tokenExpiration);
+
+            // Comparer les dates
+            if (nowInParis > tokenExpiration) {
                 return res.status(400).json({ message: "Token expiré." });
             }
 
@@ -141,6 +168,8 @@ class UserController {
         }
     }
 
+
+    // Supprimer un utilisateur
     async deleteUser(req, res) {
         try {
             const userId = xss(req.params.id); // Nettoyage de l'ID utilisateur

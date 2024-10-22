@@ -49,11 +49,11 @@ class EmailsServices {
     const resetToken = this.generateResetToken(); 
 
     // Stocker le token et la date d'expiration dans la base de données (ex : 1 heure de validité)
-    const now = new Date();
-    const timezoneOffsetInMs = now.getTimezoneOffset() * 60000; // Décalage en millisecondes
-    const tokenExpiration = new Date(Date.now() + 3600000 - timezoneOffsetInMs).toLocaleString();
+    const tokenExpiration = new Date(Date.now() + 3600000); // +1 heure en UTC
+    const franceTimezoneOffset = -new Date().getTimezoneOffset() * 60000; // Décalage horaire actuel pour la France
+    const tokenExpirationInFrance = new Date(tokenExpiration.getTime() + franceTimezoneOffset); 
+    user.resetPasswordExpires = tokenExpirationInFrance; // Stocker la date ajustée pour la France
     user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = tokenExpiration;
     await user.save(); // Sauvegarder le token dans la base de données
 
     const resetLink = `http://127.0.0.1:3000/reset/password?token=${resetToken}`;
