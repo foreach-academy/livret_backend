@@ -12,7 +12,7 @@ const loginLimiter = BruteForceSecurity({
 
 
 router.post('/login', loginLimiter, (req, res) =>  authenticateController.login(req,res));
-router.post('/register', (req, res) => authenticateController.register(req,res));
+
 
 
 module.exports = router;

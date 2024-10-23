@@ -20,7 +20,7 @@ class RoleServices {
     // Ajouter un nouveau rôle
     async addRole(roleData) {
         try {
-            // Validation des données d'entrée
+            // Validation des données d'entrée pour éviter les attaques XSS
             if (validator.isEmpty(roleData.name)) {
                 throw new Error('Le nom du rôle ne peut pas être vide');
             }
@@ -38,7 +38,7 @@ class RoleServices {
     // Mettre à jour un rôle
     async updateRole(roleId, roleData) {
         try {
-            // Validation des données d'entrée
+            // Validation des données d'entrée pour éviter les attaques XSS
             if (roleData.name && validator.isEmpty(roleData.name)) {
                 throw new Error('Le nom du rôle ne peut pas être vide');
             }

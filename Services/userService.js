@@ -29,7 +29,7 @@ class UserServices {
     // Ajouter un nouvel utilisateur
     async addUser(userData) {
         try {
-            // Validation des données d'entrée
+            // Validation des données d'entrée pour éviter les attaque XSS
             if (!validator.isEmail(userData.email)) {
                 throw new Error('Email invalide');
             }
@@ -68,7 +68,7 @@ class UserServices {
     // Mettre à jour un utilisateur
     async updateUser(ids, userData) {
         try {
-            // Validation des données d'entrée
+            // Validation des données d'entrée pour éviter les attaques XSS
             if (userData.email && !validator.isEmail(userData.email)) {
                 throw new Error('Email invalide');
             }

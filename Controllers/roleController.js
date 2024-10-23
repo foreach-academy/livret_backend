@@ -15,7 +15,7 @@ class RoleController {
     async getRoleById(req, res) {
         try {
             const roleId = xss(req.params.id); // Nettoyage de l'ID du rôle
-            const role = await roleService.fetchRoleById(roleId);
+            const role = await roleService.getRoleById(roleId);
             if (!role) {
                 return res.status(404).json({ error: "Rôle non trouvé." });
             }

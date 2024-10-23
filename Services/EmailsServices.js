@@ -46,26 +46,26 @@ class EmailsServices {
   async sendLinkEmail(user) {
     const cleanedFirstName = xss(user.first_name); // Nettoyer le prénom
     const cleanedSurname = xss(user.surname); // Nettoyer le nom de famille
-    const resetToken = this.generateResetToken(); 
+    const resetToken = this.generateResetToken(); // stocker le token génerer dans la const resetToken
 
     // Stocker le token et la date d'expiration dans la base de données (ex : 1 heure de validité)
     const tokenExpiration = new Date(Date.now() + 3600000); // +1 heure en UTC
     const franceTimezoneOffset = -new Date().getTimezoneOffset() * 60000; // Décalage horaire actuel pour la France
-    const tokenExpirationInFrance = new Date(tokenExpiration.getTime() + franceTimezoneOffset); 
+    const tokenExpirationInFrance = new Date(tokenExpiration.getTime() + franceTimezoneOffset); // date du token en france +1h, pour avoir 1h avant expiration
     user.resetPasswordExpires = tokenExpirationInFrance; // Stocker la date ajustée pour la France
     user.resetPasswordToken = resetToken;
     await user.save(); // Sauvegarder le token dans la base de données
 
-    const resetLink = `http://127.0.0.1:3000/reset/password?token=${resetToken}`;
+    const resetLink = `http://127.0.0.1:3000/reset/password?token=${resetToken}`; // stocker le lien de la page reset mot de passe qui se situe dans le front
     const mailOptions = {
       from: process.env.user_email, // Utiliser l'email configuré dans les variables d'environnement
       to: user.email,
       subject: 'Réinitialisation de votre mot de passe',
       text: `Bonjour ${cleanedFirstName} ${cleanedSurname}, Voici le lien de réinitialisation de votre mot de passe : ${resetLink}`,
-      html: `
+      html: ` 
         <p>Bonjour ${cleanedFirstName} ${cleanedSurname},</p>
         <p>Voici le lien pour réinitialiser votre mot de passe :</p>
-        <a href="${resetLink}">Cliquez ici pour réinitialiser votre mot de passe</a>
+        <a href="${resetLink}">Cliquez ici pour réinitialiser votre mot de passe</a> 
         <p>Ce lien expirera dans 1 heure.</p>
       `,
     };

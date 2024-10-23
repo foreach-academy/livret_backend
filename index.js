@@ -10,7 +10,7 @@ app.use(cors());
 // Routes
 const roleRouter = require('./Routes/roleRoute')
 const userRouter = require('./Routes/userRoute')
-const authenticateRouter = require('./routes/authenticateRoute')
+const authenticateRouter = require('./Routes/authenticateRoute')
 const moduleRouter = require('./Routes/moduleRoute')
 const formationRouter = require('./Routes/formationRoute')
 const formation_moduleRouter = require('./Routes/formation_moduleRoute')

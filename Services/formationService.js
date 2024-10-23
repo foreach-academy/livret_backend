@@ -20,7 +20,7 @@ class FormationServ {
             }]
         });
     }
-    
+    // récuperer l'évaluation d'un étudiant par son module 
     async getStudentEvaluationsByModule(studentId, moduleId) {
         const studentWithEvaluation = await User.findOne({
             where: { id: studentId },
@@ -61,26 +61,7 @@ class FormationServ {
         return formationWithStudents;
     }
 
-    async getStudentEvaluationsByModule(studentId, moduleId) {
-        const studentWithEvaluation = await User.findOne({
-            where: { id: studentId },
-            include: [{
-                model: Evaluation,
-                as: 'evaluation',
-                where: { module_id: moduleId },
-                required: false,
-                include: [{
-                    model: EvaluationResultat,
-                    as: 'resultat',
-                    attributes: ['name'],
-                }]
-            }]
-        });
-        return studentWithEvaluation;
-    }
-    
-    
-    
+    // récupérer un module par l'ID d'une formation
     async getModulesByFormationId(formationId) {
         return await Formation.findByPk(formationId, {
             include: [{

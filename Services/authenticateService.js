@@ -6,6 +6,7 @@ const xss = require('xss'); // Importer la bibliothèque xss
 
 const getUserByEmail = async (email) => {
     try {
+        // Trouver un utilisateur par son email
         const user = await User.findOne({
             where: { email: email },
             include: [{
@@ -21,6 +22,7 @@ const getUserByEmail = async (email) => {
     }
 };
 
+// créer un token
 const createToken = (user) => {
     const userPayload = {
         id: user.id,

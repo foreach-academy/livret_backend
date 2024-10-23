@@ -7,16 +7,20 @@ const ApprenantsFormation = require('../Models/apprenants_formations');
 const Formation = require('../Models/formation');
 
 class EvaluationServ{
+
+    // récuperer tout les évaluation
     async getAllEvaluation(){
         return await Evaluation.findAll({include:[Module, User, {
             model: EvaluationType, as: 'evaluationType'}
         ]});
     }
 
+    // Ajouter une évaluation
     async addEvaluation (evaluation) {
         return await Evaluation.create(evaluation);
     }
 
+    // Modifier une évaluation
     async editEvaluation (evaluationId, evaluation) {
         return await Evaluation.update(evaluation, {
             where : {

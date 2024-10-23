@@ -19,7 +19,7 @@ class Formation_ModuleServ {
     // Ajouter un nouveau module de formation
     async addFormationModule(formationModuleData) {
         try {
-            // Validation des données d'entrée
+            // Validation des données d'entrée pour éviter les attaques XSS
             if (!formationModuleData.formation_id || !formationModuleData.module_id) {
                 throw new Error('Les champs formation_id et module_id sont requis');
             }
@@ -38,7 +38,7 @@ class Formation_ModuleServ {
     // Mettre à jour un module de formation
     async updateFormationModule(formationModuleId, formationModuleData) {
         try {
-            // Validation des données d'entrée
+            // Validation des données d'entrée pour éviter les attaques XSS
             if (!formationModuleData.formation_id && !formationModuleData.module_id) {
                 throw new Error('Au moins un champ doit être fourni pour la mise à jour');
             }

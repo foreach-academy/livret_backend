@@ -4,39 +4,6 @@ const bcrypt = require('bcrypt');
 const config = require('../config/config.js');
 const xss = require('xss');
 
-// Fonction d'enregistrement des utilisateurs
-// const register = async (req, res) => {
-//     try {
-//         const { email, password, promo, role_id, company, prenom, surname } = req.body;
-
-//         // Validation des données d'entrée
-//         if (!email || !password || !promo || !role_id || !company || !prenom || !surname) {
-//             return res.status(400).json({ error: "Tous les champs sont requis" });
-//         }
-
-//         // Nettoyage des données pour éviter les attaques XSS
-//         const data = {
-//             first_name: xss(prenom),
-//             surname: xss(surname),
-//             promo: xss(promo),
-//             email: xss(email),
-//             password: xss(password),
-//             created_at: new Date(),
-//             updated_at: new Date(),
-//             company: xss(company),
-//             role_id: xss(role_id) // Assurez-vous que role_id est un entier valide dans le modèle
-//         };
-
-//         // Créer l'utilisateur
-//         const user = await User.create(data);
-//         res.status(201).json({ message: "Inscription réussie", user });
-
-//     } catch (error) {
-//         console.error("Erreur lors de l'inscription:", error);
-//         res.status(401).json({ error: "L'inscription a échoué" });
-//     }
-// };
-
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
