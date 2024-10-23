@@ -12,15 +12,6 @@ class ModuleControl {
         }
     }
 
-    // async getModulesByFormateurId (req, res) {
-    //     try {
-    //         const modules = await ModuleService.getModulesByFormateurId(req.params.formateurId);
-    //         res.json(modules);
-    //     } catch (error) {
-    //         res.status(500).json({error: "An error occured while getting modules for this teacher"})
-    //     }
-    // }
-
     async getModuleById(req, res){
         try{
             const module = await ModuleService.getModuleById(req.params.moduleId)

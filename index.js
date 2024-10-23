@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+
+//dependance pour fichier .env
 require('dotenv').config();
 
 app.use(express.json());
@@ -17,9 +19,9 @@ const formation_moduleRouter = require('./Routes/formation_moduleRoute')
 const evaluationRouter = require('./Routes/evaluationRoute')
 const evaluationTypeRouter = require('./Routes/evaluation_typeRoute')
 const evaluationResultatsRouter = require('./Routes/evaluationResultatRoute')
-// const markRouter = require('./Routes/markRoute')
 const emailRouter = require('./Routes/EmailRoute')
 
+// header pour le compte a rebours sur le front-end
 app.use(cors({
     exposedHeaders: ['Retry-After'],  // Autorise Axios à lire cet en-tête
 }));
@@ -28,12 +30,13 @@ app.use(cors({
 // importer les relations
 require('./Models/relations'); 
 
-
+// Erreur detaillé sur postman
 app.use((err, req, res, next) => {
     console.error('Erreur détaillée :', err); // Affiche l'erreur dans la console
     res.status(500).send('Something broke!');
 }); 
 
+// route principal
 app.use("/users", userRouter);
 app.use("/role", roleRouter);
 app.use("/authenticate", authenticateRouter);

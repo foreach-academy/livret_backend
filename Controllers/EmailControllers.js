@@ -5,6 +5,7 @@ const EmailsServices = require('../Services/EmailsServices'); // Importer l'inst
 const xss = require('xss');
 
 class emailController {
+    
     // Contrôleur pour envoyer le lien de réinitialisation du mot de passe
     async requestPasswordReset(req, res) {
         try {
