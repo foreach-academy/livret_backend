@@ -8,8 +8,8 @@ const xss = require('xss'); // Importer la bibliothèque xss
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.user_email, // Ton adresse Gmail
-    pass: process.env.user_password, // Le mot de passe d'application généré par Google
+    user: process.env.user_email, // Ton adresse Gmail du fichier.env
+    pass: process.env.user_password, // Le mot de passe d'application généré par Google du fichier.env
   },
 });
 
@@ -19,7 +19,7 @@ class EmailsServices {
     const cleanedFirstName = xss(user.first_name); // Nettoyer le prénom
     const cleanedSurname = xss(user.surname); // Nettoyer le nom de famille
     const mailOptions = {
-      from: process.env.user_email, // Utiliser l'email configuré dans les variables d'environnement
+      from: process.env.user_email, // Utiliser l'email configuré dans les variables d'environnement(fichier.env)
       to: user.email, // L'adresse email du destinataire
       subject: 'Bienvenue sur notre plateforme!', // Sujet de l'email
       text: `Bonjour ${cleanedFirstName} ${cleanedSurname}, bienvenue sur notre plateforme!`, // Texte brut de l'email
@@ -58,7 +58,7 @@ class EmailsServices {
 
     const resetLink = `http://127.0.0.1:3000/reset/password?token=${resetToken}`; // stocker le lien de la page reset mot de passe qui se situe dans le front
     const mailOptions = {
-      from: process.env.user_email, // Utiliser l'email configuré dans les variables d'environnement
+      from: process.env.user_email, // Utiliser l'email configuré dans les variables d'environnement(fichier.env)
       to: user.email,
       subject: 'Réinitialisation de votre mot de passe',
       text: `Bonjour ${cleanedFirstName} ${cleanedSurname}, Voici le lien de réinitialisation de votre mot de passe : ${resetLink}`,
