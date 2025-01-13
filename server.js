@@ -1,5 +1,7 @@
-const app = require("./index");
+import app from './index.js';
 
-app.listen(3006, () =>{
-    console.log("votre serveur est lancée sur http://127.0.0.1:3006");
-})
+app.listen(process.env.API_PORT || 3005, () => {
+    console.log(
+        `L'API est lancé sur le port ${process.env.API_PORT}`
+    );
+});

@@ -1,4 +1,4 @@
-const rateLimit = require('express-rate-limit');
+import rateLimit from 'express-rate-limit';
 
 // Fonction utilitaire pour formater le temps en minutes et secondes
 const formatTime = (seconds) => {
@@ -31,4 +31,4 @@ const BruteForceSecurity = (options = {}) => {
     });
 };
 
-module.exports = { BruteForceSecurity };
+export default BruteForceSecurity ;

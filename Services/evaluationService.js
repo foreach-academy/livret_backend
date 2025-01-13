@@ -1,12 +1,9 @@
-const Evaluation = require('../Models/evaluation');
-const EvaluationResultat = require('../Models/evaluation_resultat');
-const EvaluationType = require('../Models/evaluation_type');
-const Module = require('../Models/module');
-const User = require('../Models/user');
-const ApprenantsFormation = require('../Models/apprenants_formations');
-const Formation = require('../Models/formation');
+import Evaluation from '../models/evaluation.js';
+import EvaluationType from '../models/evaluationType.js';
+import Module from '../models/module.js';
+import User from '../models/user.js';
 
-class EvaluationServ{
+class EvaluationService{
 
     // récuperer tout les évaluation
     async getAllEvaluation(){
@@ -31,4 +28,4 @@ class EvaluationServ{
 
 };
 
-module.exports = new EvaluationServ();
+export default new EvaluationService();

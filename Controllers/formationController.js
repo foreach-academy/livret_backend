@@ -1,10 +1,10 @@
-const FormationServ = require('../Services/formationService');
-const xss = require('xss');
+import FormationService from '../services/formationService.js';
+import xss from 'xss';
 
-class FormationControl {
+class FormationController {
     async getAllFormation(req, res) {
         try {
-            const formations = await FormationServ.getAllFormation();
+            const formations = await FormationService.getAllFormation();
             res.json(formations);
         } catch (error) {
             console.error('Erreur lors de la récupération de toutes les formations:', error);
@@ -19,7 +19,7 @@ class FormationControl {
             const sanitizedFormationId = xss(formationId);
             const sanitizedModuleId = xss(moduleId);
 
-            const students = await FormationServ.getStudentsEvaluationsByFormationAndModule(sanitizedFormationId, sanitizedModuleId);
+            const students = await FormationService.getStudentsEvaluationsByFormationAndModule(sanitizedFormationId, sanitizedModuleId);
             res.json(students);
         } catch (error) {
             console.error('Error while getting students evaluations:', error); 
@@ -30,7 +30,7 @@ class FormationControl {
     async getStudentEvaluationsByModule(req, res) {
         try {
             const { studentId, moduleId } = req.params; 
-            const evaluation = await FormationServ.getStudentEvaluationsByModule(studentId, moduleId);
+            const evaluation = await FormationService.getStudentEvaluationsByModule(studentId, moduleId);
             res.json(evaluation);
         } catch (error) {
             console.error('Error while getting students evaluations:', error); 
@@ -54,7 +54,7 @@ class FormationControl {
                 commentary: req.body.commentary ? xss(req.body.commentary) : null, // Optional field
             };
 
-            const formation = await FormationServ.addFormation(sanitizedData);
+            const formation = await FormationService.addFormation(sanitizedData);
             res.status(201).json(formation); // Retourner un statut 201 pour la création réussie
         } catch (error) {
             console.error('Erreur lors de l\'ajout d\'une formation:', error);
@@ -67,7 +67,7 @@ class FormationControl {
     async getStudentEvaluationsByModule(req, res) {
         try {
             const { studentId, moduleId } = req.params; 
-            const evaluation = await FormationServ.getStudentEvaluationsByModule(studentId, moduleId);
+            const evaluation = await FormationService.getStudentEvaluationsByModule(studentId, moduleId);
             res.json(evaluation);
         } catch (error) {
             console.error('Error while getting students evaluations:', error); 
@@ -75,10 +75,9 @@ class FormationControl {
         }
     }
 
-
     async addFormation(req, res){
         try{
-             const formation = await FormationServ.addFormation(req.body)
+             const formation = await FormationService.addFormation(req.body)
              res.json(formation)
         }catch(error){
             res.status(500).json({error: "An error occured while adding formation"})
@@ -88,7 +87,7 @@ class FormationControl {
     async getModulesByFormationId(req, res) {
         try {
             const sanitizedFormationId = xss(req.params.formationId); // Nettoyage de l'ID de formation
-            const modules = await FormationServ.getModulesByFormationId(sanitizedFormationId);
+            const modules = await FormationService.getModulesByFormationId(sanitizedFormationId);
             if (!modules) {
                 return res.status(404).json({ error: 'Modules non trouvés pour cette formation.' });
             }
@@ -102,7 +101,7 @@ class FormationControl {
     async getStudentEvaluationsByModule(req, res) {
         try {
             const { studentId, moduleId } = req.params; 
-            const evaluation = await FormationServ.getStudentEvaluationsByModule(studentId, moduleId);
+            const evaluation = await FormationService.getStudentEvaluationsByModule(studentId, moduleId);
             res.json(evaluation);
         } catch (error) {
             console.error('Error while getting students evaluations:', error); 
@@ -115,7 +114,7 @@ class FormationControl {
             const sanitizedFormationId = xss(req.params.formationId); // Nettoyage de l'ID de formation
             const sanitizedFormateurId = xss(req.params.formateurId); // Nettoyage de l'ID de formateur
 
-            const modules = await FormationServ.getModulesByFormationIdAndFormateurId(sanitizedFormationId, sanitizedFormateurId);
+            const modules = await FormationService.getModulesByFormationIdAndFormateurId(sanitizedFormationId, sanitizedFormateurId);
             if (!modules) {
                 return res.status(404).json({ error: 'Modules non trouvés pour cette formation et cet enseignant.' });
             }
@@ -127,4 +126,4 @@ class FormationControl {
     }
 }
 
-module.exports = new FormationControl();
+export default new FormationController();

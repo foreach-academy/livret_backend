@@ -1,11 +1,8 @@
-// /controllers/userController.js
-
-const userService = require('../Services/userService');
-const EmailsServices = require("../Services/EmailsServices");
-const bcrypt = require('bcrypt');
-const User = require('../Models/user');
-const xss = require('xss'); // Assurez-vous d'installer cette bibliothèque avec npm
-const { utcToZonedTime } = require('date-fns-tz');
+import userService from '../services/userService.js';
+import EmailsServices from "../services/emailServices.js";
+import bcrypt from 'bcrypt';
+import User from '../models/user.js';
+import xss from 'xss'; // Assurez-vous d'installer cette bibliothèque avec npm
 
 class UserController {
     // Récupérer tous les utilisateurs
@@ -168,7 +165,6 @@ class UserController {
         }
     }
 
-
     // Supprimer un utilisateur
     async deleteUser(req, res) {
         try {
@@ -185,4 +181,4 @@ class UserController {
     }
 }
 
-module.exports = new UserController();
+export default new UserController();

@@ -1,9 +1,9 @@
-const Formation = require('../Models/formation');
-const Module = require('../Models/module');
-const User = require('../Models/user');
-const Evaluation = require('../Models/evaluation');
-const EvaluationResultat = require('../Models/evaluation_resultat');
-const xss = require('xss');
+import Formation from '../models/formation.js';
+import Module from '../models/module.js';
+import User from '../models/user.js';
+import Evaluation from '../models/evaluation.js';
+import EvaluationResultat from '../models/evaluationResultat.js';
+import xss from 'xss';
 
 class FormationServ {
     // Récupérer toutes les formations
@@ -108,4 +108,4 @@ class FormationServ {
     }
 }
 
-module.exports = new FormationServ();
+export default new FormationServ();

@@ -1,9 +1,9 @@
-const EvaluationServ = require('../Services/evaluationService');
+import EvaluationService from '../services/evaluationService.js';
 
 class EvaluationControl{
     async getAllEvaluation(req, res){
         try{
-            const evaluation = await EvaluationServ.getAllEvaluation()
+            const evaluation = await EvaluationService.getAllEvaluation()
             res.json(evaluation)
         }catch(error){
             res.status(500).json({error: 'A error ocuured while getting all evaluations'});
@@ -12,7 +12,7 @@ class EvaluationControl{
 
     async addEvaluation(req, res){
         try{
-            const evaluation = await EvaluationServ.addEvaluation(req.body)
+            const evaluation = await EvaluationService.addEvaluation(req.body)
             res.json(evaluation)
         }catch(error){
             res.status(500).json({error: 'An error occured while adding this evaluation'});
@@ -21,7 +21,7 @@ class EvaluationControl{
 
     async editEvaluation(req, res) {
         try {
-            const evaluation = await EvaluationServ.editEvaluation(req.params.evaluationId, req.body);
+            const evaluation = await EvaluationService.editEvaluation(req.params.evaluationId, req.body);
             res.json(evaluation);
         } catch (error) {
             res.status(500).json({error: 'An error occured while editing this evaluation'});
@@ -30,4 +30,4 @@ class EvaluationControl{
 
 };
 
-module.exports = new EvaluationControl();
+export default new EvaluationControl();

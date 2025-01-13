@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
 
-const userController = require('../Controllers/userController');
-const authGuard = require('../middleware/authGuard');
+import userController from '../controllers/userController.js';
+import authGuard from '../middleware/authGuard.js';
 
 router.get('/', authGuard, (req, res) => userController.getAllUser(req,res));
 router.get('/:id', (req, res) => userController.getUserById(req,res));
@@ -14,4 +14,4 @@ router.delete('/:id', authGuard, (req, res) => userController.deleteUser(req, re
 
 
 
-module.exports = router;
+export default router;

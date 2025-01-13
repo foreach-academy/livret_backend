@@ -1,8 +1,7 @@
 // /services/emailService.js
-
-const nodemailer = require('nodemailer');
-const crypto = require("crypto");
-const xss = require('xss'); // Importer la bibliothèque xss
+import nodemailer from 'nodemailer';
+import crypto from "crypto";
+import xss from 'xss'; // Importer la bibliothèque xss
 
 // Configurer le transporteur avec le service Gmail et ton mot de passe d'application
 const transporter = nodemailer.createTransport({
@@ -80,4 +79,4 @@ class EmailsServices {
   }
 }
 
-module.exports = new EmailsServices();
+export default new EmailsServices();

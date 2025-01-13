@@ -1,10 +1,8 @@
 
-
-const express = require('express');
-const EmailController = require('../Controllers/EmailControllers'); 
-const {BruteForceSecurity} = require('../middleware/BruteForceSecurity');
-
-const router = express.Router();
+import EmailController from '../controllers/emailControllers.js'; 
+import BruteForceSecurity from '../middleware/BruteForceSecurity.js';
+import { Router } from 'express';
+const router = Router();
 
 // Limiteur pour la réinitialisation de mot de passe
 const passwordResetLimiter = BruteForceSecurity({
@@ -16,4 +14,4 @@ const passwordResetLimiter = BruteForceSecurity({
 // Route pour demander la réinitialisation du mot de passe
 router.post('/request-password-reset',passwordResetLimiter, EmailController.requestPasswordReset.bind(EmailController));
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const EvaluationType = require('../Models/evaluation_type');
-const ModuleEvaluationType = require('../Models/module_evaluation_type');
+import EvaluationType from '../models/evaluationType.js';
+import ModuleEvaluationType from '../models/moduleEvaluationType.js';
 
-class EvaluationTypeServ{
+class EvaluationTypeService{
 
     // récuperer tout les type d'évaluation
     async getAllEvaluationType(){
@@ -44,4 +44,4 @@ class EvaluationTypeServ{
     }
 };
 
-module.exports = new EvaluationTypeServ();
+export default new EvaluationTypeService();

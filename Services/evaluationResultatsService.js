@@ -1,4 +1,4 @@
-const EvaluationResultat = require('../Models/evaluation_resultat')
+import EvaluationResultat from '../models/evaluationResultat.js'
 
 class EvaluationResultatsServices {
 
@@ -8,4 +8,4 @@ class EvaluationResultatsServices {
     }
 }
 
-module.exports = new EvaluationResultatsServices();
+export default new EvaluationResultatsServices();

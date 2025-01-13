@@ -1,5 +1,5 @@
-const roleService = require('../Services/roleService');
-const xss = require('xss'); // Assurez-vous d'installer cette bibliothèque avec npm
+import roleService from '../services/roleService.js';
+import xss from 'xss';
 
 class RoleController {
     async getAllRole(req, res) {
@@ -84,4 +84,4 @@ class RoleController {
     }
 }
 
-module.exports = new RoleController();
+export default new RoleController();

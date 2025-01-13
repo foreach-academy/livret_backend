@@ -1,13 +1,13 @@
-const {Model, DataTypes} = require('sequelize')
-const sequelize = require('../config/Sequelize')
-const Formation = require('./formation')
-const Module = require('./module')
+import { Model, DataTypes} from 'sequelize';
+import sequelize from '../config/Sequelize.js';
+import Formation from './formation.js';
+import Module from './module.js';
 
-class Formation_Module extends Model{
+class FormationModule extends Model{
 
 }
 
-Formation_Module.init({
+FormationModule.init({
     formation_id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -34,4 +34,4 @@ Formation_Module.init({
     timestamps: false
 });
 
-module.exports = Formation_Module;
+export default FormationModule;

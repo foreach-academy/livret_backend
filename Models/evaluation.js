@@ -1,6 +1,6 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require('../config/Sequelize');
-const EvaluationResultat = require('../Models/evaluation_resultat');
+import { Model, DataTypes } from "sequelize";
+import sequelize from '../config/Sequelize.js';
+import EvaluationResultat from './evaluationResultat.js';
 
 class Evaluation extends Model {}
 
@@ -53,4 +53,4 @@ Evaluation.init({
     timestamps: false
 });
 
-module.exports = Evaluation;
+export default Evaluation;

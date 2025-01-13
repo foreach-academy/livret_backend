@@ -1,5 +1,5 @@
-const Module = require("../Models/module");
-const User = require('../Models/user');
+import Module from "../models/module.js";
+import User from '../models/user.js';
 
 class ModuleService {
     // récuperer un module par son ID
@@ -13,4 +13,4 @@ class ModuleService {
     }
 }
 
-module.exports = new ModuleService();
+export default new ModuleService();

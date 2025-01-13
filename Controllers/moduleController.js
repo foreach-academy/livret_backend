@@ -1,5 +1,5 @@
-const ModuleService = require('../Services/moduleService');
-const xss = require('xss');
+import ModuleService from '../services/moduleService.js';
+import xss from 'xss';
 
 class ModuleControl {
     async getAllModule(req, res) {
@@ -32,4 +32,4 @@ class ModuleControl {
 
 };
 
-module.exports = new ModuleControl();
+export default new ModuleControl();

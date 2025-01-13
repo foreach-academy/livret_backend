@@ -1,4 +1,4 @@
-const EvaluationResultatsServices = require('../Services/evaluationResultatsService')
+import EvaluationResultatsServices from '../services/evaluationResultatsService.js'
 
 class EvaluationResultatsController {
     async getAllEvaluationResultats (req, res) {
@@ -11,4 +11,4 @@ class EvaluationResultatsController {
     }
 }
 
-module.exports = new EvaluationResultatsController();
+export default new EvaluationResultatsController();

@@ -1,6 +1,6 @@
-const Role = require('../Models/role');
-const xss = require('xss');
-const validator = require('validator');
+import Role from '../models/role.js';
+import xss from 'xss';
+import validator from 'validator';
 
 class RoleServices {
     // Récupérer tous les rôles
@@ -77,4 +77,4 @@ class RoleServices {
     }
 }
 
-module.exports = new RoleServices();
+export default new RoleServices();

@@ -1,9 +1,8 @@
-const { model } = require('../config/Sequelize');
-const User = require('../Models/user');
-const Role = require('../Models/role');
-const bcrypt = require('bcrypt');
-const xss = require('xss');
-const validator = require('validator');
+import User from '../models/user.js';
+import Role from '../models/role.js';
+import bcrypt from 'bcrypt';
+import xss from 'xss';
+import validator from 'validator';
 
 class UserServices {
     // Récupérer tous les utilisateurs
@@ -110,4 +109,4 @@ class UserServices {
     }
 }
 
-module.exports = new UserServices();
+export default new UserServices();

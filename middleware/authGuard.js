@@ -1,5 +1,4 @@
-const jwt = require('jsonwebtoken');
-const config = require('../config/config');
+import jwt from 'jsonwebtoken';
 
 const authGuard = (request, response, next) => {
     const authHeader = request.headers['authorization'];
@@ -16,7 +15,7 @@ const authGuard = (request, response, next) => {
     }
 
     // Vérification du token
-    jwt.verify(token, config.SECRET, (error, user) => {
+    jwt.verify(token, process.env.PASSWORD_SECRET, (error, user) => {
         if (error) {
             return response.status(401).json({ error: "Token invalide" });
         }
@@ -32,4 +31,4 @@ const authGuard = (request, response, next) => {
     });
 };
 
-module.exports = authGuard;
+export default authGuard;

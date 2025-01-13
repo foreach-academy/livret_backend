@@ -1,11 +1,11 @@
-const Formation_ModuleServ = require('../Services/formation_moduleService');
-const xss = require('xss');
+import FormationModuleService from '../services/formationModuleService.js';
+import xss from 'xss';
 
-class Formation_ModuleControl {
+class FormationModuleController {
     // Récupérer tous les modules de formation
     async getAllFormationModule(req, res) {
         try {
-            const formationModule = await Formation_ModuleServ.getAllFormationModule();
+            const formationModule = await FormationModuleService.getAllFormationModule();
             res.json(formationModule);
         } catch (error) {
             console.error('Erreur lors de la récupération de tous les modules de formation:', error);
@@ -16,7 +16,7 @@ class Formation_ModuleControl {
     // Récupérer un module de formation par son ID
     async getFormationModuleById(req, res) {
         try {
-            const formationModule = await Formation_ModuleServ.getFormationModuleById(req.params.id);
+            const formationModule = await FormationModuleService.getFormationModuleById(req.params.id);
             if (!formationModule) {
                 return res.status(404).json({ error: 'Module de formation non trouvé.' });
             }
@@ -41,7 +41,7 @@ class Formation_ModuleControl {
                 module_id: xss(req.body.module_id)
             };
 
-            const formationModule = await Formation_ModuleServ.addFormationModule(sanitizedData);
+            const formationModule = await FormationModuleService.addFormationModule(sanitizedData);
             res.status(201).json(formationModule); // Retourner un statut 201 pour une création réussie
         } catch (error) {
             console.error('Erreur lors de l\'ajout d\'un module de formation:', error);
@@ -50,4 +50,4 @@ class Formation_ModuleControl {
     }
 }
 
-module.exports = new Formation_ModuleControl();
+export default new FormationModuleController();

@@ -1,10 +1,10 @@
-const EvaluationControl = require('../Controllers/evaluationController');
-const express = require('express');
-const router = express.Router();
-const authGuard = require('../middleware/authGuard');
+import EvaluationController from '../controllers/evaluationController.js';
+import { Router } from 'express';
+const router = Router();
+import authGuard from '../middleware/authGuard.js';
 
-router.get('/', (req, res) => EvaluationControl.getAllEvaluation(req, res));
-router.post('/', (req, res) => EvaluationControl.addEvaluation(req, res));
-router.patch('/:evaluationId', authGuard, (req, res) => EvaluationControl.editEvaluation(req, res));
+router.get('/', (req, res) => EvaluationController.getAllEvaluation(req, res));
+router.post('/', (req, res) => EvaluationController.addEvaluation(req, res));
+router.patch('/:evaluationId', authGuard, (req, res) => EvaluationController.editEvaluation(req, res));
 
-module.exports = router;
+export default router;

@@ -1,15 +1,15 @@
-const Formation_Module = require('../Models/formation_module');
-const xss = require('xss');
+import FormationModule from '../models/formationModule.js';
+import xss from 'xss';
 
-class Formation_ModuleServ {
+class FormationModuleService {
     // Récupérer tous les modules de formation
     async getAllFormationModule() {
-        return await Formation_Module.findAll();
+        return await FormationModule.findAll();
     }
 
     // Récupérer un module de formation par ID
     async getFormationModuleById(formationModuleId) {
-        const formationModule = await Formation_Module.findByPk(formationModuleId);
+        const formationModule = await FormationModule.findByPk(formationModuleId);
         if (!formationModule) {
             throw new Error('Module de formation non trouvé');
         }
@@ -28,7 +28,7 @@ class Formation_ModuleServ {
             formationModuleData.formation_id = xss(formationModuleData.formation_id);
             formationModuleData.module_id = xss(formationModuleData.module_id);
 
-            return await Formation_Module.create(formationModuleData);
+            return await FormationModule.create(formationModuleData);
         } catch (error) {
             console.error("Erreur lors de l'ajout du module de formation:", error);
             throw error;
@@ -52,7 +52,7 @@ class Formation_ModuleServ {
             }
 
             // Trouver le module de formation par ID
-            const formationModule = await Formation_Module.findByPk(formationModuleId);
+            const formationModule = await FormationModule.findByPk(formationModuleId);
             if (!formationModule) {
                 throw new Error('Module de formation non trouvé');
             }
@@ -68,7 +68,7 @@ class Formation_ModuleServ {
 
     // Supprimer un module de formation
     async deleteFormationModule(formationModuleId) {
-        const result = await Formation_Module.destroy({
+        const result = await FormationModule.destroy({
             where: {
                 formation_id: formationModuleId // Suppression basée sur l'ID
             }
@@ -80,4 +80,4 @@ class Formation_ModuleServ {
     }
 }
 
-module.exports = new Formation_ModuleServ();
+export default new FormationModuleService();

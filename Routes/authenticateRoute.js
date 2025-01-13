@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const authenticateController = require('../Controllers/authenticateController');
-const {BruteForceSecurity} = require('../middleware/BruteForceSecurity')
+import { Router } from 'express';
+const router = Router();
+import authenticateController from '../controllers/authenticateController.js';
+import BruteForceSecurity from '../middleware/BruteForceSecurity.js';
 
 // Limiteur pour la connexion (login)
 const loginLimiter = BruteForceSecurity({
@@ -15,4 +15,4 @@ router.post('/login', loginLimiter, (req, res) =>  authenticateController.login(
 
 
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require('../config/Sequelize');
-const bcrypt = require('bcrypt');
-const Role = require("./role");
+import sequelize from '../config/Sequelize.js';
+import Role from "./role.js";
+import { Model, DataTypes } from "sequelize";
+import bcrypt from 'bcrypt';
 
 class User extends Model {
     async validateMdp(password) {
@@ -58,7 +58,7 @@ User.init({
         type: DataTypes.STRING(50),
         allowNull: false
     },
-    password:{
+    password: {
         type: DataTypes.STRING(200),
         // unique: true,
         allowNull: false
@@ -86,4 +86,4 @@ User.init({
     }
 });
 
-module.exports = User;
+export default User;
