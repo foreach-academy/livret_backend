@@ -10,7 +10,7 @@ Role.init({
         autoIncrement: true
     },
     name: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
         allowNull: false
     }
 }, {

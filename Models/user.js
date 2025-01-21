@@ -15,16 +15,16 @@ User.init({
         primaryKey: true,
         autoIncrement: true
     },
-    first_name: {
-        type: DataTypes.STRING(50),
+    lastname: {
+        type: DataTypes.STRING,
         allowNull: false
     },
-    surname: {
-        type: DataTypes.STRING(50),
+    firstname: {
+        type: DataTypes.STRING,
         allowNull: false
     },
     email: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true
     },
@@ -33,7 +33,7 @@ User.init({
         allowNull: true
     },
     promo: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     created_at: {
@@ -49,30 +49,23 @@ User.init({
     },
     role_id: {
         type: DataTypes.INTEGER,
-        references: {
-            model: "Role",
-            key: "id"
-        }
-    },
-    company: {
-        type: DataTypes.STRING(50),
-        allowNull: false
+        // references: {
+        //     model: Role,
+        //     key: "id"
+        // }
     },
     password: {
-        type: DataTypes.STRING(200),
-        // unique: true,
+        type: DataTypes.STRING,
         allowNull: false
     },
-    // Ajout des champs pour la réinitialisation de mot de passe
-    resetPasswordToken: {
+    reset_password_token: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: true // Ce champ est null tant qu'il n'y a pas de demande de réinitialisation
+        allowNull: true 
     },
-
-    resetPasswordExpires: {
+    reset_password_expires: {
         type: DataTypes.DATE,
-        allowNull: true // Ce champ est null tant qu'il n'y a pas de demande de réinitialisation
+        allowNull: true
     }
 }, {
     sequelize,
@@ -85,5 +78,7 @@ User.init({
         }
     }
 });
+
+User.belongsTo(Role, {foreignKey: 'role_id', as: 'role'})
 
 export default User;

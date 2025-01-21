@@ -2,9 +2,9 @@ import FormationService from '../services/formationService.js';
 import xss from 'xss';
 
 class FormationController {
-    async getAllFormation(req, res) {
+    async getAllFormations(req, res) {
         try {
-            const formations = await FormationService.getAllFormation();
+            const formations = await FormationService.getAllFormations();
             res.json(formations);
         } catch (error) {
             console.error('Erreur lors de la récupération de toutes les formations:', error);
@@ -12,46 +12,32 @@ class FormationController {
         }
     }
 
-    async getStudentsEvaluationsByFormationAndModule(req, res) {
-        try {
-            const { formationId, moduleId } = req.params; 
-            // Nettoyage des données pour éviter les attaques XSS
-            const sanitizedFormationId = xss(formationId);
-            const sanitizedModuleId = xss(moduleId);
+    async getFormationById(req, res) {
 
-            const students = await FormationService.getStudentsEvaluationsByFormationAndModule(sanitizedFormationId, sanitizedModuleId);
-            res.json(students);
+        const {formationId} = req.params
+
+        try {
+            const formations = await FormationService.getFormationById(formationId);
+            res.json(formations);
         } catch (error) {
-            console.error('Error while getting students evaluations:', error); 
-            res.status(500).json({ error: "An error occurred while getting formation", details: error.message }); 
+            console.error('Erreur lors de la récupération de toutes les formations:', error);
+            res.status(500).json({ error: 'Une erreur est survenue lors de la récupération des formations.' });
         }
     }
-
-    async getStudentEvaluationsByModule(req, res) {
-        try {
-            const { studentId, moduleId } = req.params; 
-            const evaluation = await FormationService.getStudentEvaluationsByModule(studentId, moduleId);
-            res.json(evaluation);
-        } catch (error) {
-            console.error('Error while getting students evaluations:', error); 
-            res.status(500).json({ error: "An error occurred while getting this evaluation", details: error.message }); 
-        }
-    }
-
 
     async addFormation(req, res) {
+
+        const {title, commentary} = req.body
+        
         try {
             // Validation des données d'entrée
-            if (!req.body.title || !req.body.start_date || !req.body.end_date) {
-                return res.status(400).json({ error: 'Les champs title, start_date et end_date sont requis.' });
+            if (!title) {
+                throw new Error('Un nom de formation est requis');
             }
 
-            // Nettoyage des données pour éviter les attaques XSS
             const sanitizedData = {
-                title: xss(req.body.title),
-                start_date: xss(req.body.start_date),
-                end_date: xss(req.body.end_date),
-                commentary: req.body.commentary ? xss(req.body.commentary) : null, // Optional field
+                title: xss(title),
+                commentary: xss(commentary)
             };
 
             const formation = await FormationService.addFormation(sanitizedData);
@@ -61,67 +47,6 @@ class FormationController {
             res.status(500).json({ error: "Une erreur est survenue lors de l'ajout de la formation." });
             console.error('Error while getting students evaluations:', error); 
             res.status(500).json({ error: "An error occurred while getting formation", details: error.message }); 
-        }
-    }
-
-    async getStudentEvaluationsByModule(req, res) {
-        try {
-            const { studentId, moduleId } = req.params; 
-            const evaluation = await FormationService.getStudentEvaluationsByModule(studentId, moduleId);
-            res.json(evaluation);
-        } catch (error) {
-            console.error('Error while getting students evaluations:', error); 
-            res.status(500).json({ error: "An error occurred while getting this evaluation", details: error.message }); 
-        }
-    }
-
-    async addFormation(req, res){
-        try{
-             const formation = await FormationService.addFormation(req.body)
-             res.json(formation)
-        }catch(error){
-            res.status(500).json({error: "An error occured while adding formation"})
-        }
-    }
-
-    async getModulesByFormationId(req, res) {
-        try {
-            const sanitizedFormationId = xss(req.params.formationId); // Nettoyage de l'ID de formation
-            const modules = await FormationService.getModulesByFormationId(sanitizedFormationId);
-            if (!modules) {
-                return res.status(404).json({ error: 'Modules non trouvés pour cette formation.' });
-            }
-            res.json(modules);
-        } catch (error) {
-            console.error(`Erreur lors de la récupération des modules pour la formation ID ${req.params.formationId}:`, error);
-            res.status(500).json({ error: "Une erreur est survenue lors de la récupération des modules pour cette formation." });
-        }
-    }
-
-    async getStudentEvaluationsByModule(req, res) {
-        try {
-            const { studentId, moduleId } = req.params; 
-            const evaluation = await FormationService.getStudentEvaluationsByModule(studentId, moduleId);
-            res.json(evaluation);
-        } catch (error) {
-            console.error('Error while getting students evaluations:', error); 
-            res.status(500).json({ error: "An error occurred while getting this evaluation", details: error.message }); 
-        }
-    }
-
-    async getModulesByFormationIdAndFormateurId(req, res) {
-        try {
-            const sanitizedFormationId = xss(req.params.formationId); // Nettoyage de l'ID de formation
-            const sanitizedFormateurId = xss(req.params.formateurId); // Nettoyage de l'ID de formateur
-
-            const modules = await FormationService.getModulesByFormationIdAndFormateurId(sanitizedFormationId, sanitizedFormateurId);
-            if (!modules) {
-                return res.status(404).json({ error: 'Modules non trouvés pour cette formation et cet enseignant.' });
-            }
-            res.json(modules);
-        } catch (error) {
-            console.error(`Erreur lors de la récupération des modules pour la formation ID ${req.params.formationId} et l'enseignant ID ${req.params.formateurId}:`, error);
-            res.status(500).json({ error: "Une erreur est survenue lors de la récupération des modules pour cette formation et cet enseignant." });
         }
     }
 }

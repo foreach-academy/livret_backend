@@ -6,9 +6,9 @@ import xss from 'xss'; // Assurez-vous d'installer cette bibliothèque avec npm
 
 class UserController {
     // Récupérer tous les utilisateurs
-    async getAllUser(req, res) {
+    async getAllUsers(req, res) {
         try {
-            const users = await userService.getAllUser();
+            const users = await userService.getAllUsers();
             res.json(users);
         } catch (error) {
             console.error('Erreur lors de la récupération des utilisateurs:', error);
@@ -31,27 +31,13 @@ class UserController {
         }
     }
 
-    // Récupérer les utilisateurs par rôle
-    async getUserByRole(req, res) {
-        try {
-            const roleName = xss(req.params.roleName); // Nettoyage du nom de rôle
-            const users = await userService.getUsersByRole(roleName);
-            res.json(users);
-        } catch (error) {
-            console.error('Erreur lors de la récupération des utilisateurs par rôle:', error);
-            res.status(500).json({ error: "Une erreur s'est produite lors de la récupération des utilisateurs par rôle" });
-        }
-    }
-
     // Ajouter un nouvel utilisateur
     async addUser(req, res) {
         try {
-            // Validation des données d'entrée
-            const { first_name, surname, email, birthdate, promo, role_id, company, password } = req.body;
+            const { firstname, lastname, email, birthdate, promo, role_id, password } = req.body;
 
-            // Vérifiez que tous les champs requis sont présents
-            if (!first_name || !surname || !email || !promo || !company || !password) {
-                return res.status(400).json({ error: "Les champs 'first_name', 'surname', 'email', 'promo', 'company' et 'password' sont requis." });
+            if (!firstname || !lastname || !email || !promo || !password) {
+                return res.status(400).json({ error: "Les champs 'firstname', 'lastname', 'email', 'promo', et 'password' sont requis." });
             }
 
             // Validation d'email
@@ -62,30 +48,28 @@ class UserController {
 
             // Nettoyage des données pour éviter les attaques XSS
             const sanitizedData = {
-                first_name: xss(first_name),
-                surname: xss(surname),
+                firstname: xss(firstname),
+                lastname: xss(lastname),
                 email: xss(email),
-                birthdate: birthdate || null, // Laisser la date telle quelle
+                birthdate: birthdate || null,
                 promo: xss(promo),
-                company: xss(company),
                 password: password, // Le mot de passe sera hashé avant d'être stocké
-                role_id: role_id || null // Si le rôle n'est pas fourni, on l'initialise à null
+                role_id: role_id
             };
 
-            // Créer l'utilisateur via le service
             const user = await userService.addUser(sanitizedData);
 
             // Envoi d'un e-mail de bienvenue si l'utilisateur a été créé
-            if (user) {
-                try {
-                    await EmailsServices.sendWelcomeEmail(user);
-                    console.log('Email envoyé à :', user.email);
-                } catch (emailError) {
-                    console.error('Erreur lors de l\'envoi de l\'email:', emailError);
-                }
-            }
+            // if (user) {
+            //     try {
+            //         await EmailsServices.sendWelcomeEmail(user);
+            //         console.log('Email envoyé à :', user.email);
+            //     } catch (emailError) {
+            //         console.error('Erreur lors de l\'envoi de l\'email:', emailError);
+            //     }
+            // }
 
-            res.status(201).json(user); // Retourner un statut 201 pour la création réussie
+            res.status(201).json(user);
         } catch (error) {
             console.error('Erreur lors de l\'ajout de l\'utilisateur:', error);
             res.status(500).json({ error: "Une erreur s'est produite lors de l'ajout de l'utilisateur" });
@@ -95,9 +79,22 @@ class UserController {
     // Mettre à jour un utilisateur par ID
     async updateUser(req, res) {
         try {
-            const userId = xss(req.params.id); // Nettoyage de l'ID utilisateur
-            const sanitizedData = req.body; // Optionnel : Vous pouvez nettoyer les données du corps ici
+            const userId = xss(req.params.id);
+            const { firstname, lastname, email, birthdate, promo, role_id, company, password } = req.body;
+
+            const sanitizedData = {}
+
+            if (firstname) sanitizedData.firstname = xss(firstname);
+            if (lastname) sanitizedData.lastname = xss(lastname);
+            if (birthdate) sanitizedData.birthdate = xss(birthdate)
+            if (email) sanitizedData.email = xss(email);
+            if (promo) sanitizedData.promo = xss(promo);
+            if (company) sanitizedData.company = xss(company);
+            if (role_id) sanitizedData.role_id = xss(role_id)
+            if (password) sanitizedData.password = xss(password)
+
             const user = await userService.updateUser(userId, sanitizedData);
+
             if (!user) {
                 return res.status(404).json({ error: "Utilisateur non trouvé" });
             }
@@ -108,24 +105,22 @@ class UserController {
         }
     }
 
-   // Mettre à jour un utilisateur via le token de réinitialisation de mot de passe
+    // Mettre à jour un utilisateur via le token de réinitialisation de mot de passe
     async updateUserByToken(req, res) {
         const { password, token } = req.body;
 
         try {
-            // Validation des données d'entrée
+
             if (!password || !token) {
                 return res.status(400).json({ message: "Le mot de passe et le token sont requis." });
             }
 
-            // Rechercher l'utilisateur via le token
             const user = await User.findOne({ where: { resetPasswordToken: token } });
 
             if (!user) {
                 return res.status(400).json({ message: "Token invalide ou utilisateur introuvable." });
             }
 
-            // Obtenir la date actuelle en UTC
             const now = new Date(); // Cette date est en UTC
 
             // Obtenir l'heure locale de Paris (UTC +1)
@@ -144,20 +139,13 @@ class UserController {
                 return res.status(400).json({ message: "Token expiré." });
             }
 
-            // Hash du nouveau mot de passe
             const hashedPassword = await bcrypt.hash(password, 10);
-
-            // Mise à jour du mot de passe de l'utilisateur
             user.password = hashedPassword;
-
-            // Supprimer le token et son expiration pour qu'ils ne puissent pas être réutilisés
             user.resetPasswordToken = null;
             user.resetPasswordExpires = null;
 
-            // Sauvegarder les changements dans la base de données
             await user.save();
 
-            // Envoyer une réponse de succès
             res.status(200).json({ message: "Mot de passe mis à jour avec succès." });
         } catch (error) {
             console.error('Erreur lors de la mise à jour du mot de passe:', error);
@@ -167,9 +155,13 @@ class UserController {
 
     // Supprimer un utilisateur
     async deleteUser(req, res) {
+
+        const {id} = req.params
+
         try {
-            const userId = xss(req.params.id); // Nettoyage de l'ID utilisateur
+            const userId = xss(id);
             const user = await userService.deleteUser(userId);
+
             if (!user) {
                 return res.status(404).json({ error: "Utilisateur non trouvé" });
             }

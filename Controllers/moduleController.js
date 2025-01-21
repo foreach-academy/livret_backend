@@ -2,9 +2,9 @@ import ModuleService from '../services/moduleService.js';
 import xss from 'xss';
 
 class ModuleControl {
-    async getAllModule(req, res) {
+    async getAllModules(req, res) {
         try {
-            const modules = await ModuleService.getAllModule();
+            const modules = await ModuleService.getAllModules();
             res.json(modules);
         } catch (error) {
             console.error('Erreur lors de la récupération de tous les modules:', error);
@@ -13,20 +13,14 @@ class ModuleControl {
     }
 
     async getModuleById(req, res){
+
+        const {moduleId} = req.params
+
         try{
-            const module = await ModuleService.getModuleById(req.params.moduleId)
-            res.json(module);
+            const module = await ModuleService.getModuleById(moduleId)
+            res.status(200).json(module);
         }catch(error){
             res.status(500).json({error: " An error occured while getting module"});
-        }
-    }
-
-    async addModule(req, res){
-        try{
-            const module = await ModuleService.addModule(req.body)
-            res.json(module)
-        }catch(error){
-            res.status(500).json({error:" An error occured while adding module"})
         }
     }
 

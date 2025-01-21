@@ -7,19 +7,14 @@ class emailController {
     // Contrôleur pour envoyer le lien de réinitialisation du mot de passe
     async requestPasswordReset(req, res) {
         try {
-            console.log('Requête reçue pour réinitialisation de mot de passe:', req.body); // Ajouté pour le débogage
-
             const { email } = req.body;
 
-            // Validation des données d'entrée
             if (!email) {
                 return res.status(400).json({ error: 'Email est requis.' });
             }
 
-            // Nettoyage de l'email pour éviter les attaques XSS
             const sanitizedEmail = xss(email);
 
-            // Trouver l'utilisateur par email
             const user = await User.findOne({ where: { email: sanitizedEmail } });
             if (!user) {
                 return res.status(404).json({ message: 'Utilisateur non trouvé.' });

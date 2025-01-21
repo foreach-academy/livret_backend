@@ -15,15 +15,15 @@ const transporter = nodemailer.createTransport({
 class EmailsServices {
   // Fonction pour envoyer un email de bienvenue
   async sendWelcomeEmail(user) {
-    const cleanedFirstName = xss(user.first_name); // Nettoyer le prénom
-    const cleanedSurname = xss(user.surname); // Nettoyer le nom de famille
+    const firstname = xss(user.first_name); // Nettoyer le prénom
+    const lastname = xss(user.surname); // Nettoyer le nom de famille
     const mailOptions = {
       from: process.env.user_email, // Utiliser l'email configuré dans les variables d'environnement(fichier.env)
       to: user.email, // L'adresse email du destinataire
       subject: 'Bienvenue sur notre plateforme!', // Sujet de l'email
-      text: `Bonjour ${cleanedFirstName} ${cleanedSurname}, bienvenue sur notre plateforme!`, // Texte brut de l'email
+      text: `Bonjour ${firstname} ${lastname}, bienvenue sur notre plateforme!`, // Texte brut de l'email
       html: `
-        <p>Bonjour ${cleanedFirstName} ${cleanedSurname},</p>
+        <p>Bonjour ${firstname} ${lastname},</p>
         <p>Bienvenue sur notre plateforme. Nous sommes ravis de vous compter parmi nous !</p>`, // Contenu HTML de l'email
     };
 
@@ -43,12 +43,11 @@ class EmailsServices {
 
   // Fonction pour envoyer l'email de réinitialisation de mot de passe
   async sendLinkEmail(user) {
-    const cleanedFirstName = xss(user.first_name); // Nettoyer le prénom
-    const cleanedSurname = xss(user.surname); // Nettoyer le nom de famille
-    const resetToken = this.generateResetToken(); // stocker le token génerer dans la const resetToken
 
-    // Stocker le token et la date d'expiration dans la base de données (ex : 1 heure de validité)
-    const tokenExpiration = new Date(Date.now() + 3600000); // +1 heure en UTC
+    const { firstname, lastname } = user
+    const resetToken = this.generateResetToken();
+
+    const tokenExpiration = new Date(Date.now() + 3600000);
     const franceTimezoneOffset = -new Date().getTimezoneOffset() * 60000; // Décalage horaire actuel pour la France
     const tokenExpirationInFrance = new Date(tokenExpiration.getTime() + franceTimezoneOffset); // date du token en france +1h, pour avoir 1h avant expiration
     user.resetPasswordExpires = tokenExpirationInFrance; // Stocker la date ajustée pour la France
@@ -60,9 +59,9 @@ class EmailsServices {
       from: process.env.user_email, // Utiliser l'email configuré dans les variables d'environnement(fichier.env)
       to: user.email,
       subject: 'Réinitialisation de votre mot de passe',
-      text: `Bonjour ${cleanedFirstName} ${cleanedSurname}, Voici le lien de réinitialisation de votre mot de passe : ${resetLink}`,
+      text: `Bonjour ${firstname} ${lastname}, Voici le lien de réinitialisation de votre mot de passe : ${resetLink}`,
       html: ` 
-        <p>Bonjour ${cleanedFirstName} ${cleanedSurname},</p>
+        <p>Bonjour ${firstname} ${lastname},</p>
         <p>Voici le lien pour réinitialiser votre mot de passe :</p>
         <a href="${resetLink}">Cliquez ici pour réinitialiser votre mot de passe</a> 
         <p>Ce lien expirera dans 1 heure.</p>

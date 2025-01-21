@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../config/Sequelize');
 
-class ResponsablesFormation extends Model {}
+class ResponsablesPromotion extends Model {}
 
-ResponsablesFormation.init({
+ResponsablesPromotion.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -16,18 +16,18 @@ ResponsablesFormation.init({
             key: "id"
         }
     },
-    formation_id: {
+    promotion_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Formation",
+            model: "Promotion",
             key: "id"
         }
     }
 }, {
     sequelize,
-    modelName: "ResponsablesFormation",
-    tableName: "responsables_formation",
+    modelName: "ResponsablesPromotion",
+    tableName: "responsables_promotion",
     timestamps: false
 });
 
-module.exports = ResponsablesFormation;
+module.exports = ResponsablesPromotion;

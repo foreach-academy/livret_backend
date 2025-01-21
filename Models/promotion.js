@@ -1,9 +1,10 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
+import Formation from "./formation.js";
 
-class Formation extends Model {}
+class Promotion extends Model { }
 
-Formation.init({
+Promotion.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -12,12 +13,19 @@ Formation.init({
     title: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    formation_id: {
+        type: DataTypes.STRING,
+        references: {
+            model: Formation,
+            key: "id"
+        },
     }
 }, {
     sequelize,
-    modelName: "Formation",
-    tableName: "formation",
+    modelName: "Promotion",
+    tableName: "promotion",
     timestamps: false
 });
 
-export default Formation;
+export default Promotion;

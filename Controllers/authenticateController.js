@@ -40,6 +40,8 @@ class AuthenticateController {
             res.status(500).json({ error: "Erreur interne du serveur" });
         }
     };
+
+    // Faire l'inscription
 }
 
 export default new AuthenticateController

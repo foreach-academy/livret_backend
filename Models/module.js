@@ -13,23 +13,6 @@ Module.init({
         type: DataTypes.STRING(200),
         allowNull: true
     },
-    start_date: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        defaultValue: DataTypes.NOW
-    },
-    end_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-    },
-    formateur_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "User",
-            key: "id"
-        }
-    },
     commentary: {
         type: DataTypes.TEXT,
         allowNull: true
