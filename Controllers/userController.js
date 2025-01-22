@@ -1,4 +1,4 @@
-import userService from '../services/userService.js';
+import userService from '../services/userServices.js';
 import EmailsServices from "../services/emailServices.js";
 import bcrypt from 'bcrypt';
 import User from '../models/user.js';
@@ -34,10 +34,10 @@ class UserController {
     // Ajouter un nouvel utilisateur
     async addUser(req, res) {
         try {
-            const { firstname, lastname, email, birthdate, promo, role_id, password } = req.body;
+            const { firstname, lastname, email, role_id, password } = req.body;
 
-            if (!firstname || !lastname || !email || !promo || !password) {
-                return res.status(400).json({ error: "Les champs 'firstname', 'lastname', 'email', 'promo', et 'password' sont requis." });
+            if (!firstname || !lastname || !email || !password) {
+                return res.status(400).json({ error: "Les champs 'firstname', 'lastname', 'email' et 'password' sont requis." });
             }
 
             // Validation d'email
@@ -51,23 +51,11 @@ class UserController {
                 firstname: xss(firstname),
                 lastname: xss(lastname),
                 email: xss(email),
-                birthdate: birthdate || null,
-                promo: xss(promo),
                 password: password, // Le mot de passe sera hashé avant d'être stocké
                 role_id: role_id
             };
 
             const user = await userService.addUser(sanitizedData);
-
-            // Envoi d'un e-mail de bienvenue si l'utilisateur a été créé
-            // if (user) {
-            //     try {
-            //         await EmailsServices.sendWelcomeEmail(user);
-            //         console.log('Email envoyé à :', user.email);
-            //     } catch (emailError) {
-            //         console.error('Erreur lors de l\'envoi de l\'email:', emailError);
-            //     }
-            // }
 
             res.status(201).json(user);
         } catch (error) {
@@ -102,54 +90,6 @@ class UserController {
         } catch (error) {
             console.error('Erreur lors de la mise à jour de l\'utilisateur:', error);
             res.status(500).json({ error: "Une erreur s'est produite lors de la mise à jour de l'utilisateur" });
-        }
-    }
-
-    // Mettre à jour un utilisateur via le token de réinitialisation de mot de passe
-    async updateUserByToken(req, res) {
-        const { password, token } = req.body;
-
-        try {
-
-            if (!password || !token) {
-                return res.status(400).json({ message: "Le mot de passe et le token sont requis." });
-            }
-
-            const user = await User.findOne({ where: { resetPasswordToken: token } });
-
-            if (!user) {
-                return res.status(400).json({ message: "Token invalide ou utilisateur introuvable." });
-            }
-
-            const now = new Date(); // Cette date est en UTC
-
-            // Obtenir l'heure locale de Paris (UTC +1)
-            const nowInParis = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
-
-            // Ajouter 2 heures à l'heure actuelle à Paris
-            nowInParis.setHours(nowInParis.getHours() + 2);
-
-            // La date d'expiration du token en UTC
-            const tokenExpiration = new Date(user.resetPasswordExpires); // Supposé en UTC
-
-            console.log("date maintenant (Paris) : ", nowInParis, "expire le : ", tokenExpiration);
-
-            // Comparer les dates
-            if (nowInParis > tokenExpiration) {
-                return res.status(400).json({ message: "Token expiré." });
-            }
-
-            const hashedPassword = await bcrypt.hash(password, 10);
-            user.password = hashedPassword;
-            user.resetPasswordToken = null;
-            user.resetPasswordExpires = null;
-
-            await user.save();
-
-            res.status(200).json({ message: "Mot de passe mis à jour avec succès." });
-        } catch (error) {
-            console.error('Erreur lors de la mise à jour du mot de passe:', error);
-            res.status(500).json({ message: "Erreur serveur lors de la mise à jour du mot de passe." });
         }
     }
 

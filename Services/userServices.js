@@ -1,8 +1,7 @@
 import User from '../models/user.js';
 import Role from '../models/role.js';
 import bcrypt from 'bcrypt';
-import xss from 'xss';
-import validator from 'validator';
+import EmailServices from './emailServices.js';
 
 class UserServices {
     // Récupérer tous les utilisateurs
@@ -28,12 +27,23 @@ class UserServices {
     // Ajouter un nouvel utilisateur
     async addUser(userData) {
         try {
-            return await User.create(userData, {
+            const newUser = await User.create(userData, {
                 include: [{
                     model: Role,
                     as: 'role'
                 }]
-            });
+            })
+
+            if (newUser.dataValues) {
+                try {
+                    await EmailServices.sendWelcomeEmail(newUser.dataValues);
+                } catch (emailError) {
+                    console.error('Erreur lors de l\'envoi de l\'email:', emailError);
+                }
+
+            }
+
+            return newUser
         } catch (error) {
             console.error("Erreur lors de l'ajout de l'utilisateur:", error);
             throw error;

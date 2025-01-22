@@ -1,4 +1,4 @@
-import EvaluationService from '../services/evaluationService.js';
+import EvaluationService from '../services/evaluationServices.js';
 
 class EvaluationControl{
     async getAllEvaluation(req, res){

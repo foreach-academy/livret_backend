@@ -1,4 +1,4 @@
-import roleService from '../services/roleService.js';
+import roleService from '../services/roleServices.js';
 import xss from 'xss';
 
 class RoleController {

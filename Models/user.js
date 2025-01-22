@@ -34,16 +34,16 @@ User.init({
     },
     promo: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     created_at: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
         defaultValue: DataTypes.NOW
     },
     updated_at: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
         defaultValue: DataTypes.NOW,
         onUpdate: DataTypes.NOW
     },

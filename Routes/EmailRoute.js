@@ -12,6 +12,6 @@ const passwordResetLimiter = BruteForceSecurity({
 });
 
 // Route pour demander la réinitialisation du mot de passe
-router.post('/request-password-reset',passwordResetLimiter, EmailController.requestPasswordReset.bind(EmailController));
+router.post('/request-password-reset', passwordResetLimiter, (req, res) => EmailController.requestPasswordReset(req, res));
 
 export default router;

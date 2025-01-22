@@ -21,7 +21,7 @@ class emailController {
             }
 
             // Envoyer le lien de réinitialisation du mot de passe
-            await EmailsServices.sendLinkEmail(user);
+            await EmailsServices.sendLinkToResetPasswordEmail(user);
 
             return res.status(200).json({ message: 'Email de réinitialisation envoyé.' });
         } catch (error) {

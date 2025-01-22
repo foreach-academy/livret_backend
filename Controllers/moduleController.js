@@ -1,4 +1,4 @@
-import ModuleService from '../services/moduleService.js';
+import ModuleService from '../services/moduleServices.js';
 import xss from 'xss';
 
 class ModuleControl {
