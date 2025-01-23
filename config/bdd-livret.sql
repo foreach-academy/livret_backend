@@ -112,6 +112,7 @@ CREATE TABLE
 
 INSERT INTO role (name) VALUES 
 ('Admin'),
+('Formateur'),
 ('Apprenant');
 
 INSERT INTO formation (title) VALUES 
@@ -122,9 +123,12 @@ INSERT INTO promotion (title, formation_id) VALUES
 ('DWWM 2024', 1),
 ('CDA - Première Année 2024', 2);
 
+-- MDP des utilisateurs : ForEach-Academy1
 INSERT INTO "user" (id, firstname, lastname, email, birthdate, promo, created_at, updated_at, role_id, password) VALUES 
-(1, 'Alice', 'Smith', 'alice.smith@example.com', '1995-06-15', 'Promo 2025', NOW(), NOW(), 1, 'hashed_password_1'),
-(2, 'Bob', 'Johnson', 'bob.johnson@example.com', '1990-09-23', 'Promo 2024', NOW(), NOW(), 2, 'hashed_password_2');
+(1, 'Flore', 'Wicart', 'flore.wicart@example.com', '1992-06-15', 'Promo 2025', NOW(), NOW(), 1, '$2b$10$.FdNFwHFr7fx4DrAEFFLZ.e5cCBCQfL9cAdUUAJebC5ZMzDR78.Nq'),
+(2, 'Bob', 'Johnson', 'bob.johnson@example.com', '1990-09-23', 'Promo 2024', NOW(), NOW(), 2, '$2b$10$.FdNFwHFr7fx4DrAEFFLZ.e5cCBCQfL9cAdUUAJebC5ZMzDR78.Nq'),
+(3, 'Thomas', 'Arbley', 'thomas.arbley@example.com', '1995-09-25', 'Promo 2024', NOW(), NOW(), 3, '$2b$10$.FdNFwHFr7fx4DrAEFFLZ.e5cCBCQfL9cAdUUAJebC5ZMzDR78.Nq'),
+(4, 'Simon', 'Cimetiere', 'simon.cimetiere@example.com', '1996-11-13', 'Promo 2024', NOW(), NOW(), 3, '$2b$10$.FdNFwHFr7fx4DrAEFFLZ.e5cCBCQfL9cAdUUAJebC5ZMzDR78.Nq');
 
 INSERT INTO responsables_promotion (responsable_id, promotion_id) VALUES 
 (1, 1),
@@ -147,7 +151,7 @@ INSERT INTO module_evaluation_type (module_id, evaluation_type_id) VALUES
 (2, 2);
 
 INSERT INTO formation_module (start_date, end_date, formateur_id, formation_id, module_id) VALUES 
-('2025-01-01', '2025-01-07', 1, 1, 1),
+('2025-01-01', '2025-01-07', 2, 1, 1),
 ('2025-01-15', '2025-01-21', 2, 2, 2);
 
 INSERT INTO evaluation (created_at, updated_at, module_id, apprenant_id, evaluation_resultat_id, comment) VALUES 
@@ -155,9 +159,12 @@ INSERT INTO evaluation (created_at, updated_at, module_id, apprenant_id, evaluat
 (NOW(), NOW(), 2, 2, 2, 'A besoin de nets améliorations en JS');
 
 INSERT INTO apprenants_promotion (apprenant_id, promotion_id) VALUES 
-(2, 1),
-(2, 2);
+(3, 1),
+(3, 2),
+(4, 1),
+(4, 2);
 
 INSERT INTO formateurs_promotion (formateur_id, promotion_id) VALUES 
 (2, 1),
 (2, 2);
+

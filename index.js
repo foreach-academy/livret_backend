@@ -17,10 +17,7 @@ app.use(cors({
 app.use(cors());
 app.use(json());
 
-// // Routes
-// const emailRouter = require('./routes/EmailRoute')
-
-// route principal
+// Routes
 app.use("/roles", roleRoute);
 app.use("/users", userRoute);
 app.use("/authenticate", authenticateRoute);
