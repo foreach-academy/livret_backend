@@ -1,5 +1,3 @@
-create database if not exists foreach_livret;
-
 CREATE TABLE
   IF NOT EXISTS role (
     id SERIAL PRIMARY KEY,
@@ -9,7 +7,8 @@ CREATE TABLE
 CREATE TABLE
   IF NOT EXISTS training (
     id SERIAL PRIMARY KEY, 
-    title VARCHAR NOT NULL UNIQUE
+    title VARCHAR NOT NULL UNIQUE,
+    description VARCHAR NOT NULL UNIQUE
   );
 
 CREATE TABLE
@@ -32,6 +31,7 @@ CREATE TABLE
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     role_id INTEGER,
+    job VARCHAR NULL,
     reset_password_token VARCHAR UNIQUE,
     reset_password_expires TIMESTAMP,
     CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE SET NULL ON UPDATE CASCADE
@@ -59,7 +59,7 @@ CREATE TABLE
   IF NOT EXISTS evaluation_type (id SERIAL PRIMARY KEY, name VARCHAR NOT NULL);
 
 CREATE TABLE
-  IF NOT EXISTS evaluation_resultat (id SERIAL PRIMARY KEY, name VARCHAR NOT NULL);
+  IF NOT EXISTS evaluation_result (id SERIAL PRIMARY KEY, name VARCHAR NOT NULL);
 
 CREATE TABLE
   IF NOT EXISTS module (
@@ -95,11 +95,11 @@ CREATE TABLE
     updated_at TIMESTAMP NOT NULL DEFAULT NOW (),
     module_id INTEGER,
     studient_id INTEGER,
-    evaluation_resultat_id INTEGER,
+    evaluation_result_id INTEGER,
     comment VARCHAR,
     CONSTRAINT fk_evaluation_module FOREIGN KEY (module_id) REFERENCES module (id) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT fk_evaluation_studient FOREIGN KEY (studient_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT fk_evaluation_evaluation_resultat FOREIGN KEY (evaluation_resultat_id) REFERENCES evaluation_resultat (id) ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT fk_evaluation_evaluation_result FOREIGN KEY (evaluation_result_id) REFERENCES evaluation_result (id) ON DELETE SET NULL ON UPDATE CASCADE
   );
 
 CREATE TABLE
@@ -115,9 +115,9 @@ INSERT INTO role (name) VALUES
 ('trainer'),
 ('studient');
 
-INSERT INTO training (title) VALUES 
-('DWWM'),
-('CDA - Première Année');
+INSERT INTO training (title, description) VALUES 
+('DWWM',' Developeur Web et Web Mobile'),
+('CDA - Première Année', 'Première Année Concepteur Développeur d Applications');
 
 INSERT INTO promotion (title, training_id) VALUES 
 ('DWWM 2024', 1),
@@ -138,7 +138,7 @@ INSERT INTO evaluation_type (name) VALUES
 ('QCM'),
 ('Project');
 
-INSERT INTO evaluation_resultat (name) VALUES 
+INSERT INTO evaluation_result (name) VALUES 
 ('Reussi'),
 ('Echec');
 
@@ -154,7 +154,7 @@ INSERT INTO training_module (start_date, end_date, trainer_id, training_id, modu
 ('2025-01-01', '2025-01-07', 2, 1, 1),
 ('2025-01-15', '2025-01-21', 2, 2, 2);
 
-INSERT INTO evaluation (created_at, updated_at, module_id, studient_id, evaluation_resultat_id, comment) VALUES 
+INSERT INTO evaluation (created_at, updated_at, module_id, studient_id, evaluation_result_id, comment) VALUES 
 (NOW(), NOW(), 1, 2, 1, 'Bon travail en HTML'),
 (NOW(), NOW(), 2, 2, 2, 'A besoin de nets améliorations en JS');
 
