@@ -7,7 +7,7 @@ CREATE TABLE
   );
 
 CREATE TABLE
-  IF NOT EXISTS formation (
+  IF NOT EXISTS training (
     id SERIAL PRIMARY KEY, 
     title VARCHAR NOT NULL UNIQUE
   );
@@ -16,8 +16,8 @@ CREATE TABLE
   IF NOT EXISTS promotion (
     id SERIAL PRIMARY KEY, 
     title VARCHAR NOT NULL UNIQUE,
-    formation_id INTEGER,
-    CONSTRAINT fk_formation_promotion FOREIGN KEY (formation_id) REFERENCES formation (id) ON DELETE SET NULL ON UPDATE CASCADE
+    training_id INTEGER,
+    CONSTRAINT fk_training_promotion FOREIGN KEY (training_id) REFERENCES training (id) ON DELETE SET NULL ON UPDATE CASCADE
   );
 
 CREATE TABLE
@@ -27,8 +27,8 @@ CREATE TABLE
     firstname VARCHAR NOT NULL,
     email VARCHAR NOT NULL UNIQUE,
     password VARCHAR NOT NULL,
-    birthdate DATE,
     promo VARCHAR NOT NULL,
+    birthdate DATE,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     role_id INTEGER,
@@ -38,21 +38,21 @@ CREATE TABLE
   );
 
 CREATE TABLE
-  IF NOT EXISTS responsables_promotion (
+  IF NOT EXISTS supervisors_promotion (
     id SERIAL PRIMARY KEY,
-    responsable_id INTEGER,
+    supervisor_id INTEGER,
     promotion_id INTEGER,
-    CONSTRAINT fk_responsables_promotion_responsable FOREIGN KEY (responsable_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT fk_responsables_promotion_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id) ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT fk_supervisors_promotion_supervisor FOREIGN KEY (supervisor_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_supervisors_promotion_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id) ON DELETE SET NULL ON UPDATE CASCADE
   );
 
 CREATE TABLE
-  IF NOT EXISTS formateurs_promotion (
+  IF NOT EXISTS trainers_promotion (
     id SERIAL PRIMARY KEY,
-    formateur_id INTEGER,
+    trainer_id INTEGER,
     promotion_id INTEGER,
-    CONSTRAINT fk_formateurs_promotion_formateur FOREIGN KEY (formateur_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT fk_formateurs_promotion_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id) ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT fk_trainers_promotion_trainer FOREIGN KEY (trainer_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_trainers_promotion_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id) ON DELETE SET NULL ON UPDATE CASCADE
   );
 
 CREATE TABLE
@@ -77,15 +77,15 @@ CREATE TABLE
   );
 
 CREATE TABLE
-  IF NOT EXISTS formation_module (
+  IF NOT EXISTS training_module (
     start_date TIMESTAMP DEFAULT NOW (),
     end_date TIMESTAMP NOT NULL DEFAULT NOW (),
-    formateur_id INTEGER,
-    formation_id INTEGER,
+    trainer_id INTEGER,
+    training_id INTEGER,
     module_id INTEGER,
-    CONSTRAINT fk_formation_module_formateur FOREIGN KEY (formateur_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT fk_formation_module_formation FOREIGN KEY (formation_id) REFERENCES formation (id) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT fk_formation_module_module FOREIGN KEY (module_id) REFERENCES module (id) ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT fk_training_module_trainer FOREIGN KEY (trainer_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_training_module_training FOREIGN KEY (training_id) REFERENCES training (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_training_module_module FOREIGN KEY (module_id) REFERENCES module (id) ON DELETE SET NULL ON UPDATE CASCADE
   );
 
 CREATE TABLE
@@ -94,32 +94,32 @@ CREATE TABLE
     created_at TIMESTAMP NOT NULL DEFAULT NOW (),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW (),
     module_id INTEGER,
-    apprenant_id INTEGER,
+    studient_id INTEGER,
     evaluation_resultat_id INTEGER,
     comment VARCHAR,
     CONSTRAINT fk_evaluation_module FOREIGN KEY (module_id) REFERENCES module (id) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT fk_evaluation_apprenant FOREIGN KEY (apprenant_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_evaluation_studient FOREIGN KEY (studient_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT fk_evaluation_evaluation_resultat FOREIGN KEY (evaluation_resultat_id) REFERENCES evaluation_resultat (id) ON DELETE SET NULL ON UPDATE CASCADE
   );
 
 CREATE TABLE
-  IF NOT EXISTS apprenants_promotion (
-    apprenant_id INTEGER,
+  IF NOT EXISTS studients_promotion (
+    studient_id INTEGER,
     promotion_id INTEGER NOT NULL,
-    CONSTRAINT fk_apprenants_promotion_apprenant FOREIGN KEY (apprenant_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT fk_apprenants_promotion_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id) ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT fk_studients_promotion_studient FOREIGN KEY (studient_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_studients_promotion_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id) ON DELETE SET NULL ON UPDATE CASCADE
   );
 
 INSERT INTO role (name) VALUES 
 ('Admin'),
-('Formateur'),
-('Apprenant');
+('trainer'),
+('studient');
 
-INSERT INTO formation (title) VALUES 
+INSERT INTO training (title) VALUES 
 ('DWWM'),
 ('CDA - Première Année');
 
-INSERT INTO promotion (title, formation_id) VALUES 
+INSERT INTO promotion (title, training_id) VALUES 
 ('DWWM 2024', 1),
 ('CDA - Première Année 2024', 2);
 
@@ -130,7 +130,7 @@ INSERT INTO "user" (id, firstname, lastname, email, birthdate, promo, created_at
 (3, 'Thomas', 'Arbley', 'thomas.arbley@example.com', '1995-09-25', 'Promo 2024', NOW(), NOW(), 3, '$2b$10$.FdNFwHFr7fx4DrAEFFLZ.e5cCBCQfL9cAdUUAJebC5ZMzDR78.Nq'),
 (4, 'Simon', 'Cimetiere', 'simon.cimetiere@example.com', '1996-11-13', 'Promo 2024', NOW(), NOW(), 3, '$2b$10$.FdNFwHFr7fx4DrAEFFLZ.e5cCBCQfL9cAdUUAJebC5ZMzDR78.Nq');
 
-INSERT INTO responsables_promotion (responsable_id, promotion_id) VALUES 
+INSERT INTO supervisors_promotion (supervisor_id, promotion_id) VALUES 
 (1, 1),
 (1, 2);
 
@@ -150,21 +150,21 @@ INSERT INTO module_evaluation_type (module_id, evaluation_type_id) VALUES
 (1, 1),
 (2, 2);
 
-INSERT INTO formation_module (start_date, end_date, formateur_id, formation_id, module_id) VALUES 
+INSERT INTO training_module (start_date, end_date, trainer_id, training_id, module_id) VALUES 
 ('2025-01-01', '2025-01-07', 2, 1, 1),
 ('2025-01-15', '2025-01-21', 2, 2, 2);
 
-INSERT INTO evaluation (created_at, updated_at, module_id, apprenant_id, evaluation_resultat_id, comment) VALUES 
+INSERT INTO evaluation (created_at, updated_at, module_id, studient_id, evaluation_resultat_id, comment) VALUES 
 (NOW(), NOW(), 1, 2, 1, 'Bon travail en HTML'),
 (NOW(), NOW(), 2, 2, 2, 'A besoin de nets améliorations en JS');
 
-INSERT INTO apprenants_promotion (apprenant_id, promotion_id) VALUES 
+INSERT INTO studients_promotion (studient_id, promotion_id) VALUES 
 (3, 1),
 (3, 2),
 (4, 1),
 (4, 2);
 
-INSERT INTO formateurs_promotion (formateur_id, promotion_id) VALUES 
+INSERT INTO trainers_promotion (trainer_id, promotion_id) VALUES 
 (2, 1),
 (2, 2);
 
