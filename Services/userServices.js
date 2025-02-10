@@ -14,6 +14,17 @@ class UserServices {
         });
     }
 
+    // Récupérer tous les utilisateurs d'un rôle spécifique
+    async getUserByRole(role) {
+        return await User.findAll({
+            where: { role_id: role },
+            include: [{
+                model: Role,
+                as: 'role'
+            }]
+        });
+    }
+
     // Récupérer un utilisateur par ID
     async getUserById(id) {
         return await User.findByPk(id, {
@@ -27,28 +38,30 @@ class UserServices {
     // Ajouter un nouvel utilisateur
     async addUser(userData) {
         try {
+            // Création de l'utilisateur
             const newUser = await User.create(userData, {
                 include: [{
                     model: Role,
                     as: 'role'
                 }]
-            })
-
-            if (newUser.dataValues) {
+            });
+    
+            // Envoi de l'email de bienvenue
+            if (newUser) {
                 try {
-                    await EmailServices.sendWelcomeEmail(newUser.dataValues);
+                    await EmailServices.sendWelcomeEmail(newUser);
                 } catch (emailError) {
                     console.error('Erreur lors de l\'envoi de l\'email:', emailError);
                 }
-
             }
-
-            return newUser
+    
+            return newUser;
         } catch (error) {
             console.error("Erreur lors de l'ajout de l'utilisateur:", error);
             throw error;
         }
     }
+    
 
     // Mettre à jour un utilisateur
     async updateUser(id, userData) {

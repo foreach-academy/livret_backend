@@ -30,39 +30,59 @@ class UserController {
             res.status(500).json({ error: "Une erreur s'est produite lors de la récupération de l'utilisateur" });
         }
     }
-
-    // Ajouter un nouvel utilisateur
-    async addUser(req, res) {
+// récupérer les utilisateur par role 
+    async getUserByRole(req, res) {
         try {
-            const { firstname, lastname, email, role_id, password } = req.body;
-
-            if (!firstname || !lastname || !email || !password) {
-                return res.status(400).json({ error: "Les champs 'firstname', 'lastname', 'email' et 'password' sont requis." });
+            const role = xss(req.params.role); // Nettoyage du rôle
+            const users = await userService.getUserByRole(role);
+            if (!users.length) {
+                return res.status(404).json({ error: "Aucun utilisateur de ce rôle n'a été trouvé." });
             }
-
-            // Validation d'email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                return res.status(400).json({ error: "L'email n'est pas valide." });
-            }
-
-            // Nettoyage des données pour éviter les attaques XSS
-            const sanitizedData = {
-                firstname: xss(firstname),
-                lastname: xss(lastname),
-                email: xss(email),
-                password: password, // Le mot de passe sera hashé avant d'être stocké
-                role_id: role_id
-            };
-
-            const user = await userService.addUser(sanitizedData);
-
-            res.status(201).json(user);
+            res.json(users);
         } catch (error) {
-            console.error('Erreur lors de l\'ajout de l\'utilisateur:', error);
-            res.status(500).json({ error: "Une erreur s'est produite lors de l'ajout de l'utilisateur" });
+            console.error('Erreur lors de la récupération des utilisateurs par rôle:', error);
+            res.status(500).json({ error: "Une erreur s'est produite lors de la récupération des utilisateurs" });
         }
     }
+   // Ajouter un nouvel utilisateur
+async addUser(req, res) {
+    try {
+        const { firstname, lastname, email, role_id, password, birthdate, promo, created_at, updated_at } = req.body;
+
+        // Validation des champs obligatoires
+        if (!firstname || !lastname || !email || !password || !promo) {
+            return res.status(400).json({ error: "Les champs 'firstname', 'lastname', 'email', 'password' et 'promo' sont requis." });
+        }
+
+        // Validation de l'email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: "L'email n'est pas valide." });
+        }
+
+        // Nettoyage des données
+        const sanitizedData = {
+            firstname: xss(firstname),
+            lastname: xss(lastname),
+            email: xss(email),
+            promo: xss(promo),
+            birthdate: birthdate ? xss(birthdate) : null,
+            created_at: created_at ? xss(created_at) : new Date(),
+            updated_at: updated_at ? xss(updated_at) : new Date(),
+            role_id: role_id ? parseInt(xss(role_id), 10) : null,
+            password: await bcrypt.hash(password, 10) // Hashage du mot de passe
+        };
+
+        // Ajout de l'utilisateur
+        const user = await userService.addUser(sanitizedData);
+
+        res.status(201).json(user);
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout de l\'utilisateur:', error);
+        res.status(500).json({ error: "Une erreur s'est produite lors de l'ajout de l'utilisateur" });
+    }
+}
+
 
     // Mettre à jour un utilisateur par ID
     async updateUser(req, res) {

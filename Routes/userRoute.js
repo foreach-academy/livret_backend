@@ -9,7 +9,7 @@ router.get('/:id', (req, res) => userController.getUserById(req,res));
 router.post('/',  (req, res) => userController.addUser(req,res));
 router.patch('/:id',  (req, res) => userController.updateUser(req, res));
 router.delete('/:id',  (req, res) => userController.deleteUser(req, res));
-
+router.get('/role/:role', (req, res) => userController.getUserByRole(req, res));
 
 
 export default router;

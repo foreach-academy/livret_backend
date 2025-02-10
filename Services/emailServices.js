@@ -19,7 +19,7 @@ class EmailServices {
       const info = await transporter.sendMail(mailOptions);
       console.log('Email envoyé : ' + info.response);
     } catch (error) {
-      console.error('Erreur d\'envoi de l\'email :', error);
+      console.error('Erreur d\'envoi de l\'email :',error);
     }
   }
 

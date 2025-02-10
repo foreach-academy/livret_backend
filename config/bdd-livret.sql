@@ -31,9 +31,10 @@ CREATE TABLE
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     role_id INTEGER,
-    job VARCHAR NULL,
+    position VARCHAR NULL,
     reset_password_token VARCHAR UNIQUE,
     reset_password_expires TIMESTAMP,
+    photo VARCHAR NULL,
     CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE SET NULL ON UPDATE CASCADE
   );
 
