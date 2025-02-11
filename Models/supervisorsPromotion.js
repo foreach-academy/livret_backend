@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../config/Sequelize');
 
-class ResponsablesPromotion extends Model {}
+class SupervisorsPromotion extends Model {}
 
-ResponsablesPromotion.init({
+SupervisorsPromotion.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -25,9 +25,9 @@ ResponsablesPromotion.init({
     }
 }, {
     sequelize,
-    modelName: "ResponsablesPromotion",
-    tableName: "responsables_promotion",
+    modelName: "SupervisorsPromotion",
+    tableName: "supervisors_promotion",
     timestamps: false
 });
 
-module.exports = ResponsablesPromotion;
+module.exports = SupervisorsPromotion;

@@ -47,7 +47,7 @@ class UserController {
    // Ajouter un nouvel utilisateur
 async addUser(req, res) {
     try {
-        const { firstname, lastname, email, role_id, password, birthdate, promo, created_at, updated_at } = req.body;
+        const { firstname, lastname, email, role_id, position, password, birthdate, promo, created_at, updated_at } = req.body;
 
         // Validation des champs obligatoires
         if (!firstname || !lastname || !email || !password || !promo) {
@@ -70,7 +70,8 @@ async addUser(req, res) {
             created_at: created_at ? xss(created_at) : new Date(),
             updated_at: updated_at ? xss(updated_at) : new Date(),
             role_id: role_id ? parseInt(xss(role_id), 10) : null,
-            password: await bcrypt.hash(password, 10) // Hashage du mot de passe
+            password: await bcrypt.hash(password, 10), // Hashage du mot de passe
+            position: position? xss(position) : null,
         };
 
         // Ajout de l'utilisateur
@@ -88,7 +89,7 @@ async addUser(req, res) {
     async updateUser(req, res) {
         try {
             const userId = xss(req.params.id);
-            const { firstname, lastname, email, birthdate, promo, role_id, company, password } = req.body;
+            const { firstname, lastname,position, email, birthdate, promo, role_id, company, password } = req.body;
 
             const sanitizedData = {}
 
@@ -98,8 +99,10 @@ async addUser(req, res) {
             if (email) sanitizedData.email = xss(email);
             if (promo) sanitizedData.promo = xss(promo);
             if (company) sanitizedData.company = xss(company);
-            if (role_id) sanitizedData.role_id = xss(role_id)
-            if (password) sanitizedData.password = xss(password)
+            if (role_id) sanitizedData.role_id = xss(role_id);
+            if (password) sanitizedData.password = xss(password);
+            if (position) sanitizedData.position = xss(position)
+
 
             const user = await userService.updateUser(userId, sanitizedData);
 

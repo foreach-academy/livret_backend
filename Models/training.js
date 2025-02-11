@@ -1,23 +1,23 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
 
-class EvaluationResultat extends Model {}
+class Training extends Model {}
 
-EvaluationResultat.init({
+Training.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    name: {
-        type: DataTypes.STRING(50),
-        allowNull: true
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     sequelize,
-    modelName: "EvaluationResultat",
-    tableName: "evaluation_resultat",
+    modelName: "Training",
+    tableName: "training",
     timestamps: false
 });
 
-export default EvaluationResultat;
+export default Training;

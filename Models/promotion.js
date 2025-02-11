@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
-import Formation from "./formation.js";
+import Training from "./training.js";
 
 class Promotion extends Model { }
 
@@ -14,10 +14,10 @@ Promotion.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    formation_id: {
+    training_id: {
         type: DataTypes.STRING,
         references: {
-            model: Formation,
+            model: Training,
             key: "id"
         },
     }

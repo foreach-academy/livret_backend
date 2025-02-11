@@ -1,31 +1,31 @@
-import FormationService from '../services/formationService.js';
+import TrainingService from '../services/trainingService.js';
 import xss from 'xss';
 
-class FormationController {
-    async getAllFormations(req, res) {
+class TrainingController {
+    async getAllTrainings(req, res) {
         try {
-            const formations = await FormationService.getAllFormations();
-            res.json(formations);
+            const trainings = await TrainingService.getAllTrainings();
+            res.json(trainings);
         } catch (error) {
             console.error('Erreur lors de la récupération de toutes les formations:', error);
             res.status(500).json({ error: 'Une erreur est survenue lors de la récupération des formations.' });
         }
     }
 
-    async getFormationById(req, res) {
+    async getTrainingById(req, res) {
 
-        const {formationId} = req.params
+        const {trainingId} = req.params
 
         try {
-            const formations = await FormationService.getFormationById(formationId);
-            res.json(formations);
+            const trainings = await TrainingService.getTrainingById(trainingId);
+            res.json(trainings);
         } catch (error) {
             console.error('Erreur lors de la récupération de toutes les formations:', error);
             res.status(500).json({ error: 'Une erreur est survenue lors de la récupération des formations.' });
         }
     }
 
-    async addFormation(req, res) {
+    async addTraining(req, res) {
 
         const {title, commentary} = req.body
         
@@ -40,8 +40,8 @@ class FormationController {
                 commentary: xss(commentary)
             };
 
-            const formation = await FormationService.addFormation(sanitizedData);
-            res.status(201).json(formation); // Retourner un statut 201 pour la création réussie
+            const training = await TrainingService.addTraining(sanitizedData);
+            res.status(201).json(training); // Retourner un statut 201 pour la création réussie
         } catch (error) {
             console.error('Erreur lors de l\'ajout d\'une formation:', error);
             res.status(500).json({ error: "Une erreur est survenue lors de l'ajout de la formation." });
@@ -51,4 +51,4 @@ class FormationController {
     }
 }
 
-export default new FormationController();
+export default new TrainingController();

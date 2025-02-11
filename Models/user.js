@@ -4,7 +4,7 @@ import { Model, DataTypes } from "sequelize";
 import bcrypt from 'bcrypt';
 
 class User extends Model {
-    async validateMdp(password) {
+    async validatePassword(password) {
         return await bcrypt.compare(password, this.password);
     }
 }
@@ -72,6 +72,10 @@ User.init({
     reset_password_expires: {
         type: DataTypes.DATE,
         allowNull: true
+    },
+    photo: {
+        type: DataTypes.STRING,
+        allowNull: true,
     }
 }, {
     sequelize,

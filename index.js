@@ -3,7 +3,7 @@ import cors from "cors";
 
 import roleRoute from './routes/roleRoute.js';
 import authenticateRoute from './routes/authenticateRoute.js';
-import formationRoute from './routes/formationRoute.js';
+import formationRoute from './routes/trainingRoute.js';
 import moduleRoute from './routes/moduleRoute.js';
 import evaluationRoute from './routes/evaluationRoute.js';
 import emailRoute from './routes/emailRoute.js';

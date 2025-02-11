@@ -3,10 +3,10 @@ import sequelize from '../config/Sequelize';
 import User from "./user";
 import Promotion from "./Promotion";
 
-class ApprenantsPromotion extends Model {}
+class StudientsPromotion extends Model {}
 
-ApprenantsPromotion.init({
-    apprenant_id: {
+StudientsPromotion.init({
+    studient_id: {
         type: DataTypes.INTEGER,
         references: {
             model: User,
@@ -22,9 +22,9 @@ ApprenantsPromotion.init({
     }
 }, {
     sequelize,
-    modelName: "ApprenantsPromotion",
-    tableName: "apprenants_promotion",
+    modelName: "StudientsPromotion",
+    tableName: "studients_promotion",
     timestamps: false
 });
 
-export default ApprenantsPromotion;
+export default StudientsPromotion;
