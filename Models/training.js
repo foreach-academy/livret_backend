@@ -12,6 +12,10 @@ Training.init({
     title: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     sequelize,
@@ -19,5 +23,6 @@ Training.init({
     tableName: "training",
     timestamps: false
 });
+
 
 export default Training;

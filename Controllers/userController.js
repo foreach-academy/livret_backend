@@ -89,7 +89,7 @@ async addUser(req, res) {
     async updateUser(req, res) {
         try {
             const userId = xss(req.params.id);
-            const { firstname, lastname,position, email, birthdate, promo, role_id, company, password } = req.body;
+            const { firstname, lastname,position, email, birthdate, promo, role_id, password } = req.body;
 
             const sanitizedData = {}
 
@@ -98,7 +98,6 @@ async addUser(req, res) {
             if (birthdate) sanitizedData.birthdate = xss(birthdate)
             if (email) sanitizedData.email = xss(email);
             if (promo) sanitizedData.promo = xss(promo);
-            if (company) sanitizedData.company = xss(company);
             if (role_id) sanitizedData.role_id = xss(role_id);
             if (password) sanitizedData.password = xss(password);
             if (position) sanitizedData.position = xss(position)

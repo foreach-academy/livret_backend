@@ -1,13 +1,19 @@
-import { DataTypes, Model } from "sequelize";
+import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
 import User from "./user.js";
 import Promotion from "./promotion.js";
 
-class StudientsPromotion extends Model {}
-StudientsPromotion.init({
-    studient_id: {
+class TrainersPromotion extends Model {}
+
+TrainersPromotion.init({
+    id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true
+    },
+    trainer_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
             model: User,
             key: "id"
@@ -17,7 +23,7 @@ StudientsPromotion.init({
     },
     promotion_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
+        allowNull: false,
         references: {
             model: Promotion,
             key: "id"
@@ -27,10 +33,9 @@ StudientsPromotion.init({
     }
 }, {
     sequelize,
-    modelName: "StudientsPromotion",
-    tableName: "studients_promotion",
+    modelName: "TrainersPromotion",
+    tableName: "trainers_promotion",
     timestamps: false
 });
 
-
-export default StudientsPromotion;
+export default TrainersPromotion;
