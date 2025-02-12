@@ -3,11 +3,7 @@ import Role from "./role.js";
 import { Model, DataTypes } from "sequelize";
 import bcrypt from 'bcrypt';
 
-class User extends Model {
-    async validatePassword(password) {
-        return await bcrypt.compare(password, this.password);
-    }
-}
+class User extends Model {}
 
 User.init({
     id: {
@@ -82,11 +78,7 @@ User.init({
     modelName: "User",
     tableName: "user",
     timestamps: false,
-    hooks: {
-        beforeCreate: async (user) => {
-            user.password = await bcrypt.hash(user.password, 10);
-        }
-    }
+
 });
 
 User.belongsTo(Role, {foreignKey: 'role_id', as: 'role'})

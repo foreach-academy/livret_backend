@@ -113,8 +113,8 @@ CREATE TABLE
 
 INSERT INTO role (name) VALUES 
 ('Admin'),
-('trainer'),
-('studient');
+('Formateur'),
+('Etudiant');
 
 INSERT INTO training (title, description) VALUES 
 ('DWWM',' Developeur Web et Web Mobile'),
@@ -124,7 +124,7 @@ INSERT INTO promotion (title, training_id) VALUES
 ('DWWM 2024', 1),
 ('CDA - Première Année 2024', 2);
 
--- MDP des utilisateurs : ForEach-Academy1
+-- MDP des utilisateurs :   
 INSERT INTO "user" (id, firstname, lastname, email, birthdate, promo, created_at, updated_at, role_id, password) VALUES 
 (1, 'Flore', 'Wicart', 'flore.wicart@example.com', '1992-06-15', 'Promo 2025', NOW(), NOW(), 1, '$2b$10$.FdNFwHFr7fx4DrAEFFLZ.e5cCBCQfL9cAdUUAJebC5ZMzDR78.Nq'),
 (2, 'Bob', 'Johnson', 'bob.johnson@example.com', '1990-09-23', 'Promo 2024', NOW(), NOW(), 2, '$2b$10$.FdNFwHFr7fx4DrAEFFLZ.e5cCBCQfL9cAdUUAJebC5ZMzDR78.Nq'),

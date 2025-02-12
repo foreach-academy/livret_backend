@@ -12,7 +12,7 @@ class AuthenticateService {
                     as: 'role'
                 }]
             });
-
+            console.log(user);
             return user ? user.dataValues : null;
 
         } catch (error) {

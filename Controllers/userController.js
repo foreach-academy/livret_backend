@@ -47,11 +47,15 @@ class UserController {
 
     // Ajouter un nouvel utilisateur
     async addUser(req, res) {
+        console.log("Données reçues :", req.body);
+
+        
         try {
             const { firstname, lastname, email, role_id, position, password, birthdate, promo, created_at, updated_at } = req.body;
 
             // Validation des champs obligatoires
             if (!firstname || !lastname || !email || !password || !promo) {
+                
                 return res.status(400).json({ error: "Les champs 'firstname', 'lastname', 'email', 'password' et 'promo' sont requis." });
             }
 

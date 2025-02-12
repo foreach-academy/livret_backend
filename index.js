@@ -2,7 +2,7 @@ import express, { json } from "express";
 import cors from "cors";
 import sequelize from './config/Sequelize.js';  // Import de la configuration Sequelize
 import { setupRelations } from './models/relations.js';
-import xssClean from 'xss-clean'
+
 
 // Importer les modèles pour les initialiser
 import './models/role.js';
@@ -40,7 +40,27 @@ app.use(cors({
 }));
 app.use(cors());
 app.use(json());
-app.use(xssClean());
+import xss from 'xss';
+
+app.use((req, res, next) => {
+    if (req.body) {
+        for (let key in req.body) {
+            if (typeof req.body[key] === 'string') {
+                req.body[key] = xss(req.body[key]);
+            }
+        }
+    }
+
+    if (req.params) {
+        for (let key in req.params) {
+            if (typeof req.params[key] === 'string') {
+                req.params[key] = xss(req.params[key]);
+            }
+        }
+    }
+
+    next();
+});
 
 // Routes
 import roleRoute from './routes/roleRoute.js';
