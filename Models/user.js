@@ -1,7 +1,6 @@
 import sequelize from '../config/Sequelize.js';
 import Role from "./role.js";
 import { Model, DataTypes } from "sequelize";
-import bcrypt from 'bcrypt';
 
 class User extends Model {}
 
@@ -30,7 +29,7 @@ User.init({
     },
     promo: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     }
     ,
     created_at: {

@@ -47,16 +47,16 @@ class UserController {
 
     // Ajouter un nouvel utilisateur
     async addUser(req, res) {
-        console.log("Données reçues :", req.body);
+   
 
         
         try {
             const { firstname, lastname, email, role_id, position, password, birthdate, promo, created_at, updated_at } = req.body;
 
             // Validation des champs obligatoires
-            if (!firstname || !lastname || !email || !password || !promo) {
+            if (!firstname || !lastname || !email || !password ) {
                 
-                return res.status(400).json({ error: "Les champs 'firstname', 'lastname', 'email', 'password' et 'promo' sont requis." });
+                return res.status(400).json({ error: "Les champs 'firstname', 'lastname', 'email', 'password' sont requis." });
             }
 
             // Validation de l'email
@@ -69,7 +69,7 @@ class UserController {
                 firstname,
                 lastname,
                 email,
-                promo,
+                promo : promo || null,
                 birthdate: birthdate || null,
                 created_at: created_at || new Date(),
                 updated_at: updated_at || new Date(),
