@@ -17,12 +17,12 @@ class promotionService {
             include: [
                 {
                     model: Training,
-                    as: 'promotionTraining',  // Assure-toi que cet alias correspond à celui défini dans tes relations
+                    as: 'promotionTraining',  
                     attributes: ['id', 'title', 'description']
                 },
                 {
                     model: StudientsPromotion,
-                    as: 'promotionStudents',  // Assure-toi que cet alias est défini dans tes relations
+                    as: 'promotionStudents',  
                     include: [
                         {
                             model: User,
@@ -33,7 +33,7 @@ class promotionService {
                 },
                 {
                     model: SupervisorsPromotion,
-                    as: 'promotionSupervisors',  // Assure-toi que cet alias est correct
+                    as: 'promotionSupervisors',  
                     include: [
                         {
                             model: User,
@@ -44,7 +44,7 @@ class promotionService {
                 },
                 {
                     model: TrainersPromotion,
-                    as: 'promotionTrainers',  // Assure-toi que cet alias est correct
+                    as: 'promotionTrainers', 
                     include: [
                         {
                             model: User,
