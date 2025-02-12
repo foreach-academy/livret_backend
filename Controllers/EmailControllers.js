@@ -1,8 +1,7 @@
-import User from '../models/user.js'; // Assurez-vous que le chemin est correct
-import EmailsServices from '../services/emailServices.js'; // Importer l'instance de EmailsServices
-import xss from 'xss';
+import User from '../models/user.js'; 
+import EmailsServices from '../services/emailServices.js'; 
 
-class emailController {
+class EmailController {
     
     // Contrôleur pour envoyer le lien de réinitialisation du mot de passe
     async requestPasswordReset(req, res) {
@@ -13,9 +12,7 @@ class emailController {
                 return res.status(400).json({ error: 'Email est requis.' });
             }
 
-            const sanitizedEmail = xss(email);
-
-            const user = await User.findOne({ where: { email: sanitizedEmail } });
+            const user = await User.findOne({ where: { email } });
             if (!user) {
                 return res.status(404).json({ message: 'Utilisateur non trouvé.' });
             }
@@ -31,4 +28,4 @@ class emailController {
     }
 }
 
-export default new emailController();
+export default new EmailController();

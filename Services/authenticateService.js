@@ -1,9 +1,6 @@
 import User from "../models/user.js";
 import Role from '../models/role.js';
-
 import jwt from 'jsonwebtoken';
-import xss from 'xss';
-
 
 class AuthenticateService {
     async getUserByEmail(email) {
@@ -25,13 +22,13 @@ class AuthenticateService {
 
     async subscribe(data) {
         try {
-            const user = await User.create(data)
+            const user = await User.create(data);
 
-            console.log("service", user)
+            console.log("service", user);
 
-            return user 
+            return user;
         } catch (error) {
-            throw new Error("Erreur lors de l'enregistration de l'utilisateur");
+            throw new Error("Erreur lors de l'enregistrement de l'utilisateur");
         }
     };
 
@@ -40,12 +37,11 @@ class AuthenticateService {
         const userPayload = {
             id: user.id,
             email: user.email,
-            user: `${xss(user.firstname)} ${xss(user.lastname)}`,
-            role: xss(user.role.name)
+            user: `${user.firstname} ${user.lastname}`,
+            role: user.role.name
         };
         return jwt.sign(userPayload, process.env.PASSWORD_SECRET, { expiresIn: '30d' });
-    }; 
+    };
 }
 
-
-export default new AuthenticateService()
+export default new AuthenticateService();
