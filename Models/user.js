@@ -4,7 +4,7 @@ import { Model, DataTypes } from "sequelize";
 import bcrypt from 'bcrypt';
 
 class User extends Model {
-    async validateMdp(password) {
+    async validatePassword(password) {
         return await bcrypt.compare(password, this.password);
     }
 }
@@ -34,25 +34,31 @@ User.init({
     },
     promo: {
         type: DataTypes.STRING,
-        allowNull: true,
-    },
+        allowNull: false
+    }
+    ,
     created_at: {
         type: DataTypes.DATE,
-        allowNull: true,
-        defaultValue: DataTypes.NOW
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+        field: 'created_at'
     },
     updated_at: {
         type: DataTypes.DATE,
-        allowNull: true,
+        allowNull: false,
         defaultValue: DataTypes.NOW,
-        onUpdate: DataTypes.NOW
+        field: 'updated_at'
+    },    
+    position:{
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     role_id: {
         type: DataTypes.INTEGER,
-        // references: {
-        //     model: Role,
-        //     key: "id"
-        // }
+        references: {
+            model: Role,
+            key: "id"
+         }
     },
     password: {
         type: DataTypes.STRING,
@@ -66,6 +72,10 @@ User.init({
     reset_password_expires: {
         type: DataTypes.DATE,
         allowNull: true
+    },
+    photo: {
+        type: DataTypes.STRING,
+        allowNull: true,
     }
 }, {
     sequelize,

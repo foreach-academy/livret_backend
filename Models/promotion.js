@@ -1,6 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
-import Formation from "./formation.js";
+import Training from "./training.js";
+
 
 class Promotion extends Model { }
 
@@ -14,18 +15,23 @@ Promotion.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    formation_id: {
-        type: DataTypes.STRING,
+    training_id: {
+        type: DataTypes.INTEGER, 
         references: {
-            model: Formation,
+            model: Training,
             key: "id"
         },
+        allowNull: true  
     }
+    
 }, {
     sequelize,
     modelName: "Promotion",
     tableName: "promotion",
     timestamps: false
 });
+
+
+
 
 export default Promotion;

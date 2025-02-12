@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
-import EvaluationResultat from './evaluationResultat.js';
+import EvaluationResultat from './evaluationResult.js';
 
 class Evaluation extends Model {}
 
@@ -28,7 +28,7 @@ Evaluation.init({
             key: "id"
         }
     },
-    apprenant_id: {
+    studient_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "User",

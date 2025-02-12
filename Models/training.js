@@ -1,9 +1,9 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
 
-class Formation extends Model {}
+class Training extends Model {}
 
-Formation.init({
+Training.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -12,12 +12,17 @@ Formation.init({
     title: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     sequelize,
-    modelName: "Formation",
-    tableName: "formation",
+    modelName: "Training",
+    tableName: "training",
     timestamps: false
 });
 
-export default Formation;
+
+export default Training;

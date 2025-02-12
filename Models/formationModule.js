@@ -1,14 +1,14 @@
 import { Model, DataTypes} from 'sequelize';
 import sequelize from '../config/Sequelize.js';
-import Formation from './formation.js';
+import Training from './training.js';
 import Module from './module.js';
 import User from './user.js';
 
-class FormationModule extends Model{
+class TrainingModule extends Model{
 
 }
 
-FormationModule.init({
+TrainingModule.init({
     start_date: {
         type: DataTypes.DATE,
         allowNull: true,
@@ -19,19 +19,19 @@ FormationModule.init({
         allowNull: false,
         defaultValue: DataTypes.NOW
     },
-    formateur_id: {
+    trainer_id: {
         type: DataTypes.INTEGER,
         references: {
             model: User,
             key: "id"
         }
     },
-    formation_id:{
+    training_id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
         references:{
-            model: Formation,
-            key: 'formation_id'
+            model: Training,
+            key: 'training_id'
         }
     },
 
@@ -47,11 +47,11 @@ FormationModule.init({
 
 },{
     sequelize,
-    modelName: 'Formation_Module',
-    tableName: 'formation_module',
+    modelName: 'Training_Module',
+    tableName: 'training_module',
     timestamps: false
 });
 
-FormationModule.belongsTo(User, {foreignKey: 'formateur_id', as: 'formateur'})
+TrainingModule.belongsTo(User, {foreignKey: 'trainer_id', as: 'trainer'})
 
-export default FormationModule;
+export default TrainingModule;

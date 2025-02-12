@@ -23,7 +23,7 @@ class AuthenticateService {
         }
     };
 
-    async suscribe(data) {
+    async subscribe(data) {
         try {
             const user = await User.create(data)
 

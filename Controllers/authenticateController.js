@@ -41,7 +41,7 @@ class AuthenticateController {
         }
     };
 
-    async suscribe(req, res) {
+    async subscribe(req, res) {
         try {
             const { email } = req.body;
 
@@ -51,7 +51,7 @@ class AuthenticateController {
                 return res.status(401).json({ error: "Email déjà existant" });
             }
 
-            AuthenticateService.suscribe(req.body)
+            AuthenticateService.subscribe(req.body)
 
             return res.status(200).json({ message: "Enregistrement réussi" });
         } catch (error) {

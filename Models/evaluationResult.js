@@ -1,9 +1,9 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
 
-class EvaluationResultat extends Model {}
+class EvaluationResult extends Model {}
 
-EvaluationResultat.init({
+EvaluationResult.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -15,9 +15,9 @@ EvaluationResultat.init({
     }
 }, {
     sequelize,
-    modelName: "EvaluationResultat",
-    tableName: "evaluation_resultat",
+    modelName: "EvaluationResult",
+    tableName: "evaluation_result",
     timestamps: false
 });
 
-export default EvaluationResultat;
+export default EvaluationResult;

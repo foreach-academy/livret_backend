@@ -1,15 +1,15 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require('../config/Sequelize');
+import { Model, DataTypes } from "sequelize";
+import sequelize from '../config/Sequelize.js';
 
-class ResponsablesPromotion extends Model {}
+class SupervisorsPromotion extends Model {}
 
-ResponsablesPromotion.init({
+SupervisorsPromotion.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    responsable_id: {
+    supervisor_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "User",
@@ -25,9 +25,9 @@ ResponsablesPromotion.init({
     }
 }, {
     sequelize,
-    modelName: "ResponsablesPromotion",
-    tableName: "responsables_promotion",
+    modelName: "SupervisorsPromotion",
+    tableName: "supervisors_promotion",
     timestamps: false
 });
 
-module.exports = ResponsablesPromotion;
+export default SupervisorsPromotion;
