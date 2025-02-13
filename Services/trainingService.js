@@ -1,8 +1,6 @@
 import Training from '../models/training.js';
 import Module from '../models/module.js';
-import User from '../models/user.js';
-import Evaluation from '../models/evaluation.js';
-import EvaluationResultat from '../models/evaluationResult.js';
+import TrainingModule from '../models/trainingModule.js';
 
 class TrainingService {
     // Récupérer toutes les formations
@@ -11,8 +9,16 @@ class TrainingService {
     }
 
     async getTrainingById(trainingId) {
-        return await Training.findByPk(trainingId)
+        return await Training.findByPk(trainingId, {
+            include: [{
+                model: Module,
+                as: 'modules',  // Assurez-vous que cet alias correspond à la relation définie dans `setupRelations`
+                attributes: ['id', 'title', 'commentary'],
+                through: { attributes: [] } // Empêche Sequelize d'afficher les colonnes pivot de `TrainingModule`
+            }]
+        });
     }
+    
 
     // Ajouter une nouvelle formation
     async addTraining(trainingData) {

@@ -51,6 +51,19 @@ export function setupRelations() {
     TrainingModule.belongsTo(Training, { foreignKey: 'training_id', as: 'trainingModuleTraining' });
     TrainingModule.belongsTo(Module, { foreignKey: 'module_id', as: 'trainingModuleModule' });
     TrainingModule.belongsTo(User, { foreignKey: 'trainer_id', as: 'trainingModuleTrainer' });
+// Relation Many-to-Many entre Training et Module via TrainingModule
+Training.belongsToMany(Module, { 
+    through: TrainingModule, 
+    foreignKey: 'training_id', 
+    otherKey: 'module_id', 
+    as: 'modules' 
+});
+Module.belongsToMany(Training, { 
+    through: TrainingModule, 
+    foreignKey: 'module_id', 
+    otherKey: 'training_id', 
+    as: 'trainings' 
+});
 
     // Relations pour les évaluations
     Module.hasMany(Evaluation, { foreignKey: 'module_id', as: 'moduleEvaluations' });

@@ -21,6 +21,17 @@ class ModuleControl {
             res.status(500).json({ error: "An error occurred while getting module" });
         }
     }
+
+    async addModule(req, res) {
+        const { title, commentary } = req.body;
+
+        try {
+            const newModule = await ModuleService.addModule(title, commentary);
+            res.status(201).json(newModule);
+        } catch (error) {
+            res.status(500).json({ error: "An error occurred while adding module" });
+        }
+    }
 }
 
 export default new ModuleControl();

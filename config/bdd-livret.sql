@@ -79,8 +79,6 @@ CREATE TABLE
 
 CREATE TABLE
   IF NOT EXISTS training_module (
-    start_date TIMESTAMP DEFAULT NOW (),
-    end_date TIMESTAMP NOT NULL DEFAULT NOW (),
     trainer_id INTEGER,
     training_id INTEGER,
     module_id INTEGER,
@@ -151,9 +149,9 @@ INSERT INTO module_evaluation_type (module_id, evaluation_type_id) VALUES
 (1, 1),
 (2, 2);
 
-INSERT INTO training_module (start_date, end_date, trainer_id, training_id, module_id) VALUES 
-('2025-01-01', '2025-01-07', 2, 1, 1),
-('2025-01-15', '2025-01-21', 2, 2, 2);
+INSERT INTO training_module ( trainer_id, training_id, module_id) VALUES 
+( 2, 1, 1),
+( 2, 2, 2);
 
 INSERT INTO evaluation (created_at, updated_at, module_id, studient_id, evaluation_result_id, comment) VALUES 
 (NOW(), NOW(), 1, 2, 1, 'Bon travail en HTML'),
