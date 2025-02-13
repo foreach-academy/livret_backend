@@ -1,5 +1,4 @@
 import roleService from '../services/roleServices.js';
-import xss from 'xss';
 
 class RoleController {
     async getAllRoles(req, res) {

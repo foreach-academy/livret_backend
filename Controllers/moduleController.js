@@ -1,5 +1,4 @@
 import ModuleService from '../services/moduleServices.js';
-import xss from 'xss';
 
 class ModuleControl {
     async getAllModules(req, res) {
@@ -12,18 +11,16 @@ class ModuleControl {
         }
     }
 
-    async getModuleById(req, res){
+    async getModuleById(req, res) {
+        const { moduleId } = req.params;
 
-        const {moduleId} = req.params
-
-        try{
-            const module = await ModuleService.getModuleById(moduleId)
+        try {
+            const module = await ModuleService.getModuleById(moduleId);
             res.status(200).json(module);
-        }catch(error){
-            res.status(500).json({error: " An error occured while getting module"});
+        } catch (error) {
+            res.status(500).json({ error: "An error occurred while getting module" });
         }
     }
-
-};
+}
 
 export default new ModuleControl();
