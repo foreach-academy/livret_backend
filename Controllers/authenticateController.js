@@ -17,7 +17,7 @@ class AuthenticateController {
 
             if (!user) {
                 console.log('Erreur : utilisateur non trouvé pour l\'email:', email);
-                return res.status(401).json({ error: "Email ou mot de passe invalide" });
+                return res.status(401).json({ error: "Email invalide" });
             }
 
             // Vérification du mot de passe

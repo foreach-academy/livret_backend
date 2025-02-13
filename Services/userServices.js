@@ -10,7 +10,8 @@ class UserServices {
             include: [{
                 model: Role,
                 as: 'role'
-            }]
+            }],
+            attributes: { exclude: ['password'] }
         });
     }
 
