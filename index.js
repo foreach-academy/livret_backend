@@ -71,6 +71,9 @@ import evaluationRoute from './routes/evaluationRoute.js';
 import emailRoute from './routes/emailRoute.js';
 import userRoute from './routes/userRoute.js';
 import promotionRoute from './routes/promotionRoute.js';
+import studientPromotionRoute from './routes/studientPromotionRoute.js';
+import trainerPromotionRoute from './routes/trainerPromotionRoute.js';
+import supervisorPromotionRoute from './routes/supervisorPromotionRoute.js';
 
 app.use("/roles", roleRoute);
 app.use("/users", userRoute);
@@ -80,5 +83,8 @@ app.use("/modules", moduleRoute);
 app.use("/evaluations", evaluationRoute);
 app.use("/emails", emailRoute);
 app.use("/promotions", promotionRoute);
+app.use("/studients-promotion", studientPromotionRoute);
+app.use("/trainers-promotion", trainerPromotionRoute);
+app.use("/supervisors-promotion", supervisorPromotionRoute);
 
 export default app;
