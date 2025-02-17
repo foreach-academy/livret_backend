@@ -1,5 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
+import Evaluation from './evaluation.js';
+import EvaluationTypeList from './evaluationTypeList.js';
 
 class EvaluationType extends Model {}
 
@@ -9,9 +11,21 @@ EvaluationType.init({
         primaryKey: true,
         autoIncrement: true
     },
-    name: {
-        type: DataTypes.STRING(50),
-        allowNull: true
+    evaluation_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Evaluation,
+            key: "id"
+        }
+    },
+    type_eval: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: EvaluationTypeList,
+            key: "id"
+        }
     }
 }, {
     sequelize,

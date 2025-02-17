@@ -27,11 +27,6 @@ User.init({
         type: DataTypes.DATE,
         allowNull: true
     },
-    promo: {
-        type: DataTypes.STRING,
-        allowNull: true
-    }
-    ,
     created_at: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -44,16 +39,19 @@ User.init({
         defaultValue: DataTypes.NOW,
         field: 'updated_at'
     },    
-    position:{
+    position: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
     },
     role_id: {
         type: DataTypes.INTEGER,
+        allowNull: true, // Respecte ON DELETE SET NULL
         references: {
             model: Role,
             key: "id"
-         }
+        },
+        onDelete: "SET NULL", // Ajout pour bien gérer la suppression
+        onUpdate: "CASCADE"
     },
     password: {
         type: DataTypes.STRING,
@@ -70,16 +68,14 @@ User.init({
     },
     photo: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
     }
 }, {
     sequelize,
     modelName: "User",
     tableName: "user",
-    timestamps: false,
-
+    timestamps: false
 });
 
-User.belongsTo(Role, {foreignKey: 'role_id', as: 'role'})
 
 export default User;

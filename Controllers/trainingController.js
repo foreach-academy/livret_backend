@@ -1,9 +1,8 @@
 import TrainingService from "../services/trainingService.js";
-
 import Training from "../models/training.js";
 import sequelize from "../config/Sequelize.js";
-import Module from "../models/module.js";
-import TrainingModule from "../models/trainingModule.js";
+import Module from "../models/module.js"; 
+
 class TrainingController {
     async getAllTrainings(req, res) {
         try {
@@ -37,28 +36,17 @@ class TrainingController {
         const transaction = await sequelize.transaction(); // Démarrer une transaction Sequelize
         try {
             // Étape 1 : Ajouter la formation
-            const training = await Training.create({ title, description  }, { transaction });
+            const training = await Training.create({ title, description }, { transaction });
 
-            // Étape 2 : Ajouter chaque module
+            // Étape 2 : Ajouter chaque module avec `training_id`
             const modulePromises = modules.map(async (module) => {
-                const newModule = await Module.create(
-                    { title: module.title, commentary: module.commentary },
-                    { transaction }
-                );
-                return newModule.id;
-            });
-
-            const moduleIds = await Promise.all(modulePromises);
-
-            // Étape 3 : Associer chaque module à la formation
-            const associationPromises = moduleIds.map(async (moduleId) => {
-                return await TrainingModule.create(
-                    { training_id: training.id, module_id: moduleId },
+                return await Module.create(
+                    { title: module.title, commentary: module.commentary, training_id: training.id },
                     { transaction }
                 );
             });
 
-            await Promise.all(associationPromises);
+            await Promise.all(modulePromises);
 
             // Commit de la transaction
             await transaction.commit();

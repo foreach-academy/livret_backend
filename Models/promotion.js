@@ -1,9 +1,8 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
-import Training from "./training.js";
+import Training from './training.js';
 
-
-class Promotion extends Model { }
+class Promotion extends Model {}
 
 Promotion.init({
     id: {
@@ -13,25 +12,25 @@ Promotion.init({
     },
     title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     training_id: {
-        type: DataTypes.INTEGER, 
+        type: DataTypes.INTEGER,
+        allowNull: true,
         references: {
             model: Training,
             key: "id"
         },
-        allowNull: true  
+        onDelete: "SET NULL",
+        onUpdate: "CASCADE"
     }
-    
 }, {
     sequelize,
     modelName: "Promotion",
     tableName: "promotion",
     timestamps: false
 });
-
-
 
 
 export default Promotion;

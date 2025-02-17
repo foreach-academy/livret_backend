@@ -25,4 +25,5 @@ Training.init({
 });
 
 
+
 export default Training;

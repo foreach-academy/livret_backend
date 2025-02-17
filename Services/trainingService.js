@@ -1,6 +1,5 @@
 import Training from '../models/training.js';
 import Module from '../models/module.js';
-import TrainingModule from '../models/trainingModule.js';
 
 class TrainingService {
     // Récupérer toutes les formations
@@ -12,9 +11,10 @@ class TrainingService {
         return await Training.findByPk(trainingId, {
             include: [{
                 model: Module,
-                as: 'modules',  // Assurez-vous que cet alias correspond à la relation définie dans `setupRelations`
+                as: 'modules',  
                 attributes: ['id', 'title', 'commentary'],
-                through: { attributes: [] } // Empêche Sequelize d'afficher les colonnes pivot de `TrainingModule`
+                
+                
             }]
         });
     }

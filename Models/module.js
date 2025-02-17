@@ -1,5 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
+import Training from './training.js';
 
 class Module extends Model {}
 
@@ -11,11 +12,19 @@ Module.init({
     },
     title: {
         type: DataTypes.STRING(200),
-        allowNull: true
+        allowNull: false 
     },
     commentary: {
         type: DataTypes.TEXT,
         allowNull: true
+    },
+    training_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true, 
+        references: {
+            model: Training,
+            key: "id"
+        }
     }
 }, {
     sequelize,
@@ -23,5 +32,7 @@ Module.init({
     tableName: "module",
     timestamps: false
 });
+
+
 
 export default Module;

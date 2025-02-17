@@ -9,7 +9,7 @@ class UserServices {
         return await User.findAll({
             include: [{
                 model: Role,
-                as: 'role'
+                as: 'userRole'
             }],
             attributes: { exclude: ['password'] }
         });
@@ -21,7 +21,7 @@ class UserServices {
             where: { role_id: role },
             include: [{
                 model: Role,
-                as: 'role'
+                as: 'roleUser'
             }]
         });
     }
