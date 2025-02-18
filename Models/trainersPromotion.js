@@ -18,7 +18,7 @@ TrainersPromotion.init({
             model: User,
             key: "id"
         },
-        onDelete: "CASCADE",
+        onDelete: "SET NULL",
         onUpdate: "CASCADE"
     },
     promotion_id: {
@@ -28,7 +28,7 @@ TrainersPromotion.init({
             model: Promotion,
             key: "id"
         },
-        onDelete: "CASCADE",
+        onDelete: "SET NULL", 
         onUpdate: "CASCADE"
     }
 }, {
@@ -36,6 +36,18 @@ TrainersPromotion.init({
     modelName: "TrainersPromotion",
     tableName: "trainers_promotion",
     timestamps: false
+});
+
+TrainersPromotion.belongsTo(User, { 
+    foreignKey: "trainer_id", 
+    onDelete: "SET NULL", 
+    onUpdate: "CASCADE" 
+});
+
+TrainersPromotion.belongsTo(Promotion, { 
+    foreignKey: "promotion_id", 
+    onDelete: "SET NULL", 
+    onUpdate: "CASCADE" 
 });
 
 export default TrainersPromotion;

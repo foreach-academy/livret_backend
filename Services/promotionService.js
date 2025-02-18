@@ -3,37 +3,37 @@ import Training from '../models/training.js';
 import User from "../models/user.js";
 import StudientsPromotion from "../models/studientsPromotion.js";
 import SupervisorsPromotion from "../models/supervisorsPromotion.js";
-import TrainersPromotion from "../models/trainersPromotion.js"
+import TrainersPromotion from "../models/trainersPromotion.js";
 
-class promotionService {
-    // récupérer toutes les promotions
+class PromotionService {
+    // Récupérer toutes les promotions
     async getAllPromotions() {
         return await Promotion.findAll();
     }
 
-    // récupérer une promotion par ID
+    //  Récupérer une promotion par ID avec jointures
     async getPromotionById(promotionId) {
         return await Promotion.findByPk(promotionId, {
             include: [
                 {
                     model: Training,
-                    as: 'promotionTraining',  // Assure-toi que cet alias correspond à celui défini dans tes relations
+                    as: 'training',  
                     attributes: ['id', 'title', 'description']
                 },
                 {
                     model: StudientsPromotion,
-                    as: 'promotionStudents',  // Assure-toi que cet alias est défini dans tes relations
+                    as: 'promotionStudients',  
                     include: [
                         {
                             model: User,
-                            as: 'studentUser',
-                            attributes: ['id', 'firstname', 'lastname', 'email', 'promo', 'birthdate']
+                            as: 'studientUser', 
+                            attributes: ['id', 'firstname', 'lastname', 'email', 'birthdate']
                         }
                     ]
                 },
                 {
                     model: SupervisorsPromotion,
-                    as: 'promotionSupervisors',  // Assure-toi que cet alias est correct
+                    as: 'promotionSupervisors',
                     include: [
                         {
                             model: User,
@@ -44,7 +44,7 @@ class promotionService {
                 },
                 {
                     model: TrainersPromotion,
-                    as: 'promotionTrainers',  // Assure-toi que cet alias est correct
+                    as: 'promotionTrainers',
                     include: [
                         {
                             model: User,
@@ -56,56 +56,65 @@ class promotionService {
             ]
         });
     }
+
+    //  Ajouter une promotion
+    async addPromotion(promotionData, studients, trainers, supervisors) {
+        try {
     
-        
-        // faire une jointure avec la table training trainer supervisor module
-
-      
-// REQUETE SQL CAR JE NE SAIS PAS FAIRE SUR SEQUELIEZ 
-// SELECT 
-//     promotion.id AS promotion_id,
-//     promotion.title AS promotion_title,
-//     training.id AS training_id,
-//     training.title AS training_title,
-//     training.description AS training_description,
-//     "user".id AS studient_id,
-//     "user".firstname AS studient_firstname,
-//     "user".lastname AS studient_lastname,
-//     "user".email AS studient_email,
-//     "user".promo AS studient_promo,
-//     "user".birthdate AS studient_birthdate,
-//     supervisor_user.id AS supervisor_id,
-//     supervisor_user.firstname AS supervisor_firstname,
-//     supervisor_user.lastname AS supervisor_lastname,
-//     supervisor_user.email AS supervisor_email,
-//     trainer_user.id AS trainer_id,
-//     trainer_user.firstname AS trainer_firstname,
-//     trainer_user.lastname AS trainer_lastname,
-//     trainer_user.email AS trainer_email
-
-// FROM promotion
-
-// LEFT JOIN training ON promotion.training_id = training.id
-
-// LEFT JOIN studients_promotion ON promotion.id = studients_promotion.promotion_id
-// LEFT JOIN "user" ON studients_promotion.studient_id = "user".id
-
-// LEFT JOIN supervisors_promotion ON promotion.id = supervisors_promotion.promotion_id
-// LEFT JOIN "user" AS supervisor_user ON supervisors_promotion.supervisor_id = supervisor_user.id
-
-// LEFT JOIN trainers_promotion ON promotion.id = trainers_promotion.promotion_id
-// LEFT JOIN "user" AS trainer_user ON trainers_promotion.trainer_id = trainer_user.id
-
-// WHERE promotion.id = ?;
-
-
-
-    // ajouter une  promotion
-    async addPromotion(promotionData) {
-        return await Promotion.create(promotionData);
+            // Vérifier si une promotion avec le même titre existe déjà
+            const existingPromotion = await Promotion.findOne({
+                where: { title: promotionData.title }
+            });
+    
+            if (existingPromotion) {
+                throw new Error(`Une promotion avec le titre "${promotionData.title}" existe déjà.`);
+            }
+    
+            // Création de la promotion
+            const promotion = await Promotion.create(promotionData);
+            const promotionId = promotion.id;
+    
+    
+            // Ajout des étudiants
+            if (studients && studients.length > 0) {
+                await StudientsPromotion.bulkCreate(
+                    studients.map(studientId => ({
+                        promotion_id: promotionId,
+                        studient_id: studientId
+                    }))
+                );
+            }
+    
+            // Ajout des formateurs
+            if (trainers && trainers.length > 0) {
+                await TrainersPromotion.bulkCreate(
+                    trainers.map(trainerId => ({
+                        promotion_id: promotionId,
+                        trainer_id: trainerId
+                    }))
+                );
+            }
+    
+            // Ajout des superviseurs
+            if (supervisors && supervisors.length > 0) {
+                await SupervisorsPromotion.bulkCreate(
+                    supervisors.map(supervisorId => ({
+                        promotion_id: promotionId,
+                        supervisor_id: supervisorId
+                    }))
+                );
+            }
+    
+            return promotion;
+        } catch (error) {
+            console.error(" Erreur lors de l'ajout de la promotion :", error);
+            throw error;
+        }
     }
+    
+    
 
-    // mttre à jour une promotion ( titre + training)
+    //  Mettre à jour une promotion (titre + training)
     async updatePromotion(promotionId, promotionData) {
         const promotion = await Promotion.findByPk(promotionId);
         if (!promotion) {
@@ -114,7 +123,7 @@ class promotionService {
         return await promotion.update(promotionData);
     }
 
-    // supprimer une promotion
+    //  Supprimer une promotion
     async deletePromotion(promotionId) {
         return await Promotion.destroy({
             where: {
@@ -123,4 +132,5 @@ class promotionService {
         });
     }
 }
-export default new promotionService();
+
+export default new PromotionService();

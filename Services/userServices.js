@@ -9,8 +9,9 @@ class UserServices {
         return await User.findAll({
             include: [{
                 model: Role,
-                as: 'role'
-            }]
+                as: 'userRole'
+            }],
+            attributes: { exclude: ['password'] }
         });
     }
 
@@ -20,8 +21,9 @@ class UserServices {
             where: { role_id: role },
             include: [{
                 model: Role,
-                as: 'role'
-            }]
+                as: 'userRole'
+            }],
+            attributes: { exclude: ['password'] }
         });
     }
 
@@ -30,8 +32,9 @@ class UserServices {
         return await User.findByPk(id, {
             include: [{
                 model: Role,
-                as: 'role'
-            }]
+                as: 'userRole'
+            }],
+            attributes: { exclude: ['password'] }
         });
     }
 
@@ -42,8 +45,9 @@ class UserServices {
             const newUser = await User.create(userData, {
                 include: [{
                     model: Role,
-                    as: 'role'
-                }]
+                    as: 'userRole'
+                }],
+                
             });
     
             // Envoi de l'email de bienvenue

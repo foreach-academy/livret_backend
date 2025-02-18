@@ -1,29 +1,20 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../config/Sequelize.js';
-import User from "./user.js";
-import Training from "./training.js";
-import Module from "./module.js";
+import User from './user.js';
+import ModulePromotion from './modulePromotion.js';
+import EvaluationResult from './evaluationResult.js';
 
-class TrainingModule extends Model {}
+class EvaluationUser extends Model {}
 
-TrainingModule.init({
+EvaluationUser.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    start_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-    },
-    end_date: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    trainer_id: {
+    user_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
             model: User,
             key: "id"
@@ -31,32 +22,35 @@ TrainingModule.init({
         onDelete: "SET NULL",
         onUpdate: "CASCADE"
     },
-    training_id: {
+    module_promotion_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Training,
+            model: ModulePromotion,
             key: "id"
         },
         onDelete: "CASCADE",
         onUpdate: "CASCADE"
     },
-    module_id: {
+    result_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Module,
+            model: EvaluationResult,
             key: "id"
         },
         onDelete: "CASCADE",
         onUpdate: "CASCADE"
+    },
+    commentary: {
+        type: DataTypes.STRING(255),
+        allowNull: true
     }
 }, {
     sequelize,
-    modelName: "TrainingModule",
-    tableName: "training_module",
+    modelName: "EvaluationUser",
+    tableName: "evaluation_user",
     timestamps: false
 });
 
-
-export default TrainingModule;
+export default EvaluationUser;

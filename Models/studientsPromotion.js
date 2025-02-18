@@ -4,10 +4,11 @@ import User from "./user.js";
 import Promotion from "./promotion.js";
 
 class StudientsPromotion extends Model {}
+
 StudientsPromotion.init({
-    studient_id: {
+    studient_id: { 
         type: DataTypes.INTEGER,
-        primaryKey: true,
+        primaryKey: true, 
         references: {
             model: User,
             key: "id"
@@ -17,7 +18,7 @@ StudientsPromotion.init({
     },
     promotion_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
+        primaryKey: true, 
         references: {
             model: Promotion,
             key: "id"
@@ -28,9 +29,8 @@ StudientsPromotion.init({
 }, {
     sequelize,
     modelName: "StudientsPromotion",
-    tableName: "studients_promotion",
+    tableName: "studients_promotion", 
     timestamps: false
 });
-
 
 export default StudientsPromotion;

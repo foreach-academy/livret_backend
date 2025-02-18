@@ -1,6 +1,5 @@
 import AuthenticateService from '../services/authenticateService.js';
 import bcrypt from 'bcrypt';
-import xss from 'xss';
 import User from '../models/user.js';
 
 class AuthenticateController {
@@ -13,20 +12,16 @@ class AuthenticateController {
                 return res.status(400).json({ error: "L'authentification a échoué" });
             }
 
-            // Nettoyage des données pour éviter les attaques XSS
-            const sanitizedEmail = xss(email);
-            const sanitizedPassword = xss(password); // Ajouter le nettoyage du mot de passe
-
             // Vérifier si l'utilisateur existe
-            const user = await AuthenticateService.getUserByEmail(sanitizedEmail);
+            const user = await AuthenticateService.getUserByEmail(email);
 
             if (!user) {
-                console.log('Erreur : utilisateur non trouvé pour l\'email:', sanitizedEmail);
-                return res.status(401).json({ error: "Email ou mot de passe invalide" });
+                console.log('Erreur : utilisateur non trouvé pour l\'email:', email);
+                return res.status(401).json({ error: "Email invalide" });
             }
 
             // Vérification du mot de passe
-            const checkPassword = await bcrypt.compare(sanitizedPassword, user.password); // Utiliser le mot de passe nettoyé
+            const checkPassword = await bcrypt.compare(password, user.password);
 
             if (!checkPassword) {
                 return res.status(401).json({ message: "Email ou mot de passe invalide" });
@@ -51,7 +46,7 @@ class AuthenticateController {
                 return res.status(401).json({ error: "Email déjà existant" });
             }
 
-            AuthenticateService.subscribe(req.body)
+            AuthenticateService.subscribe(req.body);
 
             return res.status(200).json({ message: "Enregistrement réussi" });
         } catch (error) {
@@ -60,11 +55,10 @@ class AuthenticateController {
     };
 
     async resetPassword(req, res) {
-
         const { password, token } = req.body;
+     
 
         try {
-
             if (!password || !token) {
                 return res.status(400).json({ message: "Le mot de passe et le token sont requis." });
             }
@@ -103,4 +97,4 @@ class AuthenticateController {
     }
 }
 
-export default new AuthenticateController
+export default new AuthenticateController;
