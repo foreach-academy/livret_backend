@@ -21,7 +21,7 @@ class UserServices {
             where: { role_id: role },
             include: [{
                 model: Role,
-                as: 'roleUser'
+                as: 'userRole'
             }]
         });
     }
@@ -31,7 +31,7 @@ class UserServices {
         return await User.findByPk(id, {
             include: [{
                 model: Role,
-                as: 'role'
+                as: 'userRole'
             }]
         });
     }
