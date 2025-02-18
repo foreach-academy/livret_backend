@@ -58,9 +58,61 @@ class PromotionService {
     }
 
     //  Ajouter une promotion
-    async addPromotion(promotionData) {
-        return await Promotion.create(promotionData);
+    async addPromotion(promotionData, studients, trainers, supervisors) {
+        try {
+    
+            // Vérifier si une promotion avec le même titre existe déjà
+            const existingPromotion = await Promotion.findOne({
+                where: { title: promotionData.title }
+            });
+    
+            if (existingPromotion) {
+                throw new Error(`Une promotion avec le titre "${promotionData.title}" existe déjà.`);
+            }
+    
+            // Création de la promotion
+            const promotion = await Promotion.create(promotionData);
+            const promotionId = promotion.id;
+    
+    
+            // Ajout des étudiants
+            if (studients && studients.length > 0) {
+                await StudientsPromotion.bulkCreate(
+                    studients.map(studientId => ({
+                        promotion_id: promotionId,
+                        studient_id: studientId
+                    }))
+                );
+            }
+    
+            // Ajout des formateurs
+            if (trainers && trainers.length > 0) {
+                await TrainersPromotion.bulkCreate(
+                    trainers.map(trainerId => ({
+                        promotion_id: promotionId,
+                        trainer_id: trainerId
+                    }))
+                );
+            }
+    
+            // Ajout des superviseurs
+            if (supervisors && supervisors.length > 0) {
+                await SupervisorsPromotion.bulkCreate(
+                    supervisors.map(supervisorId => ({
+                        promotion_id: promotionId,
+                        supervisor_id: supervisorId
+                    }))
+                );
+            }
+    
+            return promotion;
+        } catch (error) {
+            console.error(" Erreur lors de l'ajout de la promotion :", error);
+            throw error;
+        }
     }
+    
+    
 
     //  Mettre à jour une promotion (titre + training)
     async updatePromotion(promotionId, promotionData) {
