@@ -22,7 +22,8 @@ class UserServices {
             include: [{
                 model: Role,
                 as: 'userRole'
-            }]
+            }],
+            attributes: { exclude: ['password'] }
         });
     }
 
@@ -32,7 +33,8 @@ class UserServices {
             include: [{
                 model: Role,
                 as: 'userRole'
-            }]
+            }],
+            attributes: { exclude: ['password'] }
         });
     }
 
@@ -43,8 +45,9 @@ class UserServices {
             const newUser = await User.create(userData, {
                 include: [{
                     model: Role,
-                    as: 'role'
-                }]
+                    as: 'userRole'
+                }],
+                
             });
     
             // Envoi de l'email de bienvenue

@@ -56,6 +56,7 @@ class AuthenticateController {
 
     async resetPassword(req, res) {
         const { password, token } = req.body;
+     
 
         try {
             if (!password || !token) {
