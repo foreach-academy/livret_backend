@@ -18,4 +18,4 @@ router.post('/reset-password', (req, res) => authenticateController.resetPasswor
 
 
 
-export default router;
+export default router;  

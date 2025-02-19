@@ -26,6 +26,7 @@ const BruteForceSecurity = (options = {}) => {
             // Message personnalisé avec le délai formaté
             res.status(429).json({
                 message: `Trop de tentatives, veuillez réessayer dans ${retryAfterFormatted}.`,
+                retryTime: retryAfterSeconds
             });
         }
     });
