@@ -11,6 +11,19 @@ class PromotionService {
         return await Promotion.findAll();
     }
 
+    async getPromotionByTrainingId(trainingId) {
+        return await Promotion.findAll({
+            where: { training_id : trainingId },
+            include: [
+                {
+                    model: Training,
+                    as: 'training',
+                    attributes: ['id', 'title', 'description']
+                }
+            ]
+        });
+    }
+    
     //  Récupérer une promotion par ID avec jointures
     async getPromotionById(promotionId) {
         return await Promotion.findByPk(promotionId, {
