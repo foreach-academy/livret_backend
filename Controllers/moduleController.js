@@ -23,13 +23,34 @@ class ModuleControl {
     }
 
     async addModule(req, res) {
-        const { title, commentary } = req.body;
+        const { title, commentary, training_id } = req.body;
 
         try {
-            const newModule = await ModuleService.addModule(title, commentary);
+            const newModule = await ModuleService.addModule(title, commentary, training_id);
             res.status(201).json(newModule);
         } catch (error) {
             res.status(500).json({ error: "An error occurred while adding module" });
+        }
+    }
+    async deleteModule(req, res) {
+        const { moduleId } = req.params;
+        try {
+            await ModuleService.deleteModule(moduleId);
+            res.status(200).json({ message: "Module deleted successfully" });
+        } catch (error) {
+            res.status(500).json({ error: "An error occurred while deleting module" });
+        }
+    }
+
+    async updateModule(req, res) {
+        const { moduleId } = req.params;
+        const { title, commentary } = req.body;
+
+        try {
+            const updatedModule = await ModuleService.updateModule(moduleId, title, commentary);
+            res.status(200).json(updatedModule);
+        } catch (error) {
+            res.status(500).json({ error: "An error occurred while updating module" });
         }
     }
 }
