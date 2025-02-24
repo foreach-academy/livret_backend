@@ -76,7 +76,7 @@ class TrainingController {
 
             await training.update({ title, description });
 
-            res.json({ message: "Formation mise à jour avec succès" });
+            res.status(201).json({ message: "Formation mise à jour avec succès" });
         } catch (error) {
             console.error("Erreur lors de la mise à jour de la formation:", error);
             res.status(500).json({ error: "Une erreur est survenue lors de la mise à jour de la formation." });

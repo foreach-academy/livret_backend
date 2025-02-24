@@ -1,10 +1,19 @@
 import Training from '../models/training.js';
 import Module from '../models/module.js';
+import Promotion from '../models/promotion.js';
 
 class TrainingService {
     // Récupérer toutes les formations
     async getAllTrainings() {
-        return await Training.findAll();
+        return await Training.findAll(  
+            {
+                include: [{
+                    model: Promotion,
+                    as: 'promotions',  
+                    attributes: ['id', 'title'],
+                }]
+            }
+        );
     }
 
     async getTrainingById(trainingId) {
