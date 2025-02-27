@@ -73,6 +73,7 @@ import promotionRoute from './routes/promotionRoute.js';
 import studientPromotionRoute from './routes/studientPromotionRoute.js';
 import trainerPromotionRoute from './routes/trainerPromotionRoute.js';
 import supervisorPromotionRoute from './routes/supervisorPromotionRoute.js';
+import ErrorHandler from "./middleware/errorHandler.js";
 
 app.use("/roles", roleRoute);
 app.use("/users", userRoute);
@@ -86,4 +87,5 @@ app.use("/studients-promotion", studientPromotionRoute);
 app.use("/trainers-promotion", trainerPromotionRoute);
 app.use("/supervisors-promotion", supervisorPromotionRoute);
 
+app.use(ErrorHandler)
 export default app;
