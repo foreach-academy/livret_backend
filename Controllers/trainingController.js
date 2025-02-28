@@ -58,6 +58,30 @@ class TrainingController {
             res.status(500).json({ error: "Une erreur est survenue lors de l'ajout de la formation et des modules." });
         }
     }
+
+    async updateTrainingById(req, res) {
+        const { trainingId } = req.params;
+        const { title, description } = req.body;
+
+        if (!title &&!description) {
+            return res.status(400).json({ error: "Au moins un des champs est requis" });
+        }
+
+        try {
+            const training = await Training.findByPk(trainingId);
+
+            if (!training) {
+                return res.status(404).json({ error: "Formation non trouvée" });
+            }
+
+            await training.update({ title, description });
+
+            res.status(201).json({ message: "Formation mise à jour avec succès" });
+        } catch (error) {
+            console.error("Erreur lors de la mise à jour de la formation:", error);
+            res.status(500).json({ error: "Une erreur est survenue lors de la mise à jour de la formation." });
+        }
+    }
 }
 
 export default new TrainingController();

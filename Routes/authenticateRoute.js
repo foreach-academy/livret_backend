@@ -11,11 +11,11 @@ const loginLimiter = BruteForceSecurity({
 });
 
 
-router.post('/login', (req, res) =>  authenticateController.login(req,res));
+router.post('/login',loginLimiter, (req, res) =>  authenticateController.login(req,res));
 router.post('/subscribe', (req, res) =>  authenticateController.subscribe(req,res));
 router.post('/reset-password', (req, res) => authenticateController.resetPassword(req,res));
 
 
 
 
-export default router;
+export default router;  

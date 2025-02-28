@@ -77,6 +77,18 @@ class promotionController {
             res.status(500).json({ error: 'Une erreur est survenue lors de la suppression de la promotion.' });
         }
     }
-};
+
+    async getPromotionByTrainingId(req, res) {
+        const { trainingId } = req.params;
+        try {
+            const promotions = await promotionService.getPromotionByTrainingId(trainingId);
+            res.status(201).json(promotions);
+        } catch (error) {
+            console.error('Erreur lors de la récupération des promotions liées à une formation:', error);
+            res.status(500).json({ error: 'Une erreur est survenue lors de la récupération des promotions liées à une formation.' });
+        }
+    
+};}
+
 
 export default new promotionController();

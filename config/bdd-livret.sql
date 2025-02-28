@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS training (
 
 CREATE TABLE IF NOT EXISTS promotion (
     id SERIAL PRIMARY KEY, 
-    title VARCHAR NOT NULL UNIQUE,
+    title VARCHAR NOT NULL,
     training_id INTEGER,
     CONSTRAINT fk_training_promotion FOREIGN KEY (training_id) REFERENCES training (id) ON DELETE SET NULL ON UPDATE CASCADE
 );

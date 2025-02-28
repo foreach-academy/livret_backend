@@ -7,5 +7,6 @@ router.get('/:promotionId', (req, res) => promotionController.getPromotionById(r
 router.post('/', (req, res) => promotionController.addPromotion(req, res));
 router.patch('/:promotionId', (req, res) => promotionController.updatePromotion(req, res));
 router.delete('/:promotionId', (req, res) => promotionController.deletePromotion(req, res));
+router.get('/promoByTraining/:trainingId', (req, res) => promotionController.getPromotionByTrainingId(req,res));
 
 export default router;
