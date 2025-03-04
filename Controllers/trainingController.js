@@ -20,11 +20,11 @@ class TrainingController {
         try {
             const training = await TrainingService.getTrainingById(trainingId);
             if (!training) {
-                return next(new CustomError("Formation non trouvée.", 404));
+                throw new CustomError("Formation non trouvée.", 404);
             }
             res.json(training);
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de la récupération de la formation.", 500));
+           next(error)
         }
     }
 
@@ -32,7 +32,7 @@ class TrainingController {
         const { title, description, modules } = req.body;
 
         if (!title) {
-            return next(new CustomError("Un nom de formation est requis.", 400));
+            throw new CustomError("Un nom de formation est requis.", 400);
         }
 
         const transaction = await sequelize.transaction(); // Démarrer une transaction Sequelize
@@ -56,7 +56,7 @@ class TrainingController {
             res.status(201).json({ message: "Formation et modules ajoutés avec succès", trainingId: training.id });
         } catch (error) {
             await transaction.rollback(); // Annule les changements en cas d'erreur
-            next(new CustomError("Une erreur est survenue lors de l'ajout de la formation et des modules.", 500));
+            next(error)
         }
     }
 
@@ -65,21 +65,21 @@ class TrainingController {
         const { title, description } = req.body;
 
         if (!title && !description) {
-            return next(new CustomError("Au moins un des champs est requis.", 400));
+            throw new CustomError("Au moins un des champs est requis.", 400);
         }
 
         try {
             const training = await Training.findByPk(trainingId);
 
             if (!training) {
-                return next(new CustomError("Formation non trouvée.", 404));
+                throw new CustomError("Formation non trouvée.", 404);
             }
 
             await training.update({ title, description });
 
             res.status(200).json({ message: "Formation mise à jour avec succès." });
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de la mise à jour de la formation.", 500));
+            next(error)
         }
     }
 }

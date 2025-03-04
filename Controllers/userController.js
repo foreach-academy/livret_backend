@@ -9,7 +9,7 @@ class UserController {
             const users = await userService.getAllUsers();
             res.json(users);
         } catch (error) {
-            next(new CustomError("Une erreur s'est produite lors de la récupération des utilisateurs", 500));
+            next(error);
         }
     }
 
@@ -19,12 +19,11 @@ class UserController {
             const userId = req.params.id;
             const user = await userService.getUserById(userId);
             if (!user) {
-                return next(new CustomError("Utilisateur non trouvé.", 404));
+                throw new CustomError("Utilisateur non trouvé.", 404);
             }
             res.json(user);
         } catch (error) {
-            next(new CustomError("Une erreur s'est produite lors de la récupération de l'utilisateur", 500));
-        }
+            next(error);        }
     }
 
     // Récupérer les utilisateurs par rôle
@@ -33,12 +32,11 @@ class UserController {
             const role = req.params.role;
             const users = await userService.getUserByRole(role);
             if (!users.length) {
-                return next(new CustomError("Aucun utilisateur de ce rôle n'a été trouvé.", 404));
+                throw new CustomError("Aucun utilisateur de ce rôle n'a été trouvé.", 404);
             }
             res.json(users);
         } catch (error) {
-            next(new CustomError("Une erreur s'est produite lors de la récupération des utilisateurs", 500));
-        }
+            next(error);        }
     }
 
     // Ajouter un nouvel utilisateur
@@ -48,13 +46,13 @@ class UserController {
 
             // Validation des champs obligatoires
             if (!firstname || !lastname || !email || !password) {
-                return next(new CustomError("Les champs 'firstname', 'lastname', 'email', 'password' sont requis.", 400));
+                throw new CustomError("Les champs 'firstname', 'lastname', 'email', 'password' sont requis.", 400);
             }
 
             // Validation de l'email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                return next(new CustomError("L'email n'est pas valide.", 400));
+                throw new CustomError("L'email n'est pas valide.", 400);
             }
 
             const userData = {
@@ -73,8 +71,7 @@ class UserController {
             const user = await userService.addUser(userData);
             res.status(201).json(user);
         } catch (error) {
-            next(new CustomError("Une erreur s'est produite lors de l'ajout de l'utilisateur", 500));
-        }
+            next(error);        }
     }
 
     // Mettre à jour un utilisateur par ID
@@ -95,7 +92,7 @@ class UserController {
 
             const user = await userService.updateUser(userId, userData);
             if (!user) {
-                return next(new CustomError("Utilisateur non trouvé", 404));
+                throw new CustomError("Utilisateur non trouvé", 404);
             }
             res.json(user);
         } catch (error) {
@@ -109,12 +106,11 @@ class UserController {
             const { id } = req.params;
             const user = await userService.deleteUser(id);
             if (!user) {
-                return next(new CustomError("Utilisateur non trouvé", 404));
+                throw new CustomError("Utilisateur non trouvé", 404);
             }
             res.json({ message: "Utilisateur supprimé avec succès" });
         } catch (error) {
-            next(new CustomError("Une erreur s'est produite lors de la suppression de l'utilisateur", 500));
-        }
+            next(error);        }
     }
 }
 

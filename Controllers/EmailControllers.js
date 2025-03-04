@@ -10,12 +10,12 @@ class EmailController {
             const { email } = req.body;
 
             if (!email) {
-                return next(new CustomError("L'email est requis.", 400));
+                throw new CustomError("L'email est requis.", 400);
             }
 
             const user = await User.findOne({ where: { email } });
             if (!user) {
-                return next(new CustomError("Utilisateur non trouvé.", 404));
+                throw new CustomError("Utilisateur non trouvé.", 404);
             }
 
             // Envoyer le lien de réinitialisation du mot de passe
@@ -23,7 +23,7 @@ class EmailController {
 
             return res.status(200).json({ message: "Email de réinitialisation envoyé." });
         } catch (error) {
-            next(new CustomError("Erreur lors de l'envoi de l'email de réinitialisation.", 500));
+            next(error)
         }
     }
 }

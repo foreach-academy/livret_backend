@@ -7,7 +7,7 @@ class RoleController {
             const roles = await roleService.getAllRoles();
             res.json(roles);
         } catch (error) {
-            next(new CustomError("Une erreur s'est produite lors de la récupération des rôles.", 500));
+            next(error)
         }
     }
 }

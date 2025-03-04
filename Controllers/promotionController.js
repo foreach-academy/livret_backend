@@ -16,7 +16,7 @@ class PromotionController {
         try {
             const promotion = await promotionService.getPromotionById(promotionId);
             if (!promotion) {
-                return next(new CustomError("Promotion non trouvée.", 404));
+                throw new CustomError("Promotion non trouvée.", 404);
             }
             res.json(promotion);
         } catch (error) {
@@ -30,7 +30,7 @@ class PromotionController {
         const { title, training_id, students, trainers, supervisors } = req.body;
         try {
             if (!title || !training_id) {
-                return next(new CustomError("Titre et formation obligatoires.", 400));
+                throw new CustomError("Titre et formation obligatoires.", 400);
             }
 
             const promotionData = { title, training_id };
@@ -48,7 +48,7 @@ class PromotionController {
         try {
             // Validation des données d'entrée
             if (!title && !training_id) {
-                return next(new CustomError("Titre et formation obligatoires.", 400));
+                throw new CustomError("Titre et formation obligatoires.", 400);
             }
 
             const promotionData = { title, training_id };
@@ -56,7 +56,7 @@ class PromotionController {
             await promotionService.updatePromotion(promotionId, promotionData);
             res.status(200).json({ message: "Promotion mise à jour." });
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de la mise à jour de la promotion.", 500));
+            next(error)
         }
     }
 
@@ -66,7 +66,7 @@ class PromotionController {
             await promotionService.deletePromotion(promotionId);
             res.status(200).json({ message: "Promotion supprimée." });
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de la suppression de la promotion.", 500));
+            next(error)
         }
     }
 
@@ -76,7 +76,7 @@ class PromotionController {
             const promotions = await promotionService.getPromotionByTrainingId(trainingId);
             res.status(200).json(promotions);
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de la récupération des promotions liées à une formation.", 500));
+            next(error)
         }
     }
 }

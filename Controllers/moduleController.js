@@ -7,7 +7,7 @@ class ModuleController {
             const modules = await ModuleService.getAllModules();
             res.json(modules);
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de la récupération de tous les modules.", 500));
+            next(error)
         }
     }
 
@@ -17,11 +17,11 @@ class ModuleController {
         try {
             const module = await ModuleService.getModuleById(moduleId);
             if (!module) {
-                return next(new CustomError("Module non trouvé.", 404));
+                throw new CustomError("Module non trouvé.", 404);
             }
             res.status(200).json(module);
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de la récupération du module.", 500));
+            next(error)
         }
     }
 
@@ -30,13 +30,13 @@ class ModuleController {
 
         try {
             if (!title || !training_id) {
-                return next(new CustomError("Titre et formation obligatoires.", 400));
+                throw new CustomError("Titre et formation obligatoires.", 400);
             }
 
             const newModule = await ModuleService.addModule(title, commentary, training_id);
             res.status(201).json(newModule);
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de l'ajout du module.", 500));
+            next(error)
         }
     }
 
@@ -45,11 +45,11 @@ class ModuleController {
         try {
             const deleted = await ModuleService.deleteModule(moduleId);
             if (!deleted) {
-                return next(new CustomError("Module non trouvé.", 404));
+                throw new CustomError("Module non trouvé.", 404);
             }
             res.status(200).json({ message: "Module supprimé avec succès." });
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de la suppression du module.", 500));
+            next(error)
         }
     }
 
@@ -59,16 +59,16 @@ class ModuleController {
 
         try {
             if (!title && !commentary) {
-                return next(new CustomError("Au moins un des champs est requis.", 400));
+                throw new CustomError("Au moins un des champs est requis.", 400);
             }
 
             const updatedModule = await ModuleService.updateModule(moduleId, title, commentary);
             if (!updatedModule) {
-                return next(new CustomError("Module non trouvé.", 404));
+                throw new CustomError("Module non trouvé.", 404);
             }
             res.status(200).json(updatedModule);
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de la mise à jour du module.", 500));
+            next(error)
         }
     }
 }

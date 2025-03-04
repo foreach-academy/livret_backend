@@ -7,7 +7,7 @@ class EvaluationController {
             const evaluations = await EvaluationService.getAllEvaluation();
             res.json(evaluations);
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de la récupération des évaluations.", 500));
+            next(error)
         }
     }
 }
