@@ -14,7 +14,7 @@ class SupervisorsPromotionService {
         });
 
         if (existingEntry) {
-            throw new CustomError("Ce superviseur est déjà dans cette promotion.", 400);
+            throw new CustomError("Ce responsable est déjà dans cette promotion.", 400);
         }
 
         // Ajouter le superviseur à la promotion
@@ -32,10 +32,10 @@ class SupervisorsPromotionService {
         });
 
         if (!deleted) {
-            throw new CustomError("Le superviseur n'a pas été trouvé dans cette promotion.", 404);
+            throw new CustomError("Le responsable n'a pas été trouvé dans cette promotion.", 404);
         }
 
-        return { message: "Superviseur supprimé de la promotion avec succès." };
+        return { message: "Responsable supprimé de la promotion avec succès." };
     }
 }
 

@@ -7,7 +7,7 @@ class SupervisorsPromotionController {
         try {
             const { supervisor_id, promotion_id } = req.body;
             const newEntry = await SupervisorsPromotionService.addSupervisorToPromotion(supervisor_id, promotion_id);
-            res.status(201).json({ message: "Superviseur ajouté à la promotion avec succès.", data: newEntry });
+            res.status(201).json({ message: "Responsable ajouté à la promotion avec succès.", data: newEntry });
         } catch (error) {
             next(error);
         }
