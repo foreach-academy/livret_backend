@@ -1,94 +1,84 @@
 import promotionService from '../services/promotionService.js';
+import { CustomError } from '../errors/customError.js';
 
-class promotionController {
-    async getAllPromotions(req, res) {
+class PromotionController {
+    async getAllPromotions(req, res, next) {
         try {
             const promotions = await promotionService.getAllPromotions();
             res.json(promotions);
         } catch (error) {
-            console.error('Erreur lors de la récupération de toutes les promotions:', error);
-            res.status(500).json({ error: 'Une erreur est survenue lors de la récupération des promotions.' });
+            next(new CustomError("Une erreur est survenue lors de la récupération des promotions.", 500));
         }
     }
 
-    async getPromotionById(req, res) {
+    async getPromotionById(req, res, next) {
         const { promotionId } = req.params;
         try {
             const promotion = await promotionService.getPromotionById(promotionId);
             if (!promotion) {
-                return res.status(404).json({ error: 'Promotion non trouvée' });
+                return next(new CustomError("Promotion non trouvée.", 404));
             }
             res.json(promotion);
         } catch (error) {
-            console.error('Erreur lors de la récupération de la promotion:', error);
-            res.status(500).json({ error: 'Une erreur est survenue lors de la récupération de la promotion.' });
+            next(new CustomError("Une erreur est survenue lors de la récupération de la promotion.", 500));
         }
     }
 
-    async addPromotion(req, res) {
+    async addPromotion(req, res, next) {
         console.log("Données reçues:", req.body); // 👀 Vérifier ce qui est envoyé
-    
+
         const { title, training_id, students, trainers, supervisors } = req.body;
         try {
             if (!title || !training_id) {
-                return res.status(400).json({ error: 'Titre et formation obligatoires' });
+                return next(new CustomError("Titre et formation obligatoires.", 400));
             }
-    
+
             const promotionData = { title, training_id };
-    
+
             const newPromotion = await promotionService.addPromotion(promotionData, students, trainers, supervisors);
             res.status(201).json(newPromotion);
         } catch (error) {
-            console.error("Erreur lors de l'ajout de la promotion:", error);
-            res.status(500).json({ error: "Une erreur est survenue lors de l'ajout de la promotion." });
+            next(new CustomError("Une erreur est survenue lors de l'ajout de la promotion.", 500));
         }
     }
-    
-    
 
-    async updatePromotion(req, res) {
+    async updatePromotion(req, res, next) {
         const { promotionId } = req.params;
         const { title, training_id } = req.body;
         try {
             // Validation des données d'entrée
             if (!title && !training_id) {
-                return res.status(400).json({ error: 'Titre et formation obligatoires' });
+                return next(new CustomError("Titre et formation obligatoires.", 400));
             }
 
             const promotionData = { title, training_id };
 
             await promotionService.updatePromotion(promotionId, promotionData);
-            res.status(200).json({ message: 'Promotion mise à jour' });
-        }
-        catch (error) {
-            console.error('Erreur lors de la mise à jour de la promotion:', error);
-            res.status(500).json({ error: 'Une erreur est survenue lors de la mise à jour de la promotion.' });
+            res.status(200).json({ message: "Promotion mise à jour." });
+        } catch (error) {
+            next(new CustomError("Une erreur est survenue lors de la mise à jour de la promotion.", 500));
         }
     }
 
-    async deletePromotion(req, res) {
+    async deletePromotion(req, res, next) {
         const { promotionId } = req.params;
-        try{
+        try {
             await promotionService.deletePromotion(promotionId);
-            res.status(200).json({ message: 'Promotion supprimée' });
-        }
-        catch(error){
-            console.error('Erreur lors de la suppression de la promotion:', error);
-            res.status(500).json({ error: 'Une erreur est survenue lors de la suppression de la promotion.' });
+            res.status(200).json({ message: "Promotion supprimée." });
+        } catch (error) {
+            next(new CustomError("Une erreur est survenue lors de la suppression de la promotion.", 500));
         }
     }
 
-    async getPromotionByTrainingId(req, res) {
+    async getPromotionByTrainingId(req, res, next) {
         const { trainingId } = req.params;
         try {
             const promotions = await promotionService.getPromotionByTrainingId(trainingId);
-            res.status(201).json(promotions);
+            res.status(200).json(promotions);
         } catch (error) {
-            console.error('Erreur lors de la récupération des promotions liées à une formation:', error);
-            res.status(500).json({ error: 'Une erreur est survenue lors de la récupération des promotions liées à une formation.' });
+            next(new CustomError("Une erreur est survenue lors de la récupération des promotions liées à une formation.", 500));
         }
-    
-};}
+    }
+}
 
-
-export default new promotionController();
+export default new PromotionController();

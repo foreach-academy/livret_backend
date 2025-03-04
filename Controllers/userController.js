@@ -1,75 +1,67 @@
 import userService from '../services/userServices.js';
-import EmailsServices from "../services/emailServices.js";
 import bcrypt from 'bcrypt';
-import User from '../models/user.js';
+import { CustomError } from '../errors/customError.js';
 
 class UserController {
     // Récupérer tous les utilisateurs
-    async getAllUsers(req, res) {
+    async getAllUsers(req, res, next) {
         try {
             const users = await userService.getAllUsers();
             res.json(users);
         } catch (error) {
-            console.error('Erreur lors de la récupération des utilisateurs:', error);
-            res.status(500).json({ error: "Une erreur s'est produite lors de la récupération des utilisateurs" });
+            next(new CustomError("Une erreur s'est produite lors de la récupération des utilisateurs", 500));
         }
     }
 
     // Récupérer un utilisateur par son ID
-    async getUserById(req, res) {
+    async getUserById(req, res, next) {
         try {
             const userId = req.params.id;
             const user = await userService.getUserById(userId);
             if (!user) {
-                return res.status(404).json({ error: "Utilisateur non trouvé." });
+                return next(new CustomError("Utilisateur non trouvé.", 404));
             }
             res.json(user);
         } catch (error) {
-            console.error('Erreur lors de la récupération de l\'utilisateur par ID:', error);
-            res.status(500).json({ error: "Une erreur s'est produite lors de la récupération de l'utilisateur" });
+            next(new CustomError("Une erreur s'est produite lors de la récupération de l'utilisateur", 500));
         }
     }
 
-    // récupérer les utilisateurs par rôle
-    async getUserByRole(req, res) {
+    // Récupérer les utilisateurs par rôle
+    async getUserByRole(req, res, next) {
         try {
             const role = req.params.role;
             const users = await userService.getUserByRole(role);
             if (!users.length) {
-                return res.status(404).json({ error: "Aucun utilisateur de ce rôle n'a été trouvé." });
+                return next(new CustomError("Aucun utilisateur de ce rôle n'a été trouvé.", 404));
             }
             res.json(users);
         } catch (error) {
-            console.error('Erreur lors de la récupération des utilisateurs par rôle:', error);
-            res.status(500).json({ error: "Une erreur s'est produite lors de la récupération des utilisateurs" });
+            next(new CustomError("Une erreur s'est produite lors de la récupération des utilisateurs", 500));
         }
     }
 
     // Ajouter un nouvel utilisateur
-    async addUser(req, res) {
-   
-
-        
+    async addUser(req, res, next) {
         try {
             const { firstname, lastname, email, role_id, position, password, birthdate, promo, created_at, updated_at } = req.body;
 
             // Validation des champs obligatoires
-            if (!firstname || !lastname || !email || !password ) {
-                
-                return res.status(400).json({ error: "Les champs 'firstname', 'lastname', 'email', 'password' sont requis." });
+            if (!firstname || !lastname || !email || !password) {
+                return next(new CustomError("Les champs 'firstname', 'lastname', 'email', 'password' sont requis.", 400));
             }
 
             // Validation de l'email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                return res.status(400).json({ error: "L'email n'est pas valide." });
+                return next(new CustomError("L'email n'est pas valide.", 400));
             }
 
             const userData = {
                 firstname,
                 lastname,
                 email,
-                promo : promo || null,
+                promo: promo || null,
                 birthdate: birthdate || null,
                 created_at: created_at || new Date(),
                 updated_at: updated_at || new Date(),
@@ -81,13 +73,12 @@ class UserController {
             const user = await userService.addUser(userData);
             res.status(201).json(user);
         } catch (error) {
-            console.error('Erreur lors de l\'ajout de l\'utilisateur:', error);
-            res.status(500).json({ error: "Une erreur s'est produite lors de l'ajout de l'utilisateur" });
+            next(new CustomError("Une erreur s'est produite lors de l'ajout de l'utilisateur", 500));
         }
     }
 
     // Mettre à jour un utilisateur par ID
-    async updateUser(req, res) {
+    async updateUser(req, res, next) {
         try {
             const userId = req.params.id;
             const { firstname, lastname, position, email, birthdate, promo, role_id, password } = req.body;
@@ -104,27 +95,25 @@ class UserController {
 
             const user = await userService.updateUser(userId, userData);
             if (!user) {
-                return res.status(404).json({ error: "Utilisateur non trouvé" });
+                return next(new CustomError("Utilisateur non trouvé", 404));
             }
             res.json(user);
         } catch (error) {
-            console.error('Erreur lors de la mise à jour de l\'utilisateur:', error);
-            res.status(500).json({ error: "Une erreur s'est produite lors de la mise à jour de l'utilisateur" });
+            next(new CustomError("Une erreur s'est produite lors de la mise à jour de l'utilisateur", 500));
         }
     }
 
     // Supprimer un utilisateur
-    async deleteUser(req, res) {
+    async deleteUser(req, res, next) {
         try {
             const { id } = req.params;
             const user = await userService.deleteUser(id);
             if (!user) {
-                return res.status(404).json({ error: "Utilisateur non trouvé" });
+                return next(new CustomError("Utilisateur non trouvé", 404));
             }
             res.json({ message: "Utilisateur supprimé avec succès" });
         } catch (error) {
-            console.error('Erreur lors de la suppression de l\'utilisateur:', error);
-            res.status(500).json({ error: "Une erreur s'est produite lors de la suppression de l'utilisateur" });
+            next(new CustomError("Une erreur s'est produite lors de la suppression de l'utilisateur", 500));
         }
     }
 }
