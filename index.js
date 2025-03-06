@@ -32,6 +32,7 @@ import studientPromotionRoute from './routes/studientPromotionRoute.js';
 import trainerPromotionRoute from './routes/trainerPromotionRoute.js';
 import supervisorPromotionRoute from './routes/supervisorPromotionRoute.js';
 import ErrorHandler from "./middleware/errorHandler.js";
+import modulePromotionRoute from "./routes/modulePromotionRoute.js"
 
 // Configurer les relations
 setupRelations();
