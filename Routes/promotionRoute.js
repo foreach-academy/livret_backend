@@ -2,11 +2,11 @@ import { Router } from 'express';
 const router = Router();
 import promotionController from '../controllers/promotionController.js';
 
-router.get('/', (req, res) => promotionController.getAllPromotions(req, res));
-router.get('/:promotionId', (req, res) => promotionController.getPromotionById(req, res));
-router.post('/', (req, res) => promotionController.addPromotion(req, res));
-router.patch('/:promotionId', (req, res) => promotionController.updatePromotion(req, res));
-router.delete('/:promotionId', (req, res) => promotionController.deletePromotion(req, res));
-router.get('/promoByTraining/:trainingId', (req, res) => promotionController.getPromotionByTrainingId(req,res));
+router.get('/', (req, res, next) => promotionController.getAllPromotions(req, res, next));
+router.get('/:promotionId', (req, res, next) => promotionController.getPromotionById(req, res, next));
+router.post('/', (req, res, next) => promotionController.addPromotion(req, res, next));
+router.patch('/:promotionId', (req, res, next) => promotionController.updatePromotion(req, res, next));
+router.delete('/:promotionId', (req, res, next,) => promotionController.deletePromotion(req, res, next));
+router.get('/promoByTraining/:trainingId', (req, res, next) => promotionController.getPromotionByTrainingId(req,res, next));
 
 export default router;

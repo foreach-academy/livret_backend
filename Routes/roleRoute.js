@@ -3,6 +3,6 @@ import roleController from '../controllers/roleController.js';
 
 const router = Router();
 
-router.get('/', (req, res) => roleController.getAllRoles(req,res));
+router.get('/', (req, res, next) => roleController.getAllRoles(req,res, next));
 
 export default router;

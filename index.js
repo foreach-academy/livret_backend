@@ -19,6 +19,20 @@ import './models/modulePromotion.js';
 import './models/evaluationResult.js';
 import './models/evaluation.js';
 
+// Routes
+import roleRoute from './routes/roleRoute.js';
+import authenticateRoute from './routes/authenticateRoute.js';
+import trainingRoute from './routes/trainingRoute.js';
+import moduleRoute from './routes/moduleRoute.js';
+import evaluationRoute from './routes/evaluationRoute.js';
+import emailRoute from './routes/emailRoute.js';
+import userRoute from './routes/userRoute.js';
+import promotionRoute from './routes/promotionRoute.js';
+import studientPromotionRoute from './routes/studientPromotionRoute.js';
+import trainerPromotionRoute from './routes/trainerPromotionRoute.js';
+import supervisorPromotionRoute from './routes/supervisorPromotionRoute.js';
+import ErrorHandler from "./middleware/errorHandler.js";
+
 // Configurer les relations
 setupRelations();
 
@@ -61,19 +75,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Routes
-import roleRoute from './routes/roleRoute.js';
-import authenticateRoute from './routes/authenticateRoute.js';
-import trainingRoute from './routes/trainingRoute.js';
-import moduleRoute from './routes/moduleRoute.js';
-import evaluationRoute from './routes/evaluationRoute.js';
-import emailRoute from './routes/emailRoute.js';
-import userRoute from './routes/userRoute.js';
-import promotionRoute from './routes/promotionRoute.js';
-import studientPromotionRoute from './routes/studientPromotionRoute.js';
-import trainerPromotionRoute from './routes/trainerPromotionRoute.js';
-import supervisorPromotionRoute from './routes/supervisorPromotionRoute.js';
-import ErrorHandler from "./middleware/errorHandler.js";
+
 
 app.use("/roles", roleRoute);
 app.use("/users", userRoute);

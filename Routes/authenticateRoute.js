@@ -11,9 +11,9 @@ const loginLimiter = BruteForceSecurity({
 });
 
 
-router.post('/login',loginLimiter, (req, res) =>  authenticateController.login(req,res));
-router.post('/subscribe', (req, res) =>  authenticateController.subscribe(req,res));
-router.post('/reset-password', (req, res) => authenticateController.resetPassword(req,res));
+router.post('/login',loginLimiter, (req, res, next) =>  authenticateController.login(req,res, next));
+router.post('/subscribe', (req, res, next) =>  authenticateController.subscribe(req,res, next));
+router.post('/reset-password', (req, res, next) => authenticateController.resetPassword(req,res, next));
 
 
 

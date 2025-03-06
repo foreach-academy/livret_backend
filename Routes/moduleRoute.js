@@ -2,10 +2,10 @@ import ModuleControl from '../controllers/moduleController.js';
 import { Router } from 'express';
 const router = Router();
 
-router.get('/', (req, res) => ModuleControl.getAllModules(req,res));
-router.get('/:moduleId', (req, res) => ModuleControl.getModuleById(req, res));
-router.post('/', (req, res) => ModuleControl.addModule(req, res));
-router.put('/:moduleId', (req, res) => ModuleControl.updateModule(req, res));
-router.delete('/:moduleId', (req, res) => ModuleControl.deleteModule(req, res));
+router.get('/', (req, res, next) => ModuleControl.getAllModules(req,res, next));
+router.get('/:moduleId', (req, res, next) => ModuleControl.getModuleById(req, res, next));
+router.post('/', (req, res, next) => ModuleControl.addModule(req, res, next));
+router.put('/:moduleId', (req, res, next) => ModuleControl.updateModule(req, res, next));
+router.delete('/:moduleId', (req, res, next) => ModuleControl.deleteModule(req, res, next));
 
 export default router;

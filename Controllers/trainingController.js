@@ -2,35 +2,37 @@ import TrainingService from "../services/trainingService.js";
 import Training from "../models/training.js";
 import sequelize from "../config/Sequelize.js";
 import Module from "../models/module.js"; 
+import { CustomError } from '../errors/customError.js';
 
 class TrainingController {
-    async getAllTrainings(req, res) {
+    async getAllTrainings(req, res, next) {
         try {
             const trainings = await TrainingService.getAllTrainings();
             res.json(trainings);
         } catch (error) {
-            console.error("Erreur lors de la récupération de toutes les formations:", error);
-            res.status(500).json({ error: "Une erreur est survenue lors de la récupération des formations." });
+            next(new CustomError("Une erreur est survenue lors de la récupération des formations.", 500));
         }
     }
 
-    async getTrainingById(req, res) {
+    async getTrainingById(req, res, next) {
         const { trainingId } = req.params;
 
         try {
             const training = await TrainingService.getTrainingById(trainingId);
+            if (!training) {
+                throw new CustomError("Formation non trouvée.", 404);
+            }
             res.json(training);
         } catch (error) {
-            console.error("Erreur lors de la récupération de la formation:", error);
-            res.status(500).json({ error: "Une erreur est survenue lors de la récupération de la formation." });
+           next(error)
         }
     }
 
-    async addTrainingWithModules(req, res) {
+    async addTrainingWithModules(req, res, next) {
         const { title, description, modules } = req.body;
 
         if (!title) {
-            return res.status(400).json({ error: "Un nom de formation est requis" });
+            throw new CustomError("Un nom de formation est requis.", 400);
         }
 
         const transaction = await sequelize.transaction(); // Démarrer une transaction Sequelize
@@ -54,32 +56,30 @@ class TrainingController {
             res.status(201).json({ message: "Formation et modules ajoutés avec succès", trainingId: training.id });
         } catch (error) {
             await transaction.rollback(); // Annule les changements en cas d'erreur
-            console.error("Erreur lors de l'ajout d'une formation avec modules:", error);
-            res.status(500).json({ error: "Une erreur est survenue lors de l'ajout de la formation et des modules." });
+            next(error)
         }
     }
 
-    async updateTrainingById(req, res) {
+    async updateTrainingById(req, res, next) {
         const { trainingId } = req.params;
         const { title, description } = req.body;
 
-        if (!title &&!description) {
-            return res.status(400).json({ error: "Au moins un des champs est requis" });
+        if (!title && !description) {
+            throw new CustomError("Au moins un des champs est requis.", 400);
         }
 
         try {
             const training = await Training.findByPk(trainingId);
 
             if (!training) {
-                return res.status(404).json({ error: "Formation non trouvée" });
+                throw new CustomError("Formation non trouvée.", 404);
             }
 
             await training.update({ title, description });
 
-            res.status(201).json({ message: "Formation mise à jour avec succès" });
+            res.status(200).json({ message: "Formation mise à jour avec succès." });
         } catch (error) {
-            console.error("Erreur lors de la mise à jour de la formation:", error);
-            res.status(500).json({ error: "Une erreur est survenue lors de la mise à jour de la formation." });
+            next(error)
         }
     }
 }
