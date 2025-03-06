@@ -1,5 +1,4 @@
 import Module from "../models/module.js";
-import User from '../models/user.js';
 
 class ModuleService {
     // récuperer un module par son ID
@@ -22,8 +21,10 @@ class ModuleService {
     async deleteModule (moduleId) {
         return await Module.destroy({ where: { id: moduleId } })
     }
-
-
+// récupérer les modules d'un training
+    async getTraining (training_id) {
+        return await Module.findAll({ where: { training_id } })
+    }
 }
 
 export default new ModuleService();

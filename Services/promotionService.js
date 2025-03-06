@@ -71,9 +71,9 @@ class PromotionService {
     }
 
     //  Ajouter une promotion
-    async addPromotion(promotionData, studients, trainers, supervisors) {
+ 
+    async addPromotion(promotionData, studients, trainers, supervisors, modules) {
         try {
-    
             // Vérifier si une promotion avec le même titre existe déjà
             const existingPromotion = await Promotion.findOne({
                 where: { title: promotionData.title }
@@ -86,7 +86,6 @@ class PromotionService {
             // Création de la promotion
             const promotion = await Promotion.create(promotionData);
             const promotionId = promotion.id;
-    
     
             // Ajout des étudiants
             if (studients && studients.length > 0) {
@@ -118,12 +117,28 @@ class PromotionService {
                 );
             }
     
+            // Ajout des modules à la promotion
+            if (modules && modules.length > 0) {
+                await ModulePromotion.bulkCreate(
+                    modules.map(module => ({
+                        promotion_id: promotionId,
+                        module_id: module.id, 
+                        trainer_id: trainers[0] || null, 
+                        start_date: module.startDate || null,
+                        end_date: module.endDate || null,
+                        evaluation_id: module.evaluation_id || null
+                    }))
+                );
+                
+            }
+    
             return promotion;
         } catch (error) {
-            console.error(" Erreur lors de l'ajout de la promotion :", error);
+            console.error("Erreur lors de l'ajout de la promotion :", error);
             throw error;
         }
     }
+    
     
     
 

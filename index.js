@@ -88,6 +88,7 @@ app.use("/promotions", promotionRoute);
 app.use("/studients-promotion", studientPromotionRoute);
 app.use("/trainers-promotion", trainerPromotionRoute);
 app.use("/supervisors-promotion", supervisorPromotionRoute);
+app.use("/modules-promotion", modulePromotionRoute);
 
 app.use(ErrorHandler)
 export default app;
