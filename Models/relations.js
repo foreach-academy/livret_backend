@@ -60,4 +60,5 @@ export function setupRelations() {
     EvaluationUser.belongsTo(User, { foreignKey: 'user_id', as: 'evaluationUser' });
     EvaluationUser.belongsTo(ModulePromotion, { foreignKey: 'module_promotion_id', as: 'evaluationModulePromotion' });
     EvaluationUser.belongsTo(EvaluationResult, { foreignKey: 'result_id', as: 'evaluationResult' });
+
 }

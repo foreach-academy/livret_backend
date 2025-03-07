@@ -4,6 +4,7 @@ import User from "../models/user.js";
 import StudientsPromotion from "../models/studientsPromotion.js";
 import SupervisorsPromotion from "../models/supervisorsPromotion.js";
 import TrainersPromotion from "../models/trainersPromotion.js";
+import ModulePromotion from '../models/modulePromotion.js';
 
 class PromotionService {
     // Récupérer toutes les promotions
@@ -71,9 +72,9 @@ class PromotionService {
     }
 
     //  Ajouter une promotion
-    async addPromotion(promotionData, studients, trainers, supervisors) {
+ 
+    async addPromotion(promotionData, students, trainers, supervisors, modules) {
         try {
-    
             // Vérifier si une promotion avec le même titre existe déjà
             const existingPromotion = await Promotion.findOne({
                 where: { title: promotionData.title }
@@ -87,13 +88,12 @@ class PromotionService {
             const promotion = await Promotion.create(promotionData);
             const promotionId = promotion.id;
     
-    
             // Ajout des étudiants
-            if (studients && studients.length > 0) {
+            if (students && students.length > 0) {
                 await StudientsPromotion.bulkCreate(
-                    studients.map(studientId => ({
+                    students.map(studient => ({
                         promotion_id: promotionId,
-                        studient_id: studientId
+                        studient_id: studient.id
                     }))
                 );
             }
@@ -103,7 +103,7 @@ class PromotionService {
                 await TrainersPromotion.bulkCreate(
                     trainers.map(trainerId => ({
                         promotion_id: promotionId,
-                        trainer_id: trainerId
+                        trainer_id: trainerId.id
                     }))
                 );
             }
@@ -113,17 +113,30 @@ class PromotionService {
                 await SupervisorsPromotion.bulkCreate(
                     supervisors.map(supervisorId => ({
                         promotion_id: promotionId,
-                        supervisor_id: supervisorId
+                        supervisor_id: supervisorId.id
                     }))
                 );
             }
     
+            await ModulePromotion.bulkCreate(
+                modules.map(module => ({
+                    promotion_id: promotionId,
+                    trainer_id: module.trainerId || null, 
+                    start_date: module.startDate || null,
+                    end_date: module.endDate || null,
+                    evaluation_id: module.evaluation_id || null,
+                    module_id: module.id  
+                }))
+            );
+            
+    
             return promotion;
         } catch (error) {
-            console.error(" Erreur lors de l'ajout de la promotion :", error);
+            console.error("Erreur lors de l'ajout de la promotion :", error);
             throw error;
         }
     }
+    
     
     
 
