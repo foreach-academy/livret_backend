@@ -125,7 +125,7 @@ class PromotionService {
                     start_date: module.startDate || null,
                     end_date: module.endDate || null,
                     evaluation_id: module.evaluation_id || null,
-                    module_id: module.id  // ✅ Ajout du module_id ici
+                    module_id: module.id  
                 }))
             );
             

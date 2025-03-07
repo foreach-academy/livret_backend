@@ -53,6 +53,26 @@ class ModulePromotionControl  {
             next(error)
         }
     }
+    async getModuleOfPromotion(req, res, next) {
+        try {
+            const promotionId = req.params.promotionId;
+
+            if (!promotionId) {
+                return res.status(400).json({ message: "ID de promotion requis." });
+            }
+
+            const module = await ModulePromotionService.getModuleOfPromotion(promotionId);
+
+            if (!module) {
+                return res.status(404).json({ message: "Module de promotion non trouvé." });
+            }
+
+            return res.status(200).json(module);
+            
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 export default new ModulePromotionControl;

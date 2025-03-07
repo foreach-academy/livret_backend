@@ -72,10 +72,11 @@ ModulePromotion.init(
     }
 );
 
-ModulePromotion.belongsTo(TrainersPromotion, { 
+ModulePromotion.belongsTo(User, { 
     foreignKey: 'trainer_id', 
     onDelete: 'CASCADE', 
-    onUpdate: 'CASCADE' 
+    onUpdate: 'CASCADE',
+    as: 'trainerInfo'
 });
 
 ModulePromotion.belongsTo(Promotion, { 
@@ -87,7 +88,8 @@ ModulePromotion.belongsTo(Promotion, {
 ModulePromotion.belongsTo(Module, { 
     foreignKey: 'module_id', 
     onDelete: 'CASCADE', 
-    onUpdate: 'CASCADE' 
+    onUpdate: 'CASCADE',
+    as:'moduleInfo'
 });
 
 ModulePromotion.belongsTo(Evaluation, { 
@@ -95,5 +97,6 @@ ModulePromotion.belongsTo(Evaluation, {
     onDelete: 'SET NULL', 
     onUpdate: 'CASCADE' 
 });
+
 
 export default ModulePromotion;
