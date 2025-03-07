@@ -4,6 +4,7 @@ import sequelize from '../config/Sequelize.js';
 import TrainersPromotion from "./trainersPromotion.js";
 import Promotion from "./promotion.js";
 import Module from "./module.js";
+import User from "./user.js";
 
 
 class ModulePromotion extends Model {}
@@ -20,7 +21,7 @@ ModulePromotion.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: TrainersPromotion, 
+                model: User, 
                 key: 'id',
             }
         },

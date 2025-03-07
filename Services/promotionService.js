@@ -4,6 +4,7 @@ import User from "../models/user.js";
 import StudientsPromotion from "../models/studientsPromotion.js";
 import SupervisorsPromotion from "../models/supervisorsPromotion.js";
 import TrainersPromotion from "../models/trainersPromotion.js";
+import ModulePromotion from '../models/modulePromotion.js';
 
 class PromotionService {
     // Récupérer toutes les promotions
@@ -72,7 +73,7 @@ class PromotionService {
 
     //  Ajouter une promotion
  
-    async addPromotion(promotionData, studients, trainers, supervisors, modules) {
+    async addPromotion(promotionData, students, trainers, supervisors, modules) {
         try {
             // Vérifier si une promotion avec le même titre existe déjà
             const existingPromotion = await Promotion.findOne({
@@ -88,11 +89,11 @@ class PromotionService {
             const promotionId = promotion.id;
     
             // Ajout des étudiants
-            if (studients && studients.length > 0) {
+            if (students && students.length > 0) {
                 await StudientsPromotion.bulkCreate(
-                    studients.map(studientId => ({
+                    students.map(studient => ({
                         promotion_id: promotionId,
-                        studient_id: studientId
+                        studient_id: studient.id
                     }))
                 );
             }
@@ -102,7 +103,7 @@ class PromotionService {
                 await TrainersPromotion.bulkCreate(
                     trainers.map(trainerId => ({
                         promotion_id: promotionId,
-                        trainer_id: trainerId
+                        trainer_id: trainerId.id
                     }))
                 );
             }
@@ -112,25 +113,22 @@ class PromotionService {
                 await SupervisorsPromotion.bulkCreate(
                     supervisors.map(supervisorId => ({
                         promotion_id: promotionId,
-                        supervisor_id: supervisorId
+                        supervisor_id: supervisorId.id
                     }))
                 );
             }
     
-            // Ajout des modules à la promotion
-            if (modules && modules.length > 0) {
-                await ModulePromotion.bulkCreate(
-                    modules.map(module => ({
-                        promotion_id: promotionId,
-                        module_id: module.id, 
-                        trainer_id: trainers[0] || null, 
-                        start_date: module.startDate || null,
-                        end_date: module.endDate || null,
-                        evaluation_id: module.evaluation_id || null
-                    }))
-                );
-                
-            }
+            await ModulePromotion.bulkCreate(
+                modules.map(module => ({
+                    promotion_id: promotionId,
+                    trainer_id: module.trainerId || null, 
+                    start_date: module.startDate || null,
+                    end_date: module.endDate || null,
+                    evaluation_id: module.evaluation_id || null,
+                    module_id: module.id  // ✅ Ajout du module_id ici
+                }))
+            );
+            
     
             return promotion;
         } catch (error) {

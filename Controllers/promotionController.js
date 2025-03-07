@@ -25,9 +25,9 @@ class PromotionController {
     }
 
     async addPromotion(req, res, next) {
-        console.log("Données reçues:", req.body); // 👀 Vérifier ce qui est envoyé
+        console.log("Données reçues:", req.body); 
 
-        const { title, training_id, students, trainers, supervisors } = req.body;
+        const { title, training_id, students, trainers, supervisors, modules } = req.body;
         try {
             if (!title || !training_id) {
                 throw new CustomError("Titre et formation obligatoires.", 400);
@@ -35,7 +35,7 @@ class PromotionController {
 
             const promotionData = { title, training_id };
 
-            const newPromotion = await promotionService.addPromotion(promotionData, students, trainers, supervisors);
+            const newPromotion = await promotionService.addPromotion(promotionData, students, trainers, supervisors, modules);
             res.status(201).json(newPromotion);
         } catch (error) {
             next(new CustomError("Une erreur est survenue lors de l'ajout de la promotion.", 500));
