@@ -6,7 +6,6 @@ class ModulePromotionControl  {
     async updateModulePromotion(req, res, next) {
         try {
             const { promotion_id, module_id, trainer_id, start_date, end_date } = req.body;
-
             if (!promotion_id || !module_id || !trainer_id || !start_date || !end_date) {
                 return res.status(400).json({ message: "Tous les champs sont requis." });
             }
@@ -29,7 +28,6 @@ class ModulePromotionControl  {
 
     async addModulePromotion(req, res, next) {
         try {
-            console.log("Requête reçue avec body :", req.body); // ✅ DEBUG
             const { promotion_id, module_id, trainer_id, start_date, end_date } = req.body;
      
 

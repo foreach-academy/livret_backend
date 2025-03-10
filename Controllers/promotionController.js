@@ -25,7 +25,6 @@ class PromotionController {
     }
 
     async addPromotion(req, res, next) {
-        console.log("Données reçues:", req.body); 
 
         const { title, training_id, students, trainers, supervisors, modules } = req.body;
         try {

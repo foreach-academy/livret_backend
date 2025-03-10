@@ -1,7 +1,5 @@
-import Evaluation from "../models/evaluation.js";
 import Module from "../models/module.js";
 import ModulePromotion from "../models/modulePromotion.js";
-import Promotion from "../models/promotion.js";
 import User from "../models/user.js";
 
 
@@ -9,6 +7,7 @@ class ModulePromotionService {
 
     async updateModulePromotion({ promotion_id, module_id, trainer_id, start_date, end_date }) {
         try {
+
             const [updatedRows] = await ModulePromotion.update(
                 { trainer_id, start_date, end_date },
                 { where: { promotion_id, module_id } }
