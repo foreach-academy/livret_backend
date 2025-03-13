@@ -6,14 +6,14 @@ class EmailController {
     
     // Contrôleur pour envoyer le lien de réinitialisation du mot de passe
     async requestPasswordReset(req, res, next) {
+  
         try {
-            const { email } = req.body;
-
+            const  {email}  = req.body;
             if (!email) {
                 throw new CustomError("L'email est requis.", 400);
             }
 
-            const user = await User.findOne({ where: { email } });
+            const user = await User.findOne({ where: { email : email } });
             if (!user) {
                 throw new CustomError("Utilisateur non trouvé.", 404);
             }
