@@ -1,4 +1,5 @@
 
+import { CustomError } from '../errors/customError.js';
 import ModulePromotionService from '../services/modulePromotionService.js';
 
 class ModulePromotionControl  {
@@ -7,7 +8,8 @@ class ModulePromotionControl  {
         try {
             const { promotion_id, module_id, trainer_id, start_date, end_date } = req.body;
             if (!promotion_id || !module_id || !trainer_id || !start_date || !end_date) {
-                return res.status(400).json({ message: "Tous les champs sont requis." });
+                throw new CustomError("Tous les champs sont requis.", 400);
+
             }
 
             const updatedModule = await ModulePromotionService.updateModulePromotion({
@@ -33,7 +35,7 @@ class ModulePromotionControl  {
 
             // Vérification des champs requis
             if (!promotion_id || !module_id || !trainer_id || !start_date || !end_date) {
-                return res.status(400).json({ message: "Tous les champs sont requis." });
+                throw new CustomError("Tous les champs sont requis." , 400)
             }
 
             // Appel du service pour ajouter le module à la promotion
@@ -56,13 +58,13 @@ class ModulePromotionControl  {
             const promotionId = req.params.promotionId;
 
             if (!promotionId) {
-                return res.status(400).json({ message: "ID de promotion requis." });
+                throw new CustomError("ID de promotion requis.", 400)
             }
 
             const module = await ModulePromotionService.getModuleOfPromotion(promotionId);
 
             if (!module) {
-                return res.status(404).json({ message: "Module de promotion non trouvé." });
+                throw new CustomError("Module de promotion non trouvé" , 404)
             }
 
             return res.status(200).json(module);
