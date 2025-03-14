@@ -24,6 +24,9 @@ class PromotionService {
             ]
         });
     }
+    async getPromotionByTitle(title) {
+        return await Promotion.findAll({ where: { title: title } });
+    }
     
     //  Récupérer une promotion par ID avec jointures
     async getPromotionById(promotionId) {
@@ -136,6 +139,48 @@ class PromotionService {
             throw error;
         }
     }
+
+    async findPromotion(promotionId) {
+        const studients = await StudientsPromotion.findAll({
+            where: { promotion_id: promotionId },
+            include: [
+                {
+                    model: User,
+                    as: 'studientUser',
+                    attributes: ['id', 'firstname', 'lastname', 'email', 'birthdate']
+                }
+            ]
+        });
+    
+        const trainers = await TrainersPromotion.findAll({
+            where: { promotion_id: promotionId },
+            include: [
+                {
+                    model: User,
+                    as: 'trainerUser',
+                    attributes: ['id', 'firstname', 'lastname', 'email']
+                }
+            ]
+        });
+    
+        const supervisors = await SupervisorsPromotion.findAll({
+            where: { promotion_id: promotionId },
+            include: [
+                {
+                    model: User,
+                    as: 'supervisorUser',
+                    attributes: ['id', 'firstname', 'lastname', 'email']
+                }
+            ]
+        });
+    
+        return {
+            studients: studients.map(s => s.studientUser),
+            trainers: trainers.map(t => t.trainerUser),
+            supervisors: supervisors.map(s => s.supervisorUser)
+        };
+    }
+    
     
     
     

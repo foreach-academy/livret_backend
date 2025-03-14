@@ -31,13 +31,18 @@ class PromotionController {
             if (!title || !training_id) {
                 throw new CustomError("Titre et formation obligatoires.", 400);
             }
+            //vérifier si le nom de la formation existe déjà
+            const existingPromotion = await promotionService.getPromotionByTitle(title);
+            if (existingPromotion.length > 0) {
+                throw new CustomError("Une promotion avec le même nom existe déjà.", 400);
+            }
 
             const promotionData = { title, training_id };
 
             const newPromotion = await promotionService.addPromotion(promotionData, students, trainers, supervisors, modules);
             res.status(201).json(newPromotion);
         } catch (error) {
-            next(new CustomError("Une erreur est survenue lors de l'ajout de la promotion.", 500));
+            next(error);
         }
     }
 
@@ -62,10 +67,22 @@ class PromotionController {
     async deletePromotion(req, res, next) {
         const { promotionId } = req.params;
         try {
+            const existingUserPromotion = await promotionService.findPromotion(promotionId);
+
+            if (
+                existingUserPromotion.studients.length > 0 ||
+                existingUserPromotion.trainers.length > 0 ||
+                existingUserPromotion.supervisors.length > 0
+            ) {
+                throw new CustomError("Cette promotion contient un ou plusieurs utilisateurs.", 400);
+            }
+
+
             await promotionService.deletePromotion(promotionId);
             res.status(200).json({ message: "Promotion supprimée." });
+
         } catch (error) {
-            next(error)
+            next(error);
         }
     }
 
