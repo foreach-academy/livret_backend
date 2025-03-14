@@ -26,7 +26,7 @@ class PromotionController {
 
     async addPromotion(req, res, next) {
 
-        const { title, training_id, students, trainers, supervisors, modules } = req.body;
+        const { title, training_id, students, trainers, supervisors, modules, start_date, end_date } = req.body;
         try {
             if (!title || !training_id) {
                 throw new CustomError("Titre et formation obligatoires.", 400);
@@ -37,7 +37,7 @@ class PromotionController {
                 throw new CustomError("Une promotion avec le même nom existe déjà.", 400);
             }
 
-            const promotionData = { title, training_id };
+            const promotionData = { title, training_id, start_date, end_date};
 
             const newPromotion = await promotionService.addPromotion(promotionData, students, trainers, supervisors, modules);
             res.status(201).json(newPromotion);
