@@ -18,7 +18,6 @@ const BruteForceSecurity = (options = {}) => {
         handler: (req, res) => {
             const retryAfterSeconds = Math.ceil((req.rateLimit.resetTime - Date.now()) / 1000); // Calcul du temps restant en secondes
             const retryAfterFormatted = formatTime(retryAfterSeconds); // Formater en minutes et secondes
-            console.log('Temps restant avant le prochain essai:', retryAfterFormatted); // Debug
 
             // Ajouter l'en-tête Retry-After avec le temps en secondes pour le front-end
             res.set('Retry-After', retryAfterSeconds.toString());
