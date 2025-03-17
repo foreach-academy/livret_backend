@@ -4,6 +4,7 @@ import sequelize from '../config/Sequelize.js';
 import TrainersPromotion from "./trainersPromotion.js";
 import Promotion from "./promotion.js";
 import Module from "./module.js";
+import User from "./user.js";
 
 
 class ModulePromotion extends Model {}
@@ -18,9 +19,9 @@ ModulePromotion.init(
 
         trainer_id: { 
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             references: {
-                model: TrainersPromotion, 
+                model: User, 
                 key: 'id',
             }
         },
@@ -71,10 +72,11 @@ ModulePromotion.init(
     }
 );
 
-ModulePromotion.belongsTo(TrainersPromotion, { 
+ModulePromotion.belongsTo(User, { 
     foreignKey: 'trainer_id', 
     onDelete: 'CASCADE', 
-    onUpdate: 'CASCADE' 
+    onUpdate: 'CASCADE',
+    as: 'trainerInfo'
 });
 
 ModulePromotion.belongsTo(Promotion, { 
@@ -86,7 +88,8 @@ ModulePromotion.belongsTo(Promotion, {
 ModulePromotion.belongsTo(Module, { 
     foreignKey: 'module_id', 
     onDelete: 'CASCADE', 
-    onUpdate: 'CASCADE' 
+    onUpdate: 'CASCADE',
+    as:'moduleInfo'
 });
 
 ModulePromotion.belongsTo(Evaluation, { 
@@ -94,5 +97,6 @@ ModulePromotion.belongsTo(Evaluation, {
     onDelete: 'SET NULL', 
     onUpdate: 'CASCADE' 
 });
+
 
 export default ModulePromotion;

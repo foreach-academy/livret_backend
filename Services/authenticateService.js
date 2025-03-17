@@ -36,9 +36,6 @@ class AuthenticateService {
             }
 
             const user = await User.create(data);
-
-            console.log("Utilisateur enregistré avec succès:", user);
-
             return user;
         } catch (error) {
             console.error("Erreur dans subscribe:", error);
