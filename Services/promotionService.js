@@ -9,7 +9,14 @@ import ModulePromotion from '../models/modulePromotion.js';
 class PromotionService {
     // Récupérer toutes les promotions
     async getAllPromotions() {
-        return await Promotion.findAll();
+        return await Promotion.findAll({
+            include: [
+                { model: Training,
+                    as: 'training',
+                    attributes: ['id', 'title', 'description']
+                },]
+        }
+        );
     }
 
     async getPromotionByTrainingId(trainingId) {
