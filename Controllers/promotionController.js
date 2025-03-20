@@ -48,17 +48,17 @@ class PromotionController {
 
     async updatePromotion(req, res, next) {
         const { promotionId } = req.params;
-        const { title, training_id } = req.body;
+        const { title, start_date, end_date} = req.body;
         try {
             // Validation des données d'entrée
-            if (!title && !training_id) {
+            if (!title) {
                 throw new CustomError("Titre et formation obligatoires.", 400);
             }
 
-            const promotionData = { title, training_id };
+            const promotionData = { title, start_date, end_date};
 
             await promotionService.updatePromotion(promotionId, promotionData);
-            res.status(200).json({ message: "Promotion mise à jour." });
+            res.status(200).json({ message: `Promotion ${title} mise à jour.` });
         } catch (error) {
             next(error)
         }

@@ -194,6 +194,7 @@ class PromotionService {
 
     //  Mettre à jour une promotion (titre + training)
     async updatePromotion(promotionId, promotionData) {
+
         const promotion = await Promotion.findByPk(promotionId);
         if (!promotion) {
             throw new Error('Promotion non trouvée');
