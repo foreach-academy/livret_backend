@@ -32,6 +32,7 @@ import studientPromotionRoute from './routes/studientPromotionRoute.js';
 import trainerPromotionRoute from './routes/trainerPromotionRoute.js';
 import supervisorPromotionRoute from './routes/supervisorPromotionRoute.js';
 import ErrorHandler from "./middleware/errorHandler.js";
+import modulePromotionRoute from "./routes/modulePromotionRoute.js"
 
 // Configurer les relations
 setupRelations();
@@ -88,6 +89,7 @@ app.use("/promotions", promotionRoute);
 app.use("/studients-promotion", studientPromotionRoute);
 app.use("/trainers-promotion", trainerPromotionRoute);
 app.use("/supervisors-promotion", supervisorPromotionRoute);
+app.use("/modules-promotion", modulePromotionRoute);
 
 app.use(ErrorHandler)
 export default app;

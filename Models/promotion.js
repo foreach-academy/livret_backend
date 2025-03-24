@@ -24,6 +24,14 @@ Promotion.init({
         },
         onDelete: "SET NULL",
         onUpdate: "CASCADE"
+    },
+    start_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    end_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
     }
 }, {
     sequelize,

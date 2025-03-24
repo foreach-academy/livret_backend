@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS module_promotion (
     evaluation_id integer null,
     start_date date null,
     end_date date null,
-    CONSTRAINT fk_module_promotion_trainer FOREIGN KEY (trainer_id) REFERENCES trainers_promotion (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_module_promotion_trainer FOREIGN KEY (trainer_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT fk_module_promotion_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT fk_module_promotion_module FOREIGN KEY (module_id) REFERENCES module (id) ON DELETE SET NULL ON UPDATE cascade,
     constraint fk_module_promotion_evaluation foreign key (evaluation_id) references evaluation(id) on delete set null on update cascade

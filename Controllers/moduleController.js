@@ -71,6 +71,17 @@ class ModuleController {
             next(error)
         }
     }
+    async getModulesByTraining(req, res) {
+        const { trainingId } = req.params;
+        try {
+            const modules = await ModuleService.getTraining(trainingId);
+            res.json(modules);
+        } catch (error) {
+            // next(error);
+            res.status(500).json({ error: "An error occurred while getting modules by training" });
+        }
+    
+}
 }
 
 export default new ModuleController();
