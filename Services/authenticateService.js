@@ -59,7 +59,7 @@ class AuthenticateService {
                 role: user.userRole.id ? user.userRole.name : "user"  // Assurer que role existe, sinon valeur par défaut
             };
 
-            return jwt.sign(userPayload, process.env.PASSWORD_SECRET, { expiresIn: '30d' });
+            return jwt.sign(userPayload, process.env.PASSWORD_SECRET, { expiresIn: '2h' });
 
         } catch (error) {
             console.error("Erreur dans createToken:", error);

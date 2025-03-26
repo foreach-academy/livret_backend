@@ -106,17 +106,46 @@ CREATE TABLE IF NOT EXISTS evaluation_user (
     CONSTRAINT fk_evaluation_user_evaluation_result FOREIGN KEY (result_id) REFERENCES evaluation_result (id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS company (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    address VARCHAR NULL,
+    zip_code VARCHAR NULL,
+    city VARCHAR NULL
+    );
+
+CREATE TABLE IF NOT EXISTS tutor (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    company_id INTEGER NOT NULL,
+    position VARCHAR NULL, 
+    start_tutorat DATE,
+    end_tutorat DATE,
+    CONSTRAINT fk_tutor_user FOREIGN KEY (user_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_tutor_company FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS studients_promotion (
+    id SERIAL PRIMARY KEY,
     studient_id INTEGER NOT NULL,
     promotion_id INTEGER NOT NULL,
     CONSTRAINT fk_studients_promotion_studient FOREIGN KEY (studient_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT fk_studients_promotion_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id) ON DELETE SET NULL ON UPDATE CASCADE
 );
-
+CREATE TABLE IF NOT EXISTS alternance_promotion (
+    id SERIAL PRIMARY KEY,
+    id_studient_promotion INTEGER NOT NULL,
+    start_date DATE,
+    end_date DATE,
+    appreciation TEXT NULL, 
+    CONSTRAINT fk_alternance_promotion_studient FOREIGN KEY (id_studient_promotion) REFERENCES studients_promotion (id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+    
 INSERT INTO role (name) VALUES 
 ('Admin'),
 ('Formateur'),
-('Etudiant');
+('Etudiant'),
+('Tuteur');
 
 
 -- password = admin1
