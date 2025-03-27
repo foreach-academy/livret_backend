@@ -29,7 +29,7 @@ class TrainingController {
     }
 
     async addTrainingWithModules(req, res, next) {
-        const { title, description, modules } = req.body;
+        const { title, description, modules, url } = req.body;
 
         if (!title) {
             throw new CustomError("Un nom de formation est requis.", 400);
@@ -38,7 +38,7 @@ class TrainingController {
         const transaction = await sequelize.transaction(); // Démarrer une transaction Sequelize
         try {
             // Étape 1 : Ajouter la formation
-            const training = await Training.create({ title, description }, { transaction });
+            const training = await Training.create({ title, description, url }, { transaction });
 
             // Étape 2 : Ajouter chaque module avec `training_id`
             const modulePromises = modules.map(async (module) => {
