@@ -153,7 +153,7 @@ INSERT INTO role (name) VALUES
 
 -- password = admin1
 INSERT INTO public."user" (lastname,firstname,email,"password",birthdate,created_at,updated_at,role_id,"position",reset_password_token,reset_password_expires,photo) VALUES
-	 ('Wicart','Flore','admin1@test.fr','$2b$10$h5nqDj60OpDhWliJpD8wgOF8nSkj.kWdsbV1y11oB.xQk6JItMHrG','1991-07-07','2025-10-02 00:00:00','2025-10-02 00:00:00',1,NULL,NULL,NULL,NULL),
+	 ('Wicart','Flore','admin1@test.fr','$2b$10$h5nqDj60OpDhWliJpD8wgOF8nSkj.kWdsbV1y11oB.xQk6JItMHrG','1991-07-07','2025-10-02 00:00:00','2025-10-02 00:00:00',1,'Responsable des sourires',NULL,NULL,NULL),
      ('Bialasik', 'Theo','theo@test.fr','$2b$10$h5nqDj60OpDhWliJpD8wgOF8nSkj.kWdsbV1y11oB.xQk6JItMHrG','1991-07-07','2025-10-02 00:00:00','2025-10-02 00:00:00',2,NULL,NULL,NULL,NULL),
      ('Mullier', 'Karine','karine@test.fr','$2b$10$h5nqDj60OpDhWliJpD8wgOF8nSkj.kWdsbV1y11oB.xQk6JItMHrG','1991-07-07','2025-10-02 00:00:00','2025-10-02 00:00:00',3,NULL,NULL,NULL,NULL)
 ;
