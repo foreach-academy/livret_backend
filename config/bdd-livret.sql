@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS promotion (
     title VARCHAR NOT NULL,
     training_id INTEGER,
     start_date timestamp with time zone,
-    end_date timestamp with time zone
+    end_date timestamp with time zone,
     CONSTRAINT fk_training_promotion FOREIGN KEY (training_id) REFERENCES training (id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
