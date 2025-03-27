@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS evaluation (
 );
 CREATE TABLE IF NOT EXISTS module_promotion (
     id SERIAL PRIMARY KEY, 
-    trainer_id INTEGER NOT NULL,
+    trainer_id INTEGER  NULL,
     promotion_id INTEGER NOT NULL,
     module_id INTEGER NOT NULL,
     evaluation_id integer null,
@@ -107,18 +107,47 @@ CREATE TABLE IF NOT EXISTS evaluation_user (
 );
 
 CREATE TABLE IF NOT EXISTS studients_promotion (
+    id SERIAL PRIMARY KEY,
     studient_id INTEGER NOT NULL,
     promotion_id INTEGER NOT NULL,
     CONSTRAINT fk_studients_promotion_studient FOREIGN KEY (studient_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT fk_studients_promotion_promotion FOREIGN KEY (promotion_id) REFERENCES promotion (id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS company (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL
+    );
+
+CREATE TABLE IF NOT EXISTS tutor (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    position VARCHAR(255) NOT NULL,
+    company_id INTEGER NOT NULL,
+    CONSTRAINT fk_tutor_user FOREIGN KEY (user_id) REFERENCES "user" (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_tutor_company FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS apprenticeship (
+    id SERIAL PRIMARY KEY,
+    student_promotion_id INTEGER NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    tutor_id INTEGER NOT NULL,
+    commentary TEXT NULL
+);
+
+
+
 INSERT INTO role (name) VALUES 
 ('Admin'),
 ('Formateur'),
-('Etudiant');
+('Etudiant'),
+('Tuteur');
+
 
 
 -- password = admin1
 INSERT INTO public."user" (lastname,firstname,email,"password",birthdate,created_at,updated_at,role_id,"position",reset_password_token,reset_password_expires,photo) VALUES
-	 ('Admin','Lorelei','admin1@test.fr','$2b$10$h5nqDj60OpDhWliJpD8wgOF8nSkj.kWdsbV1y11oB.xQk6JItMHrG','1991-07-07','2025-10-02 00:00:00','2025-10-02 00:00:00',1,NULL,NULL,NULL,NULL);
+	 ('Admin','Flore','admin1@test.fr','$2b$10$h5nqDj60OpDhWliJpD8wgOF8nSkj.kWdsbV1y11oB.xQk6JItMHrG','1991-07-07','2025-10-02 00:00:00','2025-10-02 00:00:00',1,NULL,NULL,NULL,NULL);
