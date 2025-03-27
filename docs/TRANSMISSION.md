@@ -15,7 +15,7 @@
 
 - Modèles lié à apprenticeship, tutor, company 
 
-[Danger](#){.btn .btn-danger} /!\ La partie évaluation est assez complexe et demande encore de la réflexion sur l'approche a utiliser /!\
+<span class="bg-info text-success"> La partie évaluation est assez complexe et demande encore de la réflexion sur l'approche a utiliser /!\ </span>
 - Revoir la base de donnée de la partie évaluation :
     * Lors de la création d'une promotion, les modules_promotions sont automatiquement créés. A cela il faut ajouter une création automatique d'un objet évaluation. Cet objet sera complété par le formateur qui sera en charge de ce module. ( type d'évaluation) Une fois le type d'évaluation choisi par le formateur, un objet evaluation_user sera créé pour chaque user de la promotion (student_promotion)
     * L'utilisation de la date du module_promotion doit être utilisé pour alerter et permettre l'ajout d'une évaluation. (Si mon module commence la semaine prochaine, alors l'évaluation devient possible a partir de la semaine prochaine)
