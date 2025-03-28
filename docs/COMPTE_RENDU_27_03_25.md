@@ -1,6 +1,6 @@
 ## Ce qui a été réalisé dans le projet du 10/02/2025 au 28/03/2025 ##
 - Réécriture de la base de donnée complète ( voir bdd-livret.sql)
-- Création d'un script de suppression de la base de donnée, re création et insertion en base de donnée à partir de bdd-livret.sql ( sera très utile pour les futur test unitaires)
+- Création d'un script de suppression de la base de donnée, re création et insertion en base de donnée à partir de bdd-livret.sql ( sera très utile pour les futur test unitaires) " npm run db-reset "
 - Réécriture des modèles Sequelize
 - Réécriture des relations entre les modèles
 - Création des routes, services et controlleurs training, promotion, module, module_promotion
