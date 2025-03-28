@@ -1,7 +1,14 @@
-require('dotenv').config();
-const { Client } = require('pg');
-const fs = require('fs');
-const path = require('path');
+import 'dotenv/config';
+import pkg from 'pg';
+const { Client } = pkg;
+
+import { readFile } from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Pour remplacer __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const {
   DATABASE_NAME,
@@ -17,14 +24,14 @@ const adminClient = new Client({
   host: DATABASE_HOST,
   password: DATABASE_PASSWORD,
   port: DATABASE_PORT,
-  database: 'postgres', // base temporaire pour manipuler la vraie
+  database: 'postgres',
 });
 
 async function resetDatabase() {
   try {
     await adminClient.connect();
 
-    // 🛑 Terminer toutes les connexions à la base
+    // 🛑 Terminer les connexions actives
     console.log(`🛑 Fermeture des connexions actives sur la base ${DATABASE_NAME}...`);
     await adminClient.query(`
       SELECT pg_terminate_backend(pg_stat_activity.pid)
@@ -33,7 +40,7 @@ async function resetDatabase() {
         AND pid <> pg_backend_pid();
     `);
 
-    // 🔴 Drop + Create
+    // 🔴 Supprimer et recréer la base
     console.log(`🔴 Suppression de la base ${DATABASE_NAME}...`);
     await adminClient.query(`DROP DATABASE IF EXISTS ${DATABASE_NAME}`);
 
@@ -53,7 +60,8 @@ async function resetDatabase() {
     await appClient.connect();
     console.log(`📄 Exécution du script ./config/bdd-livret.sql...`);
 
-    const sql = fs.readFileSync(path.join(__dirname, '../config/bdd-livret.sql')).toString();
+    const sqlPath = path.join(__dirname, '../config/bdd-livret.sql');
+    const sql = await readFile(sqlPath, 'utf-8');
     await appClient.query(sql);
 
     await appClient.end();
